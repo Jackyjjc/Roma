@@ -22,8 +22,6 @@ public class Tester {
         }
         
         System.out.println("All test passed!! You are AWESOME!!!!!");
-        
-        //add some changes
     }
     
 }

@@ -50,8 +50,6 @@ public class GetCardsTest extends Test {
         gameState.setWhoseTurn(0);
         gameState.setActionDice(new int[] {1,2,2});
         
-        
-        
         //=====================test1========================
         
         //pick the first card
@@ -169,6 +167,5 @@ public class GetCardsTest extends Test {
         assert(gameState.getPlayerHand(1).size() == 1);
         assert(gameState.getPlayerHand(1).contains(Card.FORUM));
         
-        //add some changes
     } 
 }
