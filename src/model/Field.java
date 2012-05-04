@@ -9,7 +9,7 @@ import model.card.CardType;
 
 public class Field implements IField {
     
-    private static final int NUM_DISCS = 6;
+    private static final int NUM_DISCS = 7;
     private IDisc[] discs;
     
     public Field(IPlayer player) {

@@ -216,6 +216,8 @@ public class Game implements GameState, IGameDisplayState, ICardResources {
             if(discCards[i] != Card.NOT_A_CARD) {
                 card = cardFactory.create(discCards[i]);
                 p.getField().getDisc(i).layCard(card);
+            } else {
+                p.getField().getDisc(i).removeCard();
             }
         }
     }

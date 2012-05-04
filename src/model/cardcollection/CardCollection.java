@@ -28,8 +28,8 @@ public class CardCollection implements ICardStorage {
         
         cards.clear();
         
-        for (Card temp : names) {
-            appendCard(factory.create(temp));
+        for (Card cardName : names) {
+            appendCard(factory.create(cardName));
         }
     }
 
