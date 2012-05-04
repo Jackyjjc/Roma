@@ -3,11 +3,13 @@ package model.card;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IDisc;
 import model.IPlayer;
 import model.Notifier;
 import model.TurnCards;
+import framework.cards.Card;
+import framework.interfaces.activators.PraetorianusActivator;
 
 class Praetorianus extends AbstractCard implements TurnCards, PraetorianusActivator {
 
@@ -16,9 +18,9 @@ class Praetorianus extends AbstractCard implements TurnCards, PraetorianusActiva
     
     List<IDisc> affectedDiscs;
     
-    Praetorianus(ICardStorage grave, Notifier notifier) {
+    Praetorianus(ICardResources cardResources, Notifier notifier) {
         super(Card.PRAETORIANUS, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
         this.affectedDiscs = new ArrayList<IDisc>();
     }

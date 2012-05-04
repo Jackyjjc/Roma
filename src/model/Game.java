@@ -4,11 +4,12 @@ import java.util.Collection;
 import java.util.List;
 
 import model.card.AbstractCard;
-import model.card.Card;
 import model.card.CardFactory;
 import model.cardcollection.CardCollectionFactory;
+import framework.cards.Card;
+import framework.interfaces.GameState;
 
-public class Game implements GameState, IGameDisplayState {
+public class Game implements GameState, IGameDisplayState, ICardResources {
 	
     private static final int TOTAL_MONEY = Integer.MAX_VALUE;
     private static final int TOTAL_VP = 36;
@@ -38,7 +39,7 @@ public class Game implements GameState, IGameDisplayState {
 	   
 		this.bank = new ResourceStorage(TOTAL_MONEY, TOTAL_VP);
 		
-        this.cardFactory = new CardFactory(bank, notifier, diceManager);
+        this.cardFactory = new CardFactory(this);
 		
 		this.deck = CardCollectionFactory.create(DECK, cardFactory);
 		this.discard = CardCollectionFactory.create(!DECK, cardFactory);
@@ -86,7 +87,7 @@ public class Game implements GameState, IGameDisplayState {
         this.state = state;
     }
 
-    public DiceManager geDiceManager() {
+    public DiceManager getDiceManager() {
         return diceManager;
     }
 
@@ -189,7 +190,7 @@ public class Game implements GameState, IGameDisplayState {
             if(p.getField().getCard(i) != null) {
                 temp[i] = p.getField().getCard(i).getName();
             } else {
-                temp[i] = null;
+                temp[i] = Card.NOT_A_CARD;
             }
             
         }
@@ -205,10 +206,11 @@ public class Game implements GameState, IGameDisplayState {
         AbstractCard temp = null;
         
         for (int i = 0; i < numDiscs; i++) {
-            temp = cardFactory.create(discCards[i]);
-            p.getField().layCard(temp,i);
+            if(discCards[i] != Card.NOT_A_CARD) {
+                temp = cardFactory.create(discCards[i]);
+                p.getField().layCard(temp,i);
+            }
         }
-        
     }
 
     public int[] getActionDice() {

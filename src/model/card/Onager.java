@@ -1,8 +1,10 @@
 package model.card;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IPlayer;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.OnagerActivator;
 
 class Onager extends AbstractCard implements OnagerActivator {
 
@@ -11,9 +13,9 @@ class Onager extends AbstractCard implements OnagerActivator {
     
     AbstractCard target;
     
-    Onager(ICardStorage grave, Notifier notifier) {
+    Onager(ICardResources cardResources, Notifier notifier) {
         super(Card.MERCATUS, CardType.BUILDING,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
     }
     

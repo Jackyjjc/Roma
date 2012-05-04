@@ -1,7 +1,10 @@
 package model.card;
 
+import model.ICardResources;
 import model.ICardStorage;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.HaruspexActivator;
 
 
 class Haruspex extends AbstractCard implements HaruspexActivator {
@@ -9,31 +12,19 @@ class Haruspex extends AbstractCard implements HaruspexActivator {
     private static final int COST = 4;
     private static final int DEFENCE = 3;
     
-    private ICardStorage deck;
-    
-    Haruspex(ICardStorage deck, ICardStorage grave, Notifier notifier) {
+    Haruspex(ICardResources cardResources, Notifier notifier) {
         super(Card.HARUSPEX, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
     }
 
     public void activate() {
         
     }
-    
-    private boolean isValidCard(AbstractCard c) {
-        
-        boolean isValid = false;
-        
-        if(c != null && c.getOwner() == null) {
-            isValid = true;
-        }
-        
-        return isValid;
-    }
 
     public void chooseCardFromPile(int indexOfCard) {
 
+        ICardStorage deck = getCardResources().getDeckStorage();
         AbstractCard card = deck.getCard(indexOfCard);
         ICardStorage hand = this.getOwner().getHand();
         

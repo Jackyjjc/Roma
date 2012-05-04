@@ -1,7 +1,9 @@
 package model.runner;
 
 import model.Game;
-import model.GameState;
+import framework.interfaces.AcceptanceInterface;
+import framework.interfaces.GameState;
+import framework.interfaces.MoveMaker;
 
 public class AcceptanceTestImplementation implements AcceptanceInterface {
     

@@ -1,17 +1,19 @@
 package model.card;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IPlayer;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.NeroActivator;
 
 class Nero extends AbstractCard implements NeroActivator {
     
     private static final int COST = 8;
     private static final int DEFENCE = 9;
     
-    Nero(ICardStorage grave, Notifier notifier) {
+    Nero(ICardResources cardResources, Notifier notifier) {
         super(Card.NERO, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
 
     }
 

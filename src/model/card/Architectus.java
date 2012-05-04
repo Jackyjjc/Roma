@@ -2,8 +2,10 @@ package model.card;
 
 import java.util.List;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.ArchitectusActivator;
 
 class Architectus extends AbstractCard implements ArchitectusActivator {
 
@@ -12,9 +14,9 @@ class Architectus extends AbstractCard implements ArchitectusActivator {
 
     private List<AbstractCard> buildingCards;
     
-    Architectus(ICardStorage grave, Notifier notifier) {
+    Architectus(ICardResources cardResources, Notifier notifier) {
         super(Card.ARCHITECTUS, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
     }
 

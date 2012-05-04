@@ -3,11 +3,12 @@ package model.card;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IDisc;
 import model.IField;
 import model.Notifier;
 import model.TurnCards;
+import framework.cards.Card;
 
 class Turris extends AbstractCard implements TurnCards {
 
@@ -16,10 +17,10 @@ class Turris extends AbstractCard implements TurnCards {
     
     private List<AbstractCard> affectedCards;
     
-    Turris(ICardStorage grave, Notifier notifier) {
+    Turris(ICardResources cardResources, Notifier notifier) {
         
         super(Card.TURRIS, CardType.BUILDING,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
         this.affectedCards = new ArrayList<AbstractCard>();
     }
@@ -29,8 +30,10 @@ class Turris extends AbstractCard implements TurnCards {
     }
     
     @Override
-    public void lay(IDisc disc) {
+    public boolean lay(IDisc disc) {
         magicMethod();
+        
+        return true;
     }
     
     @Override

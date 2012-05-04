@@ -1,9 +1,11 @@
 package model.card;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IDisc;
 import model.IPlayer;
+import model.IResourceStorage;
 import model.Notifier;
+import framework.cards.Card;
 
 public abstract class AbstractCard {
     
@@ -18,10 +20,10 @@ public abstract class AbstractCard {
     private IDisc disc;
     private Notifier notifier;
     
-    private ICardStorage grave;
+    private ICardResources cardResources;
     
     public AbstractCard(Card name, CardType type, int cost, int defence,
-                        ICardStorage grave, Notifier notifier) {
+                        ICardResources cardResources, Notifier notifier) {
         
         this.name = name;
         this.type = type;
@@ -30,18 +32,32 @@ public abstract class AbstractCard {
         this.defence = defence;
         this.owner = null;
         this.notifier = notifier;
-        this.grave = grave;
+        this.cardResources = cardResources;
     }
 
     public abstract void activate();
     
-    public void lay(IDisc disc) {
+    public boolean lay(IDisc disc) {
         
+        boolean succeed = false;
+        IResourceStorage bank = cardResources.getBank();
+        
+        if(getOwner().getMoney() >= getCost()) {
+            disc.layCard(this);
+            getOwner().transferMoney(bank, getCost());
+        }
+        
+        return succeed;
     }
     
     public void disCard() {
-        if(this.getDisc() != null) {
-            
+        
+        AbstractCard card = null;
+        
+        if(getDisc() != null) {
+            card = getDisc().removeCard();
+            cardResources.getDiscardStorage().pushCard(card);
+            card.setOwner(null);
         }
     }
     
@@ -101,8 +117,8 @@ public abstract class AbstractCard {
         return notifier;
     }
     
-    public ICardStorage getGrave() {
-        return grave;
+    public ICardResources getCardResources() {
+        return cardResources;
     }
     
 }

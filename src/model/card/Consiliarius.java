@@ -2,10 +2,12 @@ package model.card;
 
 import java.util.List;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IDisc;
 import model.IField;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.ConsiliariusActivator;
 
 class Consiliarius extends AbstractCard implements ConsiliariusActivator {
 
@@ -14,9 +16,9 @@ class Consiliarius extends AbstractCard implements ConsiliariusActivator {
     
     private List<AbstractCard> charCards;
     
-    Consiliarius(ICardStorage grave, Notifier notifier) {
+    Consiliarius(ICardResources cardResources, Notifier notifier) {
         super(Card.CONSILIARUS, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+               COST, DEFENCE, cardResources, notifier);
 
     }
 

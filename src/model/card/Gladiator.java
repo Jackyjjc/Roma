@@ -1,16 +1,19 @@
 package model.card;
 
+import model.ICardResources;
 import model.ICardStorage;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.GladiatorActivator;
 
 class Gladiator extends AbstractCard implements GladiatorActivator {
 
     private static final int COST = 6;
     private static final int DEFENCE = 5;
     
-    Gladiator(ICardStorage grave, Notifier notifier) {
+    Gladiator(ICardResources cardResources, Notifier notifier) {
         super(Card.GLADIATOR, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
     }
 

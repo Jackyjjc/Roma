@@ -2,10 +2,12 @@ package model.card;
 
 import java.util.List;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IDisc;
 import model.IField;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.MachinaActivator;
 
 class Machina extends AbstractCard implements MachinaActivator {
 
@@ -14,10 +16,10 @@ class Machina extends AbstractCard implements MachinaActivator {
     
     private List<AbstractCard> buildingCards;
     
-    Machina(ICardStorage grave, Notifier notifier) {
+    Machina(ICardResources cardResources, Notifier notifier) {
         
         super(Card.MACHINA, CardType.BUILDING,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
     }
 

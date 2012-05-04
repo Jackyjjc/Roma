@@ -4,48 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.DiceManager;
-import model.Die;
-import model.ICardStorage;
+import model.ICardResources;
 import model.IListener;
 import model.IResourceStorage;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.ForumActivator;
 
 class Forum extends AbstractCard implements ForumActivator {
 
     private static final int COST = 5;
     private static final int DEFENCE = 5;
 
-    private DiceManager diceManager;
-    private IResourceStorage bank;
     private List<IListener> basilicas;
     private List<IListener> templums;
     
     private int dieRoll;
     
-    Forum(ICardStorage grave, Notifier notifier,
-            IResourceStorage bank, DiceManager diceManager) {
+    Forum(ICardResources cardResources, Notifier notifier) {
         super(Card.FORUM, CardType.BUILDING,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
-        this.bank = bank;
-        this.diceManager = diceManager;
         this.basilicas = new ArrayList<IListener>();
         this.templums = new ArrayList<IListener>();
     }
 
     public void activate() {
         
-    }
-    
-    private boolean isValidDie(Die die) {
-        
-        boolean isValid = false;
-        
-        if(!die.isUsed()) {
-            isValid = true;
-        }
-        
-        return isValid;
     }
     
     private void notifyBasilicas() {
@@ -61,6 +46,10 @@ class Forum extends AbstractCard implements ForumActivator {
     }
 
     public void chooseActionDice(int actionDiceValue) {
+        
+        DiceManager diceManager = getCardResources().getDiceManager();
+        IResourceStorage bank = getCardResources().getBank();
+        
         diceManager.getActionDie(actionDiceValue).use();
         dieRoll = actionDiceValue;
         bank.transferVP(getOwner(), actionDiceValue);

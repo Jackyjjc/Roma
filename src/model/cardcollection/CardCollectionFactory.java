@@ -1,7 +1,7 @@
 package model.cardcollection;
 
-import model.card.Card;
 import model.card.CardFactory;
+import framework.cards.Card;
 
 public class CardCollectionFactory {
     

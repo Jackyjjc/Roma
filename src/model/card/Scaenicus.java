@@ -1,7 +1,10 @@
 package model.card;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.CardActivator;
+import framework.interfaces.activators.ScaenicusActivator;
 
 class Scaenicus extends AbstractCard implements ScaenicusActivator {
 
@@ -10,9 +13,9 @@ class Scaenicus extends AbstractCard implements ScaenicusActivator {
     
     private CardFactory factory;
     
-    Scaenicus(ICardStorage grave, CardFactory factory, Notifier notifier) {
+    Scaenicus(ICardResources cardResources, CardFactory factory, Notifier notifier) {
         super(Card.SCAENICUS, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
         this.factory = factory;
     }

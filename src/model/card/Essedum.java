@@ -3,11 +3,13 @@ package model.card;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IDisc;
 import model.IField;
 import model.Notifier;
 import model.TurnCards;
+import framework.cards.Card;
+import framework.interfaces.activators.EssedumActivator;
 
 class Essedum extends AbstractCard implements TurnCards, EssedumActivator {
 
@@ -16,9 +18,9 @@ class Essedum extends AbstractCard implements TurnCards, EssedumActivator {
     
     private List<AbstractCard> affectedCards;
      
-    Essedum(ICardStorage grave, Notifier notifier) {
+    Essedum(ICardResources cardResources, Notifier notifier) {
         super(Card.ESSEDUM, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
         this.affectedCards = new ArrayList<AbstractCard>();
     }

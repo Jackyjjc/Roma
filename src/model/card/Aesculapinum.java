@@ -1,16 +1,19 @@
 package model.card;
 
+import model.ICardResources;
 import model.ICardStorage;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.AesculapinumActivator;
 
 class Aesculapinum extends AbstractCard implements AesculapinumActivator {
 
     private static final int COST = 5;
     private static final int DEFENCE = 2;
     
-    Aesculapinum(ICardStorage grave, Notifier notifier) {
+    Aesculapinum(ICardResources cardResources, Notifier notifier) {
         super(Card.AESCULAPINUM, CardType.BUILDING,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
     }
 
@@ -31,13 +34,14 @@ class Aesculapinum extends AbstractCard implements AesculapinumActivator {
 
     public void chooseCardFromPile(int indexOfCard) {
         
-        AbstractCard input = getGrave().getCard(indexOfCard);
+        ICardStorage discard = getCardResources().getDiscardStorage();
+        AbstractCard card = discard.getCard(indexOfCard);
         ICardStorage hand = this.getOwner().getHand();
         
-        if (isValidCard(input)) {
+        if (isValidCard(card)) {
         
-            getGrave().removeCard(input);
-            hand.pushCard(input);
+            discard.removeCard(card);
+            hand.pushCard(card);
             
         }    
     }

@@ -1,11 +1,10 @@
 package model.card;
 
-import model.DiceManager;
-import model.Die;
-import model.ICardStorage;
+import model.ICardResources;
 import model.IPlayer;
 import model.Notifier;
-
+import framework.cards.Card;
+import framework.interfaces.activators.CenturioActivator;
 
 class Centurio extends AbstractCard implements CenturioActivator {
 
@@ -14,14 +13,11 @@ class Centurio extends AbstractCard implements CenturioActivator {
     
     private int dieRoll;
     
-    private DiceManager roller;
-    
-    Centurio (DiceManager roller, ICardStorage grave, Notifier notifier) {
+    Centurio (ICardResources cardResources, Notifier notifier) {
         
         super(Card.CENTURIO, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+                COST, DEFENCE, cardResources, notifier);
         
-        this.roller = roller;
     }
 
     public void activate() {
@@ -38,10 +34,6 @@ class Centurio extends AbstractCard implements CenturioActivator {
         return isValid;
     }
     
-    private boolean isValidDie(Die die) {
-        return !die.isUsed();
-    }
-    
     private AbstractCard getOppositeCard() {
         
         IPlayer opponent = this.getOwner().getOpponent();
@@ -53,29 +45,13 @@ class Centurio extends AbstractCard implements CenturioActivator {
         return target;
     }
 
-//    private boolean isValidAddDie() {
-//        
-//        boolean isValid = handler.getBooleanInput();
-//        boolean isUsed = true;
-//        
-//        Die[] actionDice = roller.getActionDice();
-//        
-//        for(Die die : actionDice) {
-//            if(!die.isUsed()) {
-//                isUsed = false;
-//            }
-//        }
-//        
-//        return (isValid && !isUsed);
-//    }
-
     public void giveAttackDieRoll(int roll) {
         this.dieRoll = roll;
     }
 
     public void chooseActionDice(int actionDiceValue) {
         
-        roller.getActionDie(actionDiceValue).use();
+        getCardResources().getDiceManager().getActionDie(actionDiceValue).use();
         
         this.dieRoll += actionDiceValue;
         Action.attack(getOppositeCard(), dieRoll);

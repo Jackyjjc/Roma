@@ -1,9 +1,10 @@
 package model.card;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IListener;
 import model.IResourceStorage;
 import model.Notifier;
+import framework.cards.Card;
 
 class Basilica extends AbstractCard implements IListener {
 
@@ -11,13 +12,10 @@ class Basilica extends AbstractCard implements IListener {
     private static final int DEFENCE = 5;
     private static final int ADDTIONAL_VP = 2;
     
-    private IResourceStorage bank;
-    
-    Basilica(IResourceStorage bank, ICardStorage grave, Notifier notifier) {
+    Basilica(ICardResources cardResources, Notifier notifier) {
         super(Card.BASILICA, CardType.BUILDING,
-              COST, DEFENCE, grave, notifier);
-     
-        this.bank = bank;
+              COST, DEFENCE, cardResources, notifier);
+        
     }
 
     public void activate() {
@@ -26,7 +24,9 @@ class Basilica extends AbstractCard implements IListener {
 
     public void update() {
         
-        Action.attainVP(bank, this.getOwner(), ADDTIONAL_VP);
+        IResourceStorage bank = getCardResources().getBank();
+        
+        Action.attainVP(bank, getOwner(), ADDTIONAL_VP);
     }
     
 }

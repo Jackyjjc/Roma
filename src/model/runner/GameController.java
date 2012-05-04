@@ -3,11 +3,13 @@ package model.runner;
 import model.DiceManager;
 import model.Game;
 import model.ICardStorage;
+import model.IDisc;
 import model.IPlayer;
 import model.IResourceStorage;
 import model.card.AbstractCard;
-import model.card.Card;
-import model.card.CardActivator;
+import framework.cards.Card;
+import framework.interfaces.MoveMaker;
+import framework.interfaces.activators.CardActivator;
 
 /**
  * 
@@ -25,14 +27,15 @@ public class GameController implements MoveMaker {
     
     public GameController(Game g) {
         this.g = g;
-        this.diceManager = g.geDiceManager();
+        this.diceManager = g.getDiceManager();
     }
     
     public CardActivator chooseCardToActivate(int disc) {
         
         IPlayer player = g.getCurrentPlayer();
         
-        return (CardActivator)player.getField().getCard(disc);
+        //disc is from 1 - 7
+        return (CardActivator)player.getField().getCard(disc - 1);
     
     }
 
@@ -52,6 +55,7 @@ public class GameController implements MoveMaker {
             card = deck.popCard();
             
             if(card.getName() == chosen) {
+                card.setOwner(player);
                 player.getHand().appendCard(card);
             } else {
                 discard.pushCard(card);
@@ -89,7 +93,10 @@ public class GameController implements MoveMaker {
         AbstractCard card = player.getHand().getCard(toPlace);
         player.getHand().removeCard(card);
         
-        player.getField().layCard(card, discToPlaceOn);
+        //the disc to place on is from 1 - 7
+        IDisc disc = player.getField().getDisc(discToPlaceOn - 1);
+        
+        card.lay(disc);
     }
 
 }

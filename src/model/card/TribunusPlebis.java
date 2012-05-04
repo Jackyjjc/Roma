@@ -1,8 +1,10 @@
 package model.card;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IPlayer;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.TribunusPlebisActivator;
 
 class TribunusPlebis extends AbstractCard implements TribunusPlebisActivator {
 
@@ -10,9 +12,9 @@ class TribunusPlebis extends AbstractCard implements TribunusPlebisActivator {
     private static final int DEFENCE = 5;
     private static final int AMOUNT = 1;
     
-    TribunusPlebis(ICardStorage grave, Notifier notifier) {
+    TribunusPlebis(ICardResources cardResources, Notifier notifier) {
         super(Card.TRIBUNUSPLEBIS, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
     }
 
     public void activate() {

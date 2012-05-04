@@ -2,39 +2,26 @@ package model.card;
 
 import model.DiceManager;
 import model.Die;
-import model.ICardStorage;
+import model.ICardResources;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.ConsulActivator;
 
 class Consul extends AbstractCard implements ConsulActivator {
     
     private static final int COST = 3;
     private static final int DEFENCE = 3;
-    private static final int MAX_DIE_VALUE = 6;
     
     private Die die;
     
-    private DiceManager diceManager;
-    
-    Consul(ICardStorage grave, Notifier notifier, DiceManager diceManager) {
+    Consul(ICardResources cardResources, Notifier notifier) {
         super(Card.CONSUL, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
-        this.diceManager = diceManager;
     }
 
     public void activate() {
         
-    }
-
-    private boolean isValidDie(Die die) {
-        
-        boolean isValid = false;
-        
-        if(!die.isUsed() && die.getValue() < MAX_DIE_VALUE) {
-            isValid = true;
-        }
-        
-        return isValid;
     }
 
     public void complete() {
@@ -46,6 +33,8 @@ class Consul extends AbstractCard implements ConsulActivator {
     }
 
     public void chooseWhichDiceChanges(int originalRoll) {
+        
+        DiceManager diceManager = getCardResources().getDiceManager();
         die = diceManager.getActionDie(originalRoll);
         
     }

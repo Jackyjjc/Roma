@@ -1,25 +1,23 @@
 package model.card;
 
-import model.DiceManager;
-import model.ICardStorage;
+import model.ICardResources;
 import model.IPlayer;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.LegionariusActivator;
 
 class Legionarius extends AbstractCard implements LegionariusActivator {
 
     private static final int COST = 4;
     private static final int DEFENCE = 5;
     
-    private DiceManager roller;
-    
-    Legionarius (DiceManager roller, ICardStorage grave, Notifier notifier) {
+    Legionarius (ICardResources cardResources, Notifier notifier) {
         
         super(Card.LEGIONARIUS, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
-        this.roller = roller;
     }
-
+    
     public void activate() {
         
     }

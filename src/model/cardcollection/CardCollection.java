@@ -6,15 +6,17 @@ import java.util.Collections;
 import java.util.List;
 
 import model.ICardStorage;
+import model.IPlayer;
 import model.card.AbstractCard;
-import model.card.Card;
 import model.card.CardFactory;
 import model.card.CardType;
+import framework.cards.Card;
 
 public class CardCollection implements ICardStorage {
 
+    private IPlayer owner;
     private CardFactory factory;
-    List<AbstractCard> cards;
+    private List<AbstractCard> cards;
 
     CardCollection(CardFactory factory) {
         
@@ -29,10 +31,11 @@ public class CardCollection implements ICardStorage {
         for (Card temp : names) {
             appendCard(factory.create(temp));
         }
-        
     }
 
     public void pushCard(AbstractCard c) {
+        
+        c.setOwner(owner);
         cards.add(0,c);
     }
     
@@ -48,6 +51,8 @@ public class CardCollection implements ICardStorage {
     }
 
     public void appendCard(AbstractCard c) {
+        
+        c.setOwner(owner);
         cards.add(c);
     }
     
@@ -129,4 +134,9 @@ public class CardCollection implements ICardStorage {
         return temp;
         
     }
+
+    public void setOwner(IPlayer player) {
+        this.owner = player;
+    }
+
 }

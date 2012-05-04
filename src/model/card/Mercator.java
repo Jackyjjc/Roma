@@ -1,8 +1,10 @@
 package model.card;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IPlayer;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.MercatorActivator;
 
 class Mercator extends AbstractCard implements MercatorActivator {
     
@@ -11,9 +13,9 @@ class Mercator extends AbstractCard implements MercatorActivator {
     private static final int DEFENCE = 2;
     private static final int TRADING_PRICE = 2;
     
-    Mercator(ICardStorage grave, Notifier notifier) {
+    Mercator(ICardResources cardResources, Notifier notifier) {
         super(Card.MERCATOR, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
     }
 

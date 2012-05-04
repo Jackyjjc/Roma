@@ -1,18 +1,20 @@
 package model.card;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IField;
 import model.IPlayer;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.MercatusActivator;
 
 class Mercatus extends AbstractCard implements MercatusActivator {
 
     private static final int COST = 6;
     private static final int DEFENCE = 3;
     
-    Mercatus(ICardStorage grave, Notifier notifier) {
+    Mercatus(ICardResources cardResources, Notifier notifier) {
         super(Card.MERCATUS, CardType.BUILDING,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
     }
 
     public void activate() {

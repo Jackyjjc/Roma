@@ -2,8 +2,10 @@ package model.card;
 
 import java.util.List;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.SenatorActivator;
 
 class Senator extends AbstractCard implements SenatorActivator {
 
@@ -12,9 +14,9 @@ class Senator extends AbstractCard implements SenatorActivator {
     
     private List<AbstractCard> charCards;
     
-    Senator(ICardStorage grave, Notifier notifier) {
+    Senator(ICardResources cardResources, Notifier notifier) {
         super(Card.SENATOR, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
         
     }
 
@@ -25,18 +27,6 @@ class Senator extends AbstractCard implements SenatorActivator {
         for(AbstractCard card : charCards) {
             card.setCost(0);
         }
-        
-    }
-    
-    private boolean isValidCard (AbstractCard c) {
-        
-        boolean isValidCard = false;
-        
-        if (c.getType() == CardType.CHARACTER) {
-            isValidCard = true;
-        }
-        
-        return isValidCard;
         
     }
     

@@ -1,25 +1,17 @@
 package model.card;
 
-import model.DiceManager;
-import model.ICardStorage;
-import model.IResourceStorage;
+import model.ICardResources;
 import model.Notifier;
+import framework.cards.Card;
 
 public class CardFactory {
     
-    private IResourceStorage bank;
-    private ICardStorage deck;
-    private ICardStorage grave;
-    
+    private ICardResources cardResources;
     private Notifier notifier;
-    private DiceManager diceManager;
     
-    public CardFactory(IResourceStorage bank, Notifier notifier,
-                       DiceManager diceManager) {
+    public CardFactory(ICardResources cardResources) {
         
-        this.notifier = notifier;
-        this.diceManager = diceManager;
-        this.bank = bank;
+        this.cardResources = cardResources;
         
     }
     
@@ -29,81 +21,81 @@ public class CardFactory {
         
         switch(name) {
             case AESCULAPINUM:
-                card = new Aesculapinum(grave, notifier);
+                card = new Aesculapinum(cardResources, notifier);
                 break;
             case ARCHITECTUS: 
-                card = new Architectus(grave, notifier);
+                card = new Architectus(cardResources, notifier);
                 break;
             case BASILICA:
-                card = new Basilica(bank, grave, notifier);
+                card = new Basilica(cardResources, notifier);
                 break;
             case CENTURIO:
-                card = new Centurio(diceManager, grave, notifier);
+                card = new Centurio(cardResources, notifier);
                 break;
             case CONSILIARUS:
-                card = new Consiliarius(grave, notifier);
+                card = new Consiliarius(cardResources, notifier);
                 break;
             case CONSUL:
-                card = new Consul(grave, notifier, diceManager);
+                card = new Consul(cardResources, notifier);
                 break;
             case ESSEDUM:
-                card = new Essedum(grave, notifier);
+                card = new Essedum(cardResources, notifier);
                 break;
             case FORUM:
-                card = new Forum(grave, notifier, bank, diceManager);
+                card = new Forum(cardResources, notifier);
                 break;
             case GLADIATOR:
-                card = new Gladiator(grave, notifier);
+                card = new Gladiator(cardResources, notifier);
                 break;
             case HARUSPEX:
-                card = new Haruspex(deck, grave, notifier);
+                card = new Haruspex(cardResources, notifier);
                 break;
             case LEGAT:
-                card = new Legat(bank, grave, notifier);
+                card = new Legat(cardResources, notifier);
                 break;
             case LEGIONARIUS:
-                card = new Legionarius(diceManager, grave, notifier);
+                card = new Legionarius(cardResources, notifier);
                 break;
             case MACHINA:
-                card = new Machina(grave, notifier);
+                card = new Machina(cardResources, notifier);
                 break;
             case MERCATOR:
-                card = new Mercator(grave, notifier);
+                card = new Mercator(cardResources, notifier);
                 break;
             case MERCATUS:
-                card = new Mercatus(grave, notifier);
+                card = new Mercatus(cardResources, notifier);
                 break;
             case NERO:
-                card = new Nero(grave, notifier);
+                card = new Nero(cardResources, notifier);
                 break;
             case NOT_A_CARD:
                 break;
             case ONAGER:
-                card = new Onager(grave, notifier);
+                card = new Onager(cardResources, notifier);
                 break;
             case PRAETORIANUS:
-                card = new Praetorianus(grave, notifier);
+                card = new Praetorianus(cardResources, notifier);
                 break;
             case SCAENICUS:
-                card = new Scaenicus(grave, this, notifier);
+                card = new Scaenicus(cardResources, this, notifier);
                 break;
             case SENATOR:
-                card = new Senator(grave, notifier);
+                card = new Senator(cardResources, notifier);
                 break;
             case SICARIUS:
-                card = new Sicarius(grave, notifier);
+                card = new Sicarius(cardResources, notifier);
                 break;
             case TEMPLUM:
-                card = new Templum(grave, notifier, bank,diceManager);
+                card = new Templum(cardResources, notifier);
                 break;
             case TRIBUNUSPLEBIS:
-                card = new TribunusPlebis(grave, notifier);
+                card = new TribunusPlebis(cardResources, notifier);
                 break;
             case TURRIS:
-                card = new Turris(grave, notifier);
+                card = new Turris(cardResources, notifier);
                 break;
             case VELITES:
-                card = new Velites(grave, notifier);
+                card = new Velites(cardResources, notifier);
                 break;
                 
         }

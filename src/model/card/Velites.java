@@ -1,8 +1,10 @@
 package model.card;
 
-import model.ICardStorage;
+import model.ICardResources;
 import model.IPlayer;
 import model.Notifier;
+import framework.cards.Card;
+import framework.interfaces.activators.VelitesActivator;
 
 class Velites extends AbstractCard implements VelitesActivator {
 
@@ -11,9 +13,9 @@ class Velites extends AbstractCard implements VelitesActivator {
     
     private AbstractCard target;
     
-    Velites (ICardStorage grave, Notifier notifier) {
+    Velites (ICardResources cardResources, Notifier notifier) {
         super(Card.VELITES, CardType.CHARACTER,
-              COST, DEFENCE, grave, notifier);
+              COST, DEFENCE, cardResources, notifier);
 
     }
 
