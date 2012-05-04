@@ -10,13 +10,13 @@ public class Disc implements IDisc {
     private boolean isBlocked;
     private AbstractCard card;
     
+    private IPlayer owner;
+    
     private IDisc prev;
     private IDisc next;
     
     public Disc () {
-        
         isBlocked = false;
-    
     }
     
     public boolean isDiscEmpty() {
@@ -35,6 +35,7 @@ public class Disc implements IDisc {
             
             card = c;
             c.setDisc(this);
+            c.setOwner(getOwner());
             
             succeed = true;
         }
@@ -81,6 +82,14 @@ public class Disc implements IDisc {
         isBlocked = false;
     }
 
+    public void setOwner(IPlayer player) {
+        this.owner = player;
+    }
+    
+    public IPlayer getOwner() {
+        return owner;
+    }
+    
     public IDisc getPrev() {
         return prev;
     }
