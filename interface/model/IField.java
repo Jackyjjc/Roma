@@ -9,8 +9,6 @@ public interface IField extends Iterable<IDisc> {
 
     public int countUnoccupiedDiscs();
     
-    public boolean layCard(AbstractCard card, int index);
-    
     public AbstractCard getCard(int index);
     
     public IDisc getDisc(int index);
