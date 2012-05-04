@@ -3,7 +3,7 @@ package model;
 import java.util.Collection;
 import java.util.List;
 
-import model.card.Card;
+import framework.cards.Card;
 
 public interface IGameDisplayState {
 

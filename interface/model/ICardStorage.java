@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.List;
 
 import model.card.AbstractCard;
-import model.card.Card;
 import model.card.CardType;
+import framework.cards.Card;
 
 /**
  * 
@@ -40,5 +40,7 @@ public interface ICardStorage {
     public void shuffle();
     
     public int size();
+    
+    public void setOwner(IPlayer player);
 
 }
