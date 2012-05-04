@@ -1,6 +1,7 @@
 package model;
 
-import model.runner.MoveMaker;
+import framework.interfaces.GameState;
+import framework.interfaces.MoveMaker;
 
 /**
  * 

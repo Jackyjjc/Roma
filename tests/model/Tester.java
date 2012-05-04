@@ -1,6 +1,7 @@
 package model;
 
 import model.runner.AcceptanceTestImplementation;
+import framework.interfaces.GameState;
 
 public class Tester {
 
@@ -8,6 +9,7 @@ public class Tester {
         new TurnAdvanceTest(),
         new GetMoneyTest(),
         new GetCardsTest(),
+        new CardActivatorAesculapinumBasicTest(),
     };
     
     public static void main(String[] args) {

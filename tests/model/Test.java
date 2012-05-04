@@ -3,7 +3,8 @@ package model;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import model.runner.MoveMaker;
+import framework.interfaces.GameState;
+import framework.interfaces.MoveMaker;
 
 /**
  * Provides a template for writing tests for Roma.
