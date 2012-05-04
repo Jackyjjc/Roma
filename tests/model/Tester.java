@@ -10,6 +10,7 @@ public class Tester {
         new GetMoneyTest(),
         new GetCardsTest(),
         new CardActivatorAesculapinumBasicTest(),
+        new CardActivatorArchitectusBasicTest(),
     };
     
     public static void main(String[] args) {
