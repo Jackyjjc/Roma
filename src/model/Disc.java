@@ -20,7 +20,7 @@ public class Disc implements IDisc {
     }
     
     public boolean isDiscEmpty() {
-        return (card != null);
+        return (card == null);
     }
     
     public boolean layCard(AbstractCard c) {
@@ -29,11 +29,12 @@ public class Disc implements IDisc {
         
         if (c != null || !isBlocked()) {
             
-            if(card != null) {
+            if(!isDiscEmpty()) {
                 card.disCard();
             }
             
             card = c;
+            c.setDisc(this);
             
             succeed = true;
         }
@@ -45,7 +46,7 @@ public class Disc implements IDisc {
         
         AbstractCard returnCard = getCard();
         
-        if(isDiscEmpty()) {
+        if(!isDiscEmpty()) {
             card = null;
         }
         
@@ -57,7 +58,7 @@ public class Disc implements IDisc {
         
         AbstractCard returnCard = null;
         
-        if(isDiscEmpty()) {
+        if(!isDiscEmpty()) {
             returnCard = card;
         }
         

@@ -16,10 +16,6 @@ public class Field implements IField {
         initDiscs();
     }
     
-    public boolean layCard(AbstractCard c, int index) {
-        return discs[index].layCard(c);
-    }
-    
     public List<AbstractCard> removeCardsOf(CardType type) {
         
         int length = NUM_DISCS;

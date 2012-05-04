@@ -203,12 +203,13 @@ public class Game implements GameState, IGameDisplayState, ICardResources {
         
         IPlayer p = getPlayer(playerNum);
         int numDiscs = p.getField().getNumDiscs();
-        AbstractCard temp = null;
+        AbstractCard card = null;
+        IDisc disc = null;
         
         for (int i = 0; i < numDiscs; i++) {
             if(discCards[i] != Card.NOT_A_CARD) {
-                temp = cardFactory.create(discCards[i]);
-                p.getField().layCard(temp,i);
+                card = cardFactory.create(discCards[i]);
+                p.getField().getDisc(i).layCard(card);
             }
         }
     }

@@ -38,9 +38,10 @@ class Sicarius extends AbstractCard implements SicariusActivator {
         
         IPlayer opponent = getOwner().getOpponent();
         
-        AbstractCard target = opponent.getField().getCard(diceDisc);
+        AbstractCard target = opponent.getField().getCard(diceDisc - 1);
 
         target.disCard();
+        
         this.disCard();
     }
     
