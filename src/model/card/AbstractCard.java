@@ -52,13 +52,11 @@ public abstract class AbstractCard {
     
     public void disCard() {
         
-        AbstractCard card = null;
-        
         if(getDisc() != null) {
-            card = getDisc().removeCard();
-            cardResources.getDiscardStorage().pushCard(card);
-            card.setOwner(null);
+            getDisc().removeCard();
         }
+        
+        cardResources.getDiscardStorage().pushCard(this);
     }
     
     public Card getName() {

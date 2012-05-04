@@ -8,13 +8,13 @@ import framework.interfaces.activators.OnagerActivator;
 
 class Onager extends AbstractCard implements OnagerActivator {
 
-    private static final int COST = 6;
-    private static final int DEFENCE = 3;
+    private static final int COST = 5;
+    private static final int DEFENCE = 4;
     
     AbstractCard target;
     
     Onager(ICardResources cardResources, Notifier notifier) {
-        super(Card.MERCATUS, CardType.BUILDING,
+        super(Card.ONAGER, CardType.BUILDING,
               COST, DEFENCE, cardResources, notifier);
         
     }

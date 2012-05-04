@@ -31,6 +31,9 @@ class Turris extends AbstractCard implements TurnCards {
     
     @Override
     public boolean lay(IDisc disc) {
+        
+        super.lay(disc);
+        
         magicMethod();
         
         return true;
@@ -54,7 +57,7 @@ class Turris extends AbstractCard implements TurnCards {
             
             card = disc.getCard();
             
-            if(!affectedCards.contains(card) && card != this) {
+            if(card != null && !affectedCards.contains(card) && card != this) {
                   card.setDefence(card.getDefence() + 1);
                   affectedCards.add(card);
             }

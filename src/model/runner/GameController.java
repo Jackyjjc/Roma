@@ -35,7 +35,9 @@ public class GameController implements MoveMaker {
         IPlayer player = g.getCurrentPlayer();
         
         //disc is from 1 - 7
-        return (CardActivator)player.getField().getCard(disc - 1);
+        AbstractCard card = player.getField().getCard(disc - 1);
+        card.activate();
+        return (CardActivator)card;
     
     }
 

@@ -29,7 +29,7 @@ public class Disc implements IDisc {
         
         if (c != null || !isBlocked()) {
             
-            if(isDiscEmpty()) {
+            if(card != null) {
                 card.disCard();
             }
             
