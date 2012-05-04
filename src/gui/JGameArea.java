@@ -3,12 +3,11 @@ package gui;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
+import model.IGameDisplayState;
+import view.InputHandler;
 import controller.DiscClickListener;
 import controller.FieldClickListener;
 import controller.HandClickListener;
-
-import model.IGameDisplayState;
-import model.InputHandler;
 
 public class JGameArea extends JPanel implements IListener {
     

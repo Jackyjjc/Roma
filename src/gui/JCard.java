@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import model.card.Card;
+import framework.cards.Card;
 
 
 public class JCard extends JButton {

@@ -1,16 +1,14 @@
 package gui;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import controller.ActionDieClickListener;
-
 import model.IGameDisplayState;
-import model.InputHandler;
+import view.InputHandler;
+import controller.ActionDieClickListener;
 
 public class JGameBarLeft extends JPanel implements IListener {
 

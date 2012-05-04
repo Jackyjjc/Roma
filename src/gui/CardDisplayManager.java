@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
-import model.card.Card;
+import framework.cards.Card;
 
 
 public class CardDisplayManager {

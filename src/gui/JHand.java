@@ -4,10 +4,9 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import controller.HandClickListener;
-
 import model.IGameDisplayState;
-import model.card.Card;
+import controller.HandClickListener;
+import framework.cards.Card;
 
 public class JHand extends JPanel implements IListener {
 

@@ -1,15 +1,12 @@
 package gui;
 
 import java.awt.FlowLayout;
-import java.awt.Insets;
 
 import javax.swing.JPanel;
 
-import controller.FieldClickListener;
-
 import model.IGameDisplayState;
-import model.InputHandler;
-import model.card.Card;
+import controller.FieldClickListener;
+import framework.cards.Card;
 
 
 public class JField extends JPanel implements IListener {

@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import model.IGameDisplayState;
-import model.InputHandler;
+import view.InputHandler;
 
 public class GraphicalView extends JFrame implements IListener {
     
