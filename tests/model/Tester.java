@@ -6,6 +6,8 @@ import framework.interfaces.GameState;
 public class Tester {
 
     private static Test[] tests = {
+        new InitialisationCardDiscBasicTest(),
+        new InitialisationPlayerBasicTest(),
         new MoverEndTurnTest(),
         new InitialisationBasicSestertiiTest(),
         new InitialisationBasicVictoryPointTest(),
@@ -14,6 +16,9 @@ public class Tester {
         new GetCardsTest(),
         new CardActivatorAesculapinumBasicTest(),
         new CardActivatorArchitectusBasicTest(),
+        new CardActivatorLegatBasicTest(),
+        new CardActivatorSenatorBasicTest(),
+        new CardActivatorTribunusPlebisBasicTest(),
         new CardActivatorSenatorBasicTest(),
         new CardActivatorSicariusBasicTest(),
     };

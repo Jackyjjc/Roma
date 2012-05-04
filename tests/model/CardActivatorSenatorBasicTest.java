@@ -62,6 +62,6 @@ public class CardActivatorSenatorBasicTest extends Test {
         move.placeCard(Card.ESSEDUM, 4);
         move.placeCard(Card.CENTURIO, 5);
         move.placeCard(Card.SICARIUS, 6);
-        //move.placeCard(Card.ARCHITECTUS, 7);
+        move.placeCard(Card.ARCHITECTUS, 7);
     }
 }
