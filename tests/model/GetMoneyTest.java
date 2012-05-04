@@ -22,8 +22,6 @@ public class GetMoneyTest extends Test {
     public void run(GameState gameState, MoveMaker move) throws AssertionError,
             UnsupportedOperationException, IllegalArgumentException {
         
-        out.println("Testing get Sestertii from stockpile");
-        
         gameState.setPlayerSestertii(0, 0);
         gameState.setPlayerSestertii(1, 0);
         assert(gameState.getPlayerSestertii(0) == 0);

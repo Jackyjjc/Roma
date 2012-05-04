@@ -26,8 +26,6 @@ public class TurnAdvanceTest extends Test {
                                           UnsupportedOperationException,
                                           IllegalArgumentException {
 
-        out.println("Testing if the player advances");
-
         gameState.setWhoseTurn(0);
 
         for(int i = 0; i < NUM_TESTS; i++) {

@@ -6,11 +6,16 @@ import framework.interfaces.GameState;
 public class Tester {
 
     private static Test[] tests = {
+        new MoverEndTurnTest(),
+        new InitialisationBasicSestertiiTest(),
+        new InitialisationBasicVictoryPointTest(),
         new TurnAdvanceTest(),
         new GetMoneyTest(),
         new GetCardsTest(),
         new CardActivatorAesculapinumBasicTest(),
         new CardActivatorArchitectusBasicTest(),
+        new CardActivatorSenatorBasicTest(),
+        new CardActivatorSicariusBasicTest(),
     };
     
     public static void main(String[] args) {
@@ -20,6 +25,8 @@ public class Tester {
         for(int i = 0; i < tests.length; i++) {
             
             GameState state = ai.getInitialState();
+            
+            System.out.println(tests[i].getShortDescription());
             
             tests[i].run(state, ai.getMover(state));
         }
