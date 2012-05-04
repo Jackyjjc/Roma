@@ -12,8 +12,8 @@ public class Field implements IField {
     private static final int NUM_DISCS = 6;
     private IDisc[] discs;
     
-    public Field() {
-        initDiscs();
+    public Field(IPlayer player) {
+        initDiscs(player);
     }
     
     public List<AbstractCard> removeCardsOf(CardType type) {
@@ -51,23 +51,6 @@ public class Field implements IField {
         return count;
     }
     
-    private void initDiscs() {
-        
-        discs = new Disc[NUM_DISCS];
-        
-        for(int i = 0; i < discs.length; i++) {
-            discs[i] = new Disc();
-        }
-        
-        //set up relationships
-        for(int i = 0; i < discs.length - 1; i++) {
-            discs[i].setNext(discs[i + 1]);
-        }
-        
-        for(int i = discs.length - 1; i > 0; i--) {
-            discs[i].setPrev(discs[i - 1]);
-        }
-    }
 
     public Iterator<IDisc> iterator() {
         
@@ -82,6 +65,25 @@ public class Field implements IField {
 
     public int getNumDiscs() {
         return NUM_DISCS;
+    }
+    
+    private void initDiscs(IPlayer player) {
+        
+        discs = new Disc[NUM_DISCS];
+        
+        for(int i = 0; i < discs.length; i++) {
+            discs[i] = new Disc();
+            discs[i].setOwner(player);
+        }
+        
+        //set up relationships
+        for(int i = 0; i < discs.length - 1; i++) {
+            discs[i].setNext(discs[i + 1]);
+        }
+        
+        for(int i = discs.length - 1; i > 0; i--) {
+            discs[i].setPrev(discs[i - 1]);
+        }
     }
     
 }

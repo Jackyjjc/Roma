@@ -160,7 +160,13 @@ public class Game implements GameState, IGameDisplayState, ICardResources {
 
     public void setPlayerVictoryPoints(int playerNum, int points) {
 
-        getPlayer(playerNum).setVP(points);
+        IPlayer player = getPlayer(playerNum);
+        
+        if(player.getVP() >= points) {
+            player.transferVP(bank, player.getVP() - points);
+        } else {
+            bank.transferVP(player, points - player.getVP());
+        }
         
     }
 

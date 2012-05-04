@@ -30,7 +30,7 @@ class Player implements IPlayer {
         this.rs = new ResourceStorage(0, 0);
         this.hand = CardCollectionFactory.create(false, factory);
         this.hand.setOwner(this);
-        this.field = new Field();
+        this.field = new Field(this);
     }
 
     public int getId() {
