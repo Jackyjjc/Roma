@@ -5,12 +5,12 @@ import java.util.List;
 
 import model.ICardResources;
 import model.IDisc;
+import model.IDiscListener;
 import model.IField;
 import model.IGameIO;
-import model.IListener;
 import framework.cards.Card;
 
-class Turris extends AbstractCard implements ITurnCards, IListener {
+class Turris extends AbstractCard implements IDiscListener {
 
     private static final int COST = 6;
     private static final int DEFENCE = 6;
@@ -34,9 +34,13 @@ class Turris extends AbstractCard implements ITurnCards, IListener {
         
         super.lay(disc);
         
-        addEffects();
-        
         observeDiscs();
+        
+        IField discs = getOwner().getField();
+        
+        for(IDisc d : discs) {
+            addEffects(d.getCard());
+        }
         
         return true;
     }
@@ -50,28 +54,21 @@ class Turris extends AbstractCard implements ITurnCards, IListener {
         
         affectedCards.clear();
     }
-
-    public void turnChecking() {
-        addEffects();
+    
+    public void update(IDisc disc) {
+        
+        if(affectedCards.contains(disc.getCard())) {
+            affectedCards.remove(disc.getCard());
+        } else {
+            addEffects(disc.getCard());
+        }
     }
     
-    public void update() {
-        addEffects();
-    }
-    
-    private void addEffects() {
-        
-        IField discs = getOwner().getField();
-        AbstractCard card;
-        
-        for(IDisc disc : discs) {
+    private void addEffects(AbstractCard card) {
             
-            card = disc.getCard();
-            
-            if(card != null && !affectedCards.contains(card) && card != this) {
-                  card.setDefence(card.getDefence() + 1);
-                  affectedCards.add(card);
-            }
+        if (card != null && !affectedCards.contains(card) && card != this) {
+            card.setDefence(card.getDefence() + 1);
+            affectedCards.add(card);
         }
     }
     
@@ -80,7 +77,7 @@ class Turris extends AbstractCard implements ITurnCards, IListener {
         IField discs = getOwner().getField();
         
         for(IDisc disc : discs) {
-            disc.addLayCardListener(this);
+            disc.addDiscListener(this);
         }
     }
 }

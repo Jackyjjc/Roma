@@ -29,9 +29,9 @@ public interface IDisc {
     
     public AbstractCard removeCard();
     
-    public void addLayCardListener(IListener listener);
+    public void addDiscListener(IDiscListener listener);
     
-    public void removeLayCardListener(IListener listener);
+    public void removeDiscListener(IDiscListener listener);
     
     public void setOwner(IPlayer player);
     

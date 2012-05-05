@@ -6,6 +6,7 @@ import java.util.List;
 import model.Die;
 import model.ICardResources;
 import model.IDisc;
+import model.IDiscListener;
 import model.IGameIO;
 import model.IListener;
 import model.IPlayer;
@@ -15,7 +16,7 @@ import model.card.state.ForumNotifyState;
 import model.card.state.UseDieGetVpState;
 import framework.cards.Card;
 
-class Forum extends AbstractCard implements IDieChecker, IListener {
+class Forum extends AbstractCard implements IDieChecker, IDiscListener {
 
     private static final int COST = 5;
     private static final int DEFENCE = 5;
@@ -36,7 +37,7 @@ class Forum extends AbstractCard implements IDieChecker, IListener {
         
         boolean succeed = super.lay(disc);
         
-        disc.addLayCardListener(this);
+        disc.addDiscListener(this);
 
         return succeed;
     }
@@ -74,7 +75,7 @@ class Forum extends AbstractCard implements IDieChecker, IListener {
         return isValid;
     }
 
-    public void update() {
+    public void update(IDisc disc) {
         addCards();
     }
     

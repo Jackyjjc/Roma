@@ -41,7 +41,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 	   
 		this.bank = new ResourceStorage(TOTAL_MONEY, TOTAL_VP);
 		
-        this.cardFactory = new CardFactory(this);
+        this.cardFactory = new CardFactory(this, this);
 		
 		this.deck = CardCollectionFactory.create(DECK, cardFactory);
 		this.discard = CardCollectionFactory.create(!DECK, cardFactory);

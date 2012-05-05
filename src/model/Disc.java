@@ -11,7 +11,7 @@ public class Disc implements IDisc {
     private boolean isBlocked;
     private AbstractCard card;
     
-    private List<IListener> layCardListeners;
+    private List<IDiscListener> discListeners;
     
     private IPlayer owner;
     
@@ -20,7 +20,7 @@ public class Disc implements IDisc {
     
     public Disc () {
         isBlocked = false;
-        layCardListeners = new ArrayList<IListener>();
+        discListeners = new ArrayList<IDiscListener>();
     }
     
     public boolean isDiscEmpty() {
@@ -54,6 +54,9 @@ public class Disc implements IDisc {
         AbstractCard returnCard = getCard();
         
         if(!isDiscEmpty()) {
+            
+            notifyAllListeners();
+            
             card = null;
         }
         
@@ -88,12 +91,12 @@ public class Disc implements IDisc {
         isBlocked = false;
     }
 
-    public void addLayCardListener(IListener listener) {
-        layCardListeners.add(listener);
+    public void addDiscListener(IDiscListener listener) {
+        discListeners.add(listener);
     }
     
-    public void removeLayCardListener(IListener listener) {
-        layCardListeners.remove(listener);
+    public void removeDiscListener(IDiscListener listener) {
+        discListeners.remove(listener);
     }
     
     public void setOwner(IPlayer player) {
@@ -121,8 +124,8 @@ public class Disc implements IDisc {
     }
     
     private void notifyAllListeners() {
-        for(IListener l : layCardListeners) {
-            l.update();
+        for(IDiscListener l : discListeners) {
+            l.update(this);
         }
     }
 }
