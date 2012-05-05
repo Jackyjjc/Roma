@@ -7,10 +7,9 @@ import model.ICardResources;
 import model.IDisc;
 import model.IField;
 import model.Notifier;
-import model.TurnCards;
 import framework.cards.Card;
 
-class Turris extends AbstractCard implements TurnCards {
+class Turris extends AbstractCard implements ITurnCards {
 
     private static final int COST = 6;
     private static final int DEFENCE = 6;
@@ -48,7 +47,7 @@ class Turris extends AbstractCard implements TurnCards {
         affectedCards.clear();
     }
 
-    public void magicMethod() {
+    public void TurnChecker() {
         
         IField discs = getOwner().getField();
         AbstractCard card;

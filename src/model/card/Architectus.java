@@ -25,8 +25,8 @@ class Architectus extends AbstractCard {
         
         buildingCards = getOwner().getHand().getCardsOf(CardType.BUILDING);
         
-        SetCardCostFreeState setCardFree = new SetCardCostFreeState(buildingCards);
-        SetCardCostDefaultState setCardDefault = new SetCardCostDefaultState(buildingCards);
+        SetCardCostFreeState setCardFree = new SetCardCostFreeState(this, buildingCards);
+        SetCardCostDefaultState setCardDefault = new SetCardCostDefaultState(this, buildingCards);
         
         setCardFree.setNextState(setCardDefault);
         setCardDefault.setNextState(null);

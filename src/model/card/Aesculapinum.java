@@ -19,7 +19,8 @@ class Aesculapinum extends AbstractCard implements ICardChecker {
     public void activate() {
         
         //set up the states this card would go through
-        GetCardFromPileState getCardState = new GetCardFromPileState(this, this);
+        GetCardFromPileState getCardState = new GetCardFromPileState(this, this, 
+                                                  getCardResources().getDiscardStorage());
         getCardState.setNextState(null);
         
         //run the initialState

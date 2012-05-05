@@ -1,21 +1,21 @@
 package model.card;
 
 import model.ICardResources;
+import model.IGameIO;
 import model.IPlayer;
 import model.IResourceStorage;
-import model.Notifier;
+import model.card.state.TransferVpState;
 import framework.cards.Card;
-import framework.interfaces.activators.LegatActivator;
 
-class Legat extends AbstractCard implements LegatActivator {
+class Legat extends AbstractCard {
 
     private static final int COST = 5;
     private static final int DEFENCE = 2;
     
-    Legat(ICardResources cardResources, Notifier notifier) {
+    Legat(ICardResources cardResources, IGameIO gameIO) {
         
         super(Card.LEGAT, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
     }
 
     public void activate() {
@@ -25,13 +25,7 @@ class Legat extends AbstractCard implements LegatActivator {
         IPlayer opponent = owner.getOpponent();
         int amount = opponent.getField().countUnoccupiedDiscs();
 
-        Action.attainVP(bank, owner, amount);
-
-    }
-
-    public void complete() {
-        // TODO Auto-generated method stub
-        
+        new TransferVpState(this, bank, owner, amount).run();
     }
 
 }

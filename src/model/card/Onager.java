@@ -1,29 +1,31 @@
 package model.card;
 
 import model.ICardResources;
-import model.IPlayer;
-import model.Notifier;
+import model.IGameIO;
+import model.card.state.AttackSelectedTargetState;
 import framework.cards.Card;
-import framework.interfaces.activators.OnagerActivator;
 
-class Onager extends AbstractCard implements OnagerActivator {
+class Onager extends AbstractCard implements ICardChecker {
 
     private static final int COST = 5;
     private static final int DEFENCE = 4;
     
     AbstractCard target;
     
-    Onager(ICardResources cardResources, Notifier notifier) {
+    Onager(ICardResources cardResources, IGameIO gameIO) {
         super(Card.ONAGER, CardType.BUILDING,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
     }
     
     public void activate() {
-
+        AttackSelectedTargetState attack = new AttackSelectedTargetState(this, this);
+        attack.setNextState(null);
+        
+        setState(attack);
     }
 
-    public boolean isValidTarget(AbstractCard c) {
+    public boolean isValidCard(AbstractCard c) {
         boolean isValid = false;
         
         if(c.getOwner() != null && c.getOwner() != this.getOwner()
@@ -32,22 +34,6 @@ class Onager extends AbstractCard implements OnagerActivator {
         }
         
         return isValid;
-    }
-
-    public void chooseDiceDisc(int diceDisc) {
-        
-        IPlayer opponent = getOwner().getOpponent();
-        
-        target = opponent.getField().getCard(diceDisc);
-    }
-
-    public void giveAttackDieRoll(int roll) {
-        Action.attack(target, roll);
-    }
-
-    public void complete() {
-        // TODO Auto-generated method stub
-        
     }
     
 }

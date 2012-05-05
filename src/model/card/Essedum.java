@@ -7,11 +7,10 @@ import model.ICardResources;
 import model.IDisc;
 import model.IField;
 import model.Notifier;
-import model.TurnCards;
 import framework.cards.Card;
 import framework.interfaces.activators.EssedumActivator;
 
-class Essedum extends AbstractCard implements TurnCards, EssedumActivator {
+class Essedum extends AbstractCard implements ITurnCards, EssedumActivator {
 
     private static final int COST = 6;
     private static final int DEFENCE = 3;

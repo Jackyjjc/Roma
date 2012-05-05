@@ -1,20 +1,20 @@
 package model.card;
 
 import model.ICardResources;
+import model.IGameIO;
 import model.IPlayer;
-import model.Notifier;
+import model.card.state.TransferVpState;
 import framework.cards.Card;
-import framework.interfaces.activators.TribunusPlebisActivator;
 
-class TribunusPlebis extends AbstractCard implements TribunusPlebisActivator {
+class TribunusPlebis extends AbstractCard {
 
     private static final int COST = 5;
     private static final int DEFENCE = 5;
     private static final int AMOUNT = 1;
     
-    TribunusPlebis(ICardResources cardResources, Notifier notifier) {
+    TribunusPlebis(ICardResources cardResources, IGameIO gameIO) {
         super(Card.TRIBUNUSPLEBIS, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
     }
 
     public void activate() {
@@ -22,26 +22,10 @@ class TribunusPlebis extends AbstractCard implements TribunusPlebisActivator {
         IPlayer owner = this.getOwner();
         IPlayer opponent = owner.getOpponent();
         
-        Action.attainVP(opponent, owner, AMOUNT);
-
+        TransferVpState transfer = new TransferVpState(this, opponent, owner, AMOUNT);
+        transfer.setNextState(null);
+        
+        setState(transfer);
     }
-    
-    public boolean isValid() {
-        
-        boolean isValid = false;
-        
-        if (this.getOwner().getOpponent().getVP() >= AMOUNT) {
-            isValid = true;
-        }
-        
-        return isValid;
-        
-    }
-
-    public void complete() {
-        // TODO Auto-generated method stub
-        
-    }
-
 
 }

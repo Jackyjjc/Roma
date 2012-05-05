@@ -4,6 +4,7 @@ import model.ICardResources;
 import model.IGameIO;
 import model.IListener;
 import model.IResourceStorage;
+import model.card.state.TransferVpState;
 import framework.cards.Card;
 
 class Basilica extends AbstractCard implements IListener {
@@ -26,7 +27,7 @@ class Basilica extends AbstractCard implements IListener {
         
         IResourceStorage bank = getCardResources().getBank();
         
-        Action.attainVP(bank, getOwner(), ADDTIONAL_VP);
+        new TransferVpState(this, bank, getOwner(), ADDTIONAL_VP).run();
     }
     
 }

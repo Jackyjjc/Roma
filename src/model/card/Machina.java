@@ -3,35 +3,36 @@ package model.card;
 import java.util.List;
 
 import model.ICardResources;
-import model.IDisc;
-import model.IField;
-import model.Notifier;
+import model.IGameIO;
+import model.card.state.LayCardState;
+import model.card.state.SetCardCostFreeState;
 import framework.cards.Card;
-import framework.interfaces.activators.MachinaActivator;
 
-class Machina extends AbstractCard implements MachinaActivator {
+class Machina extends AbstractCard implements ICardChecker {
 
     private static final int COST = 4;
     private static final int DEFENCE = 4;
     
     private List<AbstractCard> buildingCards;
     
-    Machina(ICardResources cardResources, Notifier notifier) {
+    Machina(ICardResources cardResources, IGameIO gameIO) {
         
         super(Card.MACHINA, CardType.BUILDING,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
     }
 
-
     public void activate() {
         
-        IField discs = getOwner().getField();
-        List<AbstractCard> buildingCards = discs.removeCardsOf(CardType.BUILDING);
+        buildingCards =  getOwner().getField().removeCardsOf(CardType.BUILDING);
 
-        for(AbstractCard card : buildingCards) {
-            card.setCost(0);
-        }
+        SetCardCostFreeState setCardFree = new SetCardCostFreeState(this, buildingCards);
+        LayCardState layCard = new LayCardState(this, buildingCards, this);
+        
+        setCardFree.setNextState(layCard);
+        layCard.setNextState(null);
+        
+        setState(setCardFree);
     }
     
     public boolean isValidCard(AbstractCard c) {
@@ -45,31 +46,4 @@ class Machina extends AbstractCard implements MachinaActivator {
         return isValid;
     }
 
-    public void placeCard(Card name, int diceDisc) {
-        
-        AbstractCard card = findCard(name);
-        IDisc disc = getOwner().getField().getDisc(diceDisc);
-        
-        card.lay(disc);
-        
-    }
-
-    private AbstractCard findCard(Card name) {
-        
-        AbstractCard c = null;
-        
-        for(AbstractCard temp : buildingCards) {
-            if(temp.getName() == name) {
-                c = temp;
-            }
-        }
-        
-        return c;
-    }
-
-    public void complete() {
-        for(AbstractCard card : buildingCards) {
-            card.setCost(card.getDefaultCost());
-        }
-    }
 }

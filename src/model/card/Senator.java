@@ -3,20 +3,21 @@ package model.card;
 import java.util.List;
 
 import model.ICardResources;
-import model.Notifier;
+import model.IGameIO;
+import model.card.state.SetCardCostDefaultState;
+import model.card.state.SetCardCostFreeState;
 import framework.cards.Card;
-import framework.interfaces.activators.SenatorActivator;
 
-class Senator extends AbstractCard implements SenatorActivator {
+class Senator extends AbstractCard{
 
     private static final int COST = 3;
     private static final int DEFENCE = 3;
     
     private List<AbstractCard> charCards;
     
-    Senator(ICardResources cardResources, Notifier notifier) {
+    Senator(ICardResources cardResources, IGameIO gameIO) {
         super(Card.SENATOR, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
     }
 
@@ -24,17 +25,13 @@ class Senator extends AbstractCard implements SenatorActivator {
         
         charCards = getOwner().getHand().getCardsOf(CardType.CHARACTER);
         
-        for(AbstractCard card : charCards) {
-            card.setCost(0);
-        }
+        SetCardCostFreeState setCardFree = new SetCardCostFreeState(this, charCards);
+        SetCardCostDefaultState setCardDefault = new SetCardCostDefaultState(this, charCards);
         
-    }
-    
-    public void complete() {
-
-        for(AbstractCard card : charCards) {
-            card.setCost(card.getDefaultCost());
-        }
+        setCardFree.setNextState(setCardDefault);
+        setCardDefault.setNextState(null);
+       
+        setState(setCardFree);
         
     }
 

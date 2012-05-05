@@ -1,27 +1,29 @@
 package model.card;
 
 import model.ICardResources;
-import model.ICardStorage;
-import model.Notifier;
+import model.IGameIO;
+import model.card.state.SendCardToHandState;
 import framework.cards.Card;
-import framework.interfaces.activators.GladiatorActivator;
 
-class Gladiator extends AbstractCard implements GladiatorActivator {
+class Gladiator extends AbstractCard implements ICardChecker {
 
     private static final int COST = 6;
     private static final int DEFENCE = 5;
     
-    Gladiator(ICardResources cardResources, Notifier notifier) {
+    Gladiator(ICardResources cardResources, IGameIO gameIO) {
         super(Card.GLADIATOR, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
     }
 
     public void activate() {
+        SendCardToHandState sendCard = new SendCardToHandState(this, this);
+        sendCard.setNextState(null);
         
+        setState(sendCard);
     }
     
-    public boolean isValidTarget(AbstractCard c) {
+    public boolean isValidCard(AbstractCard c) {
         boolean isValid = false;
         
         if(c.getOwner() != null && c.getOwner() != this.getOwner()
@@ -30,21 +32,5 @@ class Gladiator extends AbstractCard implements GladiatorActivator {
         }
         
         return isValid;
-    }
-
-    public void chooseDiceDisc(int diceDisc) {
-        
-        ICardStorage opponentHand;
-        AbstractCard target = getOwner().getField().getCard(diceDisc);
-        
-        target.getDisc().removeCard();
-        
-        opponentHand = target.getOwner().getHand();
-        opponentHand.pushCard(target);
-    }
-
-    public void complete() {
-        // TODO Auto-generated method stub
-        
     }
 }

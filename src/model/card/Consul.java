@@ -1,42 +1,40 @@
 package model.card;
 
-import model.DiceManager;
 import model.Die;
 import model.ICardResources;
-import model.Notifier;
+import model.IGameIO;
+import model.card.state.SetDieState;
 import framework.cards.Card;
-import framework.interfaces.activators.ConsulActivator;
 
-class Consul extends AbstractCard implements ConsulActivator {
+class Consul extends AbstractCard implements IDieChecker {
     
     private static final int COST = 3;
     private static final int DEFENCE = 3;
     
-    private Die die;
-    
-    Consul(ICardResources cardResources, Notifier notifier) {
+    Consul(ICardResources cardResources, IGameIO gameIO) {
         super(Card.CONSUL, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
     }
 
     public void activate() {
         
-    }
-
-    public void complete() {
-        //nothing to do
-    }
-
-    public void chooseConsulChangeAmount(int amount) {
-        die.setValue(die.getValue() + amount);
-    }
-
-    public void chooseWhichDiceChanges(int originalRoll) {
+        SetDieState setDie = new SetDieState(this, this);
+        setDie.setNextState(null);
         
-        DiceManager diceManager = getCardResources().getDiceManager();
-        die = diceManager.getActionDie(originalRoll);
+        setState(setDie);
         
+    }
+
+    public boolean isValidDie(Die die) {
+        
+        boolean isValid = false;
+        
+        if(die != null && !die.isUsed()) {
+            isValid = true;
+        }
+        
+        return isValid;
     }
     
 }

@@ -25,7 +25,7 @@ class Consiliarius extends AbstractCard implements ICardChecker{
 
         charCards = getOwner().getField().removeCardsOf(CardType.CHARACTER);
         
-        SetCardCostFreeState setCardFree = new SetCardCostFreeState(charCards);
+        SetCardCostFreeState setCardFree = new SetCardCostFreeState(this, charCards);
         LayCardState layCard = new LayCardState(this, charCards, this);
         
         setCardFree.setNextState(layCard);

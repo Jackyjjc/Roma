@@ -2,19 +2,19 @@ package model.card;
 
 import model.ICardResources;
 import model.IField;
+import model.IGameIO;
 import model.IPlayer;
-import model.Notifier;
+import model.card.state.TransferVpState;
 import framework.cards.Card;
-import framework.interfaces.activators.MercatusActivator;
 
-class Mercatus extends AbstractCard implements MercatusActivator {
+class Mercatus extends AbstractCard {
 
     private static final int COST = 6;
     private static final int DEFENCE = 3;
     
-    Mercatus(ICardResources cardResources, Notifier notifier) {
+    Mercatus(ICardResources cardResources, IGameIO gameIO) {
         super(Card.MERCATUS, CardType.BUILDING,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
     }
 
     public void activate() {
@@ -32,13 +32,7 @@ class Mercatus extends AbstractCard implements MercatusActivator {
             }
         }
         
-        Action.attainVP(opponent, this.getOwner(), numOfForum);
-
-    }
-
-    public void complete() {
-        // TODO Auto-generated method stub
-        
+        new TransferVpState(this, opponent, this.getOwner(), numOfForum).run();
     }
     
 }

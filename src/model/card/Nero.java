@@ -1,27 +1,30 @@
 package model.card;
 
 import model.ICardResources;
-import model.IPlayer;
-import model.Notifier;
+import model.IGameIO;
+import model.card.state.AssassinState;
 import framework.cards.Card;
-import framework.interfaces.activators.NeroActivator;
 
-class Nero extends AbstractCard implements NeroActivator {
+class Nero extends AbstractCard implements ICardChecker {
     
     private static final int COST = 8;
     private static final int DEFENCE = 9;
     
-    Nero(ICardResources cardResources, Notifier notifier) {
+    Nero(ICardResources cardResources, IGameIO gameIO) {
         super(Card.NERO, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
 
     }
 
     public void activate() {
         
+        AssassinState destroy = new AssassinState(this, this);
+        destroy.setNextState(null);
+        
+        setState(destroy);
     }
     
-    public boolean isValidTarget(AbstractCard c) {
+    public boolean isValidCard(AbstractCard c) {
         boolean isValid = false;
         
         if(c.getOwner() != null && c.getOwner() != this.getOwner()
@@ -30,19 +33,5 @@ class Nero extends AbstractCard implements NeroActivator {
         }
         
         return isValid;
-    }
-
-    public void chooseDiceDisc(int diceDisc) {
-        
-        IPlayer opponent = getOwner().getOpponent();
-        
-        AbstractCard target = opponent.getField().getCard(diceDisc);
-
-        target.disCard();
-        this.disCard();
-    }
-
-    public void complete() {
-        //nothing to do here
     }
 }

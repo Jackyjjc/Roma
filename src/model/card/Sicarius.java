@@ -1,28 +1,30 @@
 package model.card;
 
 import model.ICardResources;
-import model.IPlayer;
-import model.Notifier;
+import model.IGameIO;
+import model.card.state.AssassinState;
 import framework.cards.Card;
-import framework.interfaces.activators.SicariusActivator;
 
-class Sicarius extends AbstractCard implements SicariusActivator {
+class Sicarius extends AbstractCard implements ICardChecker {
 
     private static final int COST = 9;
     private static final int DEFENCE = 2;
     
-    Sicarius(ICardResources cardResources, Notifier notifier) {
+    Sicarius(ICardResources cardResources, IGameIO gameIO) {
         super(Card.SICARIUS, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
     }
 
     public void activate() {
         
+        AssassinState assassin = new AssassinState(this, this);
+        assassin.setNextState(null);
+        
+        setState(assassin);
     }
-
     
-    public boolean isValidTarget(AbstractCard c) {
+    public boolean isValidCard(AbstractCard c) {
         
         boolean isValid = false;
         
@@ -34,18 +36,4 @@ class Sicarius extends AbstractCard implements SicariusActivator {
         return isValid;
     }
 
-    public void chooseDiceDisc(int diceDisc) {
-        
-        IPlayer opponent = getOwner().getOpponent();
-        
-        AbstractCard target = opponent.getField().getCard(diceDisc - 1);
-
-        target.disCard();
-        
-        this.disCard();
-    }
-    
-    public void complete() {
-        //nothing to do here
-    }
 }

@@ -1,41 +1,39 @@
 package model.card;
 
 import model.ICardResources;
-import model.ICardStorage;
-import model.Notifier;
+import model.IGameIO;
+import model.card.state.GetCardFromPileState;
 import framework.cards.Card;
-import framework.interfaces.activators.HaruspexActivator;
 
-
-class Haruspex extends AbstractCard implements HaruspexActivator {
+class Haruspex extends AbstractCard implements ICardChecker {
 
     private static final int COST = 4;
     private static final int DEFENCE = 3;
     
-    Haruspex(ICardResources cardResources, Notifier notifier) {
+    Haruspex(ICardResources cardResources, IGameIO gameIO) {
         super(Card.HARUSPEX, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
     }
 
     public void activate() {
         
+        GetCardFromPileState getCard = new GetCardFromPileState(this, this, 
+                                             getCardResources().getDeckStorage());
+        getCard.setNextState(null);
+        
+        setState(getCard);
     }
 
-    public void chooseCardFromPile(int indexOfCard) {
-
-        ICardStorage deck = getCardResources().getDeckStorage();
-        AbstractCard card = deck.getCard(indexOfCard);
-        ICardStorage hand = this.getOwner().getHand();
+    public boolean isValidCard(AbstractCard card) {
         
-        deck.removeCard(card);
-        deck.shuffle();
-        hand.pushCard(card);
+        boolean isValid = false;
         
-    }
-
-    public void complete() {
+        if(card != null) {
+            isValid = true;
+        }
         
+        return isValid;
     }
     
 }

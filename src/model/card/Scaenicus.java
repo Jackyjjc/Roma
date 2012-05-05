@@ -1,30 +1,32 @@
 package model.card;
 
 import model.ICardResources;
-import model.Notifier;
+import model.IGameIO;
+import model.card.state.MimicState;
 import framework.cards.Card;
-import framework.interfaces.activators.CardActivator;
-import framework.interfaces.activators.ScaenicusActivator;
 
-class Scaenicus extends AbstractCard implements ScaenicusActivator {
+class Scaenicus extends AbstractCard implements ICardChecker{
 
     private static final int COST = 8;
     private static final int DEFENCE = 3;
     
     private CardFactory factory;
     
-    Scaenicus(ICardResources cardResources, CardFactory factory, Notifier notifier) {
+    Scaenicus(ICardResources cardResources, IGameIO gameIO, CardFactory factory) {
         super(Card.SCAENICUS, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
         this.factory = factory;
     }
 
     public void activate() {
         
+        MimicState mimic = new MimicState(this, this, factory);
+        
+        setState(mimic);
     }
     
-    public boolean isValidTarget(AbstractCard c) {
+    public boolean isValidCard(AbstractCard c) {
         
         boolean isValid = false;
         
@@ -34,23 +36,5 @@ class Scaenicus extends AbstractCard implements ScaenicusActivator {
         }
         
         return isValid;
-    }
-
-    public void complete() {
-        // TODO Auto-generated method stub
-        
-    }
-
-    public CardActivator getScaenicusMimicTarget(int diceDisc) {
-
-        AbstractCard target = getOwner().getField().getCard(diceDisc);
-        
-        AbstractCard clone = factory.create(target.getName());;
-        
-        clone.setDisc(this.getDisc());
-        clone.activate();
-        
-        return (CardActivator) clone;
-        
     }
 }

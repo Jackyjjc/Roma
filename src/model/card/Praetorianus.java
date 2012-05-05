@@ -5,49 +5,37 @@ import java.util.List;
 
 import model.ICardResources;
 import model.IDisc;
-import model.IPlayer;
-import model.Notifier;
-import model.TurnCards;
+import model.IGameIO;
+import model.card.state.BlockDiscState;
 import framework.cards.Card;
-import framework.interfaces.activators.PraetorianusActivator;
 
-class Praetorianus extends AbstractCard implements TurnCards, PraetorianusActivator {
+class Praetorianus extends AbstractCard implements ITurnCards{
 
     private static final int COST = 4;
     private static final int DEFENCE = 4;
     
     List<IDisc> affectedDiscs;
     
-    Praetorianus(ICardResources cardResources, Notifier notifier) {
+    Praetorianus(ICardResources cardResources, IGameIO gameIO) {
         super(Card.PRAETORIANUS, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
         this.affectedDiscs = new ArrayList<IDisc>();
     }
 
     public void activate() {
         
+        BlockDiscState block = new BlockDiscState(this, affectedDiscs);
+        block.setNextState(null);
+        
+        setState(block);
     }
 
-    public void magicMethod() {
+    public void turnChecking() {
         for(IDisc disc : affectedDiscs) {
             disc.unBlock();
             affectedDiscs.remove(disc);
         }
-    }
-
-    public void chooseDiceDisc(int diceDisc) {
-        
-        IPlayer opponent = getOwner().getOpponent();
-        
-        IDisc disc = opponent.getField().getDisc(diceDisc);
-        
-        disc.block();
-        affectedDiscs.add(disc);
-    }
-
-    public void complete() {
-        //nothing to do
     }
     
 }
