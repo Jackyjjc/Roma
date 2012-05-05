@@ -92,6 +92,10 @@ public class Disc implements IDisc {
         layCardListeners.add(listener);
     }
     
+    public void removeLayCardListener(IListener listener) {
+        layCardListeners.remove(listener);
+    }
+    
     public void setOwner(IPlayer player) {
         this.owner = player;
     }
