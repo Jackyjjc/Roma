@@ -1,8 +1,8 @@
 package model.card;
 
 import model.ICardResources;
+import model.IGameIO;
 import model.IPlayer;
-import model.Notifier;
 import framework.cards.Card;
 import framework.interfaces.activators.CenturioActivator;
 
@@ -13,10 +13,10 @@ class Centurio extends AbstractCard implements CenturioActivator {
     
     private int dieRoll;
     
-    Centurio (ICardResources cardResources, Notifier notifier) {
+    Centurio (ICardResources cardResources, IGameIO gameIO) {
         
         super(Card.CENTURIO, CardType.CHARACTER,
-                COST, DEFENCE, cardResources, notifier);
+                COST, DEFENCE, cardResources, gameIO);
         
     }
 

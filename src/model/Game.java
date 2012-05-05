@@ -9,7 +9,7 @@ import model.cardcollection.CardCollectionFactory;
 import framework.cards.Card;
 import framework.interfaces.GameState;
 
-public class Game implements GameState, IGameDisplayState, ICardResources {
+public class Game implements GameState, IGameDisplayState, ICardResources, IGameIO {
 	
     private static final int TOTAL_MONEY = Integer.MAX_VALUE;
     private static final int TOTAL_VP = 36;
@@ -22,13 +22,15 @@ public class Game implements GameState, IGameDisplayState, ICardResources {
     private ICardStorage deck;
     private ICardStorage discard;
     private DiceManager diceManager;
-    private Notifier notifier;
     private CardFactory cardFactory;
     
 	private IResourceStorage bank;
 	private IPlayer currentPlayer;
 	private int turnNum;
 	private int numPlayers;
+	
+	private InputHandler inputHandler;
+    private Notifier notifier;
 	
 	public Game (int numPlayers) {
 	    
@@ -108,6 +110,10 @@ public class Game implements GameState, IGameDisplayState, ICardResources {
         return notifier;
     }
 
+    public InputHandler getInputHandler() {
+        return inputHandler;
+    }
+    
     /* =========================================================================*
      * 
      *          ACCEPTANCE TESTS IMPLEMENTATION - AS COMMANDED BY CAESAR

@@ -3,20 +3,21 @@ package model.card;
 import java.util.List;
 
 import model.ICardResources;
-import model.Notifier;
+import model.IGameIO;
+import model.card.state.SetCardCostDefaultState;
+import model.card.state.SetCardCostFreeState;
 import framework.cards.Card;
-import framework.interfaces.activators.ArchitectusActivator;
 
-class Architectus extends AbstractCard implements ArchitectusActivator {
+class Architectus extends AbstractCard {
 
     private static final int COST = 3;
     private static final int DEFENCE = 4;
 
     private List<AbstractCard> buildingCards;
     
-    Architectus(ICardResources cardResources, Notifier notifier) {
+    Architectus(ICardResources cardResources, IGameIO gameIO) {
         super(Card.ARCHITECTUS, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
     }
 
@@ -24,15 +25,14 @@ class Architectus extends AbstractCard implements ArchitectusActivator {
         
         buildingCards = getOwner().getHand().getCardsOf(CardType.BUILDING);
         
-        for(AbstractCard card : buildingCards) {
-            card.setCost(0);
-        }
+        SetCardCostFreeState setCardFree = new SetCardCostFreeState(buildingCards);
+        SetCardCostDefaultState setCardDefault = new SetCardCostDefaultState(buildingCards);
+        
+        setCardFree.setNextState(setCardDefault);
+        setCardDefault.setNextState(null);
+       
+        setState(setCardFree);
 
     }
-
-    public void complete() {
-        for(AbstractCard card : buildingCards) {
-            card.setCost(card.getDefaultCost());
-        }
-    }  
+ 
 }

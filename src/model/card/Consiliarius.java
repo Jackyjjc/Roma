@@ -3,72 +3,45 @@ package model.card;
 import java.util.List;
 
 import model.ICardResources;
-import model.IDisc;
-import model.IField;
-import model.Notifier;
+import model.IGameIO;
+import model.card.state.LayCardState;
+import model.card.state.SetCardCostFreeState;
 import framework.cards.Card;
-import framework.interfaces.activators.ConsiliariusActivator;
 
-class Consiliarius extends AbstractCard implements ConsiliariusActivator {
+class Consiliarius extends AbstractCard implements ICardChecker{
 
     private static final int COST = 4;
     private static final int DEFENCE = 4;
     
     private List<AbstractCard> charCards;
     
-    Consiliarius(ICardResources cardResources, Notifier notifier) {
+    Consiliarius(ICardResources cardResources, IGameIO gameIO) {
         super(Card.CONSILIARUS, CardType.CHARACTER,
-               COST, DEFENCE, cardResources, notifier);
+               COST, DEFENCE, cardResources, gameIO);
 
     }
 
     public void activate() {
-      
-        IField discs = getOwner().getField();
-        charCards = discs.removeCardsOf(CardType.CHARACTER);
+
+        charCards = getOwner().getField().removeCardsOf(CardType.CHARACTER);
         
-        for(AbstractCard card : charCards) {
-            card.setCost(0);
-        }
+        SetCardCostFreeState setCardFree = new SetCardCostFreeState(charCards);
+        LayCardState layCard = new LayCardState(this, charCards, this);
         
+        setCardFree.setNextState(layCard);
+        layCard.setNextState(null);
+        
+        setState(setCardFree);
     }
     
     public boolean isValidCard(AbstractCard c) {
         
         boolean isValid = false;
         
-        if(c != null && c.getType() == CardType.CHARACTER) {
+        if(c != null && c.getType() == CardType.CHARACTER && charCards.contains(c)) {
             isValid = true;
         }
         
         return isValid;
-    }
-
-    private AbstractCard findCard(Card name) {
-        
-        AbstractCard c = null;
-        
-        for(AbstractCard temp : charCards) {
-            if(temp.getName() == name) {
-                c = temp;
-            }
-        }
-        
-        return c;
-    }
-    
-    public void placeCard(Card name, int diceDisc) {
-        
-        AbstractCard card = findCard(name);
-        IDisc disc = getOwner().getField().getDisc(diceDisc);
-        
-        card.lay(disc);
-    }
-
-    public void complete() {
-        for(AbstractCard card : charCards) {
-            card.setCost(card.getDefaultCost());
-        }
-    }
-    
+    }    
 }

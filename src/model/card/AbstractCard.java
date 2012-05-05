@@ -2,9 +2,10 @@ package model.card;
 
 import model.ICardResources;
 import model.IDisc;
+import model.IGameIO;
 import model.IPlayer;
 import model.IResourceStorage;
-import model.Notifier;
+import model.card.state.ICardState;
 import framework.cards.Card;
 
 public abstract class AbstractCard {
@@ -18,12 +19,13 @@ public abstract class AbstractCard {
     private int defence;
     private IPlayer owner;
     private IDisc disc;
-    private Notifier notifier;
     
+    private ICardState state;
     private ICardResources cardResources;
+    private IGameIO gameIO;
     
     public AbstractCard(Card name, CardType type, int cost, int defence,
-                        ICardResources cardResources, Notifier notifier) {
+                        ICardResources cardResources, IGameIO gameIO) {
         
         this.name = name;
         this.type = type;
@@ -31,7 +33,7 @@ public abstract class AbstractCard {
         this.cost = cost;
         this.defence = defence;
         this.owner = null;
-        this.notifier = notifier;
+        this.gameIO = gameIO;
         this.cardResources = cardResources;
     }
 
@@ -91,6 +93,14 @@ public abstract class AbstractCard {
         this.defence = defence;
     }
     
+    public void setState(ICardState state) {
+        this.state = state;
+    }
+    
+    public ICardState getState() {
+        return state;
+    }
+    
     public IPlayer getOwner() {
         return owner;
     }
@@ -111,8 +121,8 @@ public abstract class AbstractCard {
         return disc;
     }
     
-    public Notifier getNotifier() {
-        return notifier;
+    public IGameIO getGameIO() {
+        return gameIO;
     }
     
     public ICardResources getCardResources() {

@@ -1,27 +1,32 @@
 package model.card;
 
 import model.ICardResources;
-import model.ICardStorage;
-import model.Notifier;
+import model.IGameIO;
+import model.card.state.GetCardFromPileState;
 import framework.cards.Card;
-import framework.interfaces.activators.AesculapinumActivator;
 
-class Aesculapinum extends AbstractCard implements AesculapinumActivator {
+class Aesculapinum extends AbstractCard implements ICardChecker {
 
     private static final int COST = 5;
     private static final int DEFENCE = 2;
     
-    Aesculapinum(ICardResources cardResources, Notifier notifier) {
+    Aesculapinum(ICardResources cardResources, IGameIO gameIO) {
         super(Card.AESCULAPINUM, CardType.BUILDING,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
     }
 
     public void activate() {
-        //nothing to do
+        
+        //set up the states this card would go through
+        GetCardFromPileState getCardState = new GetCardFromPileState(this, this);
+        getCardState.setNextState(null);
+        
+        //run the initialState
+        setState(getCardState);
     }
         
-    private boolean isValidCard(AbstractCard c) {
+    public boolean isValidCard(AbstractCard c) {
         
         boolean isValid = false;
         
@@ -30,23 +35,5 @@ class Aesculapinum extends AbstractCard implements AesculapinumActivator {
         }
         
         return isValid;
-    }
-
-    public void chooseCardFromPile(int indexOfCard) {
-        
-        ICardStorage discard = getCardResources().getDiscardStorage();
-        AbstractCard card = discard.getCard(indexOfCard);
-        ICardStorage hand = this.getOwner().getHand();
-        
-        if (isValidCard(card)) {
-        
-            discard.removeCard(card);
-            hand.pushCard(card);
-            
-        }    
-    }
-
-    public void complete() {
-        //nothing to do here
     }
 }
