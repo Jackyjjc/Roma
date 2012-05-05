@@ -31,6 +31,8 @@ public interface IDisc {
     
     public void addLayCardListener(IListener listener);
     
+    public void removeLayCardListener(IListener listener);
+    
     public void setOwner(IPlayer player);
     
     public IPlayer getOwner();
