@@ -4,19 +4,20 @@ import java.util.List;
 
 import model.card.AbstractCard;
 
-public class SetCardCostState implements ICardState {
+public class SetCardCostState extends CardState implements ICardState {
 
     private List<AbstractCard> cards;
-    private AbstractCard owner;
-    private ICardState next;
     
-    public SetCardCostState(List<AbstractCard> cards) {
+    public SetCardCostState(AbstractCard owner, List<AbstractCard> cards) {
+        super(owner);
         this.cards = cards;
     }
     
     public boolean run() {
         
         //hook
+        
+        changeState();
         
         return true;
     }
@@ -25,15 +26,4 @@ public class SetCardCostState implements ICardState {
         return cards;
     }
     
-    public void setOwner(AbstractCard c) {
-        this.owner = c;
-    }
-
-    public void setNextState(ICardState state) {
-        this.next = state;
-    }
-
-    public ICardState getNextState() {
-        return next;
-    }
 }

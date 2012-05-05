@@ -6,8 +6,8 @@ import model.card.AbstractCard;
 
 public class SetCardCostDefaultState extends SetCardCostState implements ICardState {
     
-    public SetCardCostDefaultState(List<AbstractCard> cards) {
-        super(cards);
+    public SetCardCostDefaultState(AbstractCard owner, List<AbstractCard> cards) {
+        super(owner, cards);
     }
     
     @Override
@@ -19,7 +19,7 @@ public class SetCardCostDefaultState extends SetCardCostState implements ICardSt
             card.setCost(0);
         }
         
-        setNextState(super.getNextState());
+        changeState();
         
         return true;
     }
