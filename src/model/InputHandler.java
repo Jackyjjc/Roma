@@ -11,4 +11,20 @@ public class InputHandler {
     public IDisc getDiscInput() {
         
     }
+    
+    public Die getDieInput() {
+        
+    }
+    
+    public int getIntInput() {
+        
+    }
+    
+    public int getBattleDieInput() {
+        
+    }
+    
+    public boolean getBooleanInput() {
+        
+    }
 }

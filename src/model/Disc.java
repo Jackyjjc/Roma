@@ -1,14 +1,17 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.card.AbstractCard;
-
-
 
 public class Disc implements IDisc {
 
     private int index;
     private boolean isBlocked;
     private AbstractCard card;
+    
+    private List<IListener> layCardListeners;
     
     private IPlayer owner;
     
@@ -17,6 +20,7 @@ public class Disc implements IDisc {
     
     public Disc () {
         isBlocked = false;
+        layCardListeners = new ArrayList<IListener>();
     }
     
     public boolean isDiscEmpty() {
@@ -38,6 +42,8 @@ public class Disc implements IDisc {
             c.setOwner(getOwner());
             
             succeed = true;
+            
+            notifyAllListeners();
         }
         
         return succeed;
@@ -82,6 +88,10 @@ public class Disc implements IDisc {
         isBlocked = false;
     }
 
+    public void addLayCardListener(IListener listener) {
+        layCardListeners.add(listener);
+    }
+    
     public void setOwner(IPlayer player) {
         this.owner = player;
     }
@@ -106,4 +116,9 @@ public class Disc implements IDisc {
         this.next = next;
     }
     
+    private void notifyAllListeners() {
+        for(IListener l : layCardListeners) {
+            l.update();
+        }
+    }
 }
