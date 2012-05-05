@@ -3,15 +3,19 @@ package model.card;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.DiceManager;
+import model.Die;
 import model.ICardResources;
+import model.IDisc;
 import model.IGameIO;
 import model.IListener;
+import model.IPlayer;
 import model.IResourceStorage;
+import model.card.state.DecisionState;
+import model.card.state.ForumNotifyState;
+import model.card.state.UseDieGetVpState;
 import framework.cards.Card;
-import framework.interfaces.activators.ForumActivator;
 
-class Forum extends AbstractCard implements ForumActivator {
+class Forum extends AbstractCard implements IDieChecker, IListener {
 
     private static final int COST = 5;
     private static final int DEFENCE = 5;
@@ -26,41 +30,76 @@ class Forum extends AbstractCard implements ForumActivator {
         this.basilicas = new ArrayList<IListener>();
         this.templums = new ArrayList<IListener>();
     }
+    
+    @Override
+    public boolean lay(IDisc disc) {
+        
+        boolean succeed = super.lay(disc);
+        
+        disc.addLayCardListener(this);
+
+        return succeed;
+    }
 
     public void activate() {
         
-    }
-    
-    private void notifyBasilicas() {
-        for(IListener listener : basilicas) {
-            listener.update();
-        }
-    }
-    
-    private void notifyTemplums() {
-        for(IListener listener : templums) {
-            listener.update();
-        }
-    }
-
-    public void chooseActionDice(int actionDiceValue) {
-        
-        DiceManager diceManager = getCardResources().getDiceManager();
         IResourceStorage bank = getCardResources().getBank();
+        IPlayer player = getOwner();
         
-        diceManager.getActionDie(actionDiceValue).use();
-        dieRoll = actionDiceValue;
-        bank.transferVP(getOwner(), actionDiceValue);
-        notifyBasilicas();
-    }
-
-    public void chooseActivateTemplum(boolean activate) {
-        if(activate) {
-            notifyTemplums();
-        }
+        UseDieGetVpState getVP = new UseDieGetVpState(this, this, bank, player);
+        
+        ForumNotifyState trueState = new ForumNotifyState(this, basilicas);
+        ForumNotifyState notifyTemplums = new ForumNotifyState(this, templums);
+        trueState.setNextState(notifyTemplums);
+        notifyTemplums.setNextState(null);
+        
+        ForumNotifyState falseState = new ForumNotifyState(this, basilicas);
+        falseState.setNextState(null);
+        
+        DecisionState decision = new DecisionState(this, trueState, falseState);
+        getVP.setNextState(decision);
+        
+        setState(getVP);
     }
     
-    public void complete() {
-        //nothing to do here
+
+    public boolean isValidDie(Die die) {
+        
+        boolean isValid = false;
+        
+        if(die != null && !die.isUsed()) {
+            isValid = true;
+        }
+        
+        return isValid;
+    }
+
+    public void update() {
+        addCards();
+    }
+    
+    private void addCards() {
+        
+        IDisc prev = getDisc().getPrev();
+        IDisc next = getDisc().getNext();
+        
+        checkCards(prev);
+        checkCards(next);
+    }
+    
+    private void checkCards(IDisc disc) {
+        
+        if(disc != null) {
+            if(disc.getCard() != null) {
+                if(disc.getCard() instanceof Basilica 
+                     && !basilicas.contains(disc.getCard())) {
+                    basilicas.add((IListener)disc.getCard());
+                }
+                if(disc.getCard() instanceof Templum
+                     && !templums.contains(disc.getCard())) {
+                    templums.add((IListener)disc.getCard());
+                }
+            }
+        }  
     }
 }

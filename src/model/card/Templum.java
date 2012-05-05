@@ -2,36 +2,45 @@ package model.card;
 
 import model.Die;
 import model.ICardResources;
+import model.IGameIO;
+import model.IListener;
+import model.IPlayer;
 import model.IResourceStorage;
-import model.Notifier;
+import model.card.state.UseDieGetVpState;
 import framework.cards.Card;
-import framework.interfaces.activators.TemplumActivator;
 
-class Templum extends AbstractCard implements IForumListener, TemplumActivator {
+class Templum extends AbstractCard implements IListener, IDieChecker {
 
     private static final int COST = 2;
     private static final int DEFENCE = 2;
     
-    Templum(ICardResources cardResources, Notifier notifier) {
+    Templum(ICardResources cardResources, IGameIO gameIO) {
         
         super(Card.TEMPLUM, CardType.BUILDING,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
     }
 
     public void activate() {
-        
-    }
-    
-    public void complete() {
-        // TODO Auto-generated method stub
-        
+        //itself can't be activated
     }
 
-    public void notifyForumActivate(Die actiondie) {
+    public void update() {
         
         IResourceStorage bank = getCardResources().getBank();
+        IPlayer player = getOwner();
         
-        Action.attainVP(bank, this.getOwner(), actiondie.getValue());
+        new UseDieGetVpState(this, this, bank, player).run();
+    }
+
+    public boolean isValidDie(Die die) {
+
+        boolean isValid = false;
+        
+        if(die != null && !die.isUsed()) {
+            isValid = true;
+        }
+        
+        return isValid;
     }
 }

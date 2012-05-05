@@ -11,6 +11,7 @@ import framework.cards.Card;
 public abstract class AbstractCard {
     
     private final int defaultCost;
+    private final int defaultDefence;
     
     private Card name;
     private CardType type;
@@ -30,6 +31,7 @@ public abstract class AbstractCard {
         this.name = name;
         this.type = type;
         this.defaultCost = cost;
+        this.defaultDefence = defence;
         this.cost = cost;
         this.defence = defence;
         this.owner = null;
@@ -58,6 +60,9 @@ public abstract class AbstractCard {
             getDisc().removeCard();
         }
         
+        setCost(getDefaultCost());
+        setDefence(getDefaultDefence());
+        
         cardResources.getDiscardStorage().pushCard(this);
     }
     
@@ -84,6 +89,11 @@ public abstract class AbstractCard {
     public void setCost(int cost) {
         this.cost = cost;
     }
+    
+    
+    public int getDefaultCost() {
+        return defaultCost;
+    }
 
     public int getDefence() {
         return defence;
@@ -91,6 +101,10 @@ public abstract class AbstractCard {
 
     public void setDefence(int defence) {
         this.defence = defence;
+    }
+    
+    public int getDefaultDefence() {
+        return defaultDefence;
     }
     
     public void setState(ICardState state) {
@@ -107,10 +121,6 @@ public abstract class AbstractCard {
 
     public void setOwner(IPlayer owner) {
         this.owner = owner;
-    }
-    
-    public int getDefaultCost() {
-        return defaultCost;
     }
 
     public void setDisc(IDisc disc) {

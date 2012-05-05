@@ -78,7 +78,7 @@ public class CardFactory {
                 card = new Praetorianus(cardResources, gameIO);
                 break;
             case SCAENICUS:
-                card = new Scaenicus(cardResources, this, gameIO);
+                card = new Scaenicus(cardResources, gameIO, this);
                 break;
             case SENATOR:
                 card = new Senator(cardResources, gameIO);

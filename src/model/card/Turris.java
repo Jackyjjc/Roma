@@ -6,20 +6,21 @@ import java.util.List;
 import model.ICardResources;
 import model.IDisc;
 import model.IField;
-import model.Notifier;
+import model.IGameIO;
+import model.IListener;
 import framework.cards.Card;
 
-class Turris extends AbstractCard implements ITurnCards {
+class Turris extends AbstractCard implements ITurnCards, IListener {
 
     private static final int COST = 6;
     private static final int DEFENCE = 6;
     
     private List<AbstractCard> affectedCards;
     
-    Turris(ICardResources cardResources, Notifier notifier) {
+    Turris(ICardResources cardResources, IGameIO gameIO) {
         
         super(Card.TURRIS, CardType.BUILDING,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
         this.affectedCards = new ArrayList<AbstractCard>();
     }
@@ -33,13 +34,16 @@ class Turris extends AbstractCard implements ITurnCards {
         
         super.lay(disc);
         
-        magicMethod();
+        addEffects();
+        
+        observeDiscs();
         
         return true;
     }
     
     @Override
     public void disCard() {
+        
         for(AbstractCard card : affectedCards) {
             card.setDefence(card.getDefence() - 1);
         }
@@ -47,7 +51,15 @@ class Turris extends AbstractCard implements ITurnCards {
         affectedCards.clear();
     }
 
-    public void TurnChecker() {
+    public void turnChecking() {
+        addEffects();
+    }
+    
+    public void update() {
+        addEffects();
+    }
+    
+    private void addEffects() {
         
         IField discs = getOwner().getField();
         AbstractCard card;
@@ -60,6 +72,15 @@ class Turris extends AbstractCard implements ITurnCards {
                   card.setDefence(card.getDefence() + 1);
                   affectedCards.add(card);
             }
+        }
+    }
+    
+    private void observeDiscs() {
+        
+        IField discs = getOwner().getField();
+        
+        for(IDisc disc : discs) {
+            disc.addLayCardListener(this);
         }
     }
 }

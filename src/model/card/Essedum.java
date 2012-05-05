@@ -6,55 +6,57 @@ import java.util.List;
 import model.ICardResources;
 import model.IDisc;
 import model.IField;
-import model.Notifier;
+import model.IGameIO;
 import framework.cards.Card;
-import framework.interfaces.activators.EssedumActivator;
 
-class Essedum extends AbstractCard implements ITurnCards, EssedumActivator {
+class Essedum extends AbstractCard implements ITurnCards {
 
     private static final int COST = 6;
     private static final int DEFENCE = 3;
     
     private List<AbstractCard> affectedCards;
      
-    Essedum(ICardResources cardResources, Notifier notifier) {
+    Essedum(ICardResources cardResources, IGameIO gameIO) {
         super(Card.ESSEDUM, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, notifier);
+              COST, DEFENCE, cardResources, gameIO);
         
         this.affectedCards = new ArrayList<AbstractCard>();
     }
-
+    
     public void activate() {
+        addEffects();
+    }
+
+    public void disCard() {
+        super.disCard();
+        removeEffects();
+    }
+    
+    private void addEffects() {
         
         IField discs = getOwner().getOpponent().getField();
         AbstractCard card;
         
         for(IDisc disc : discs) {
             
-            card = disc.getCard();
-
-            card.setDefence(card.getDefence() - 2);
-            
-            affectedCards.add(card);
+            if(disc != null) {
+                card = disc.getCard();
+                card.setDefence(card.getDefence() - 2);
+                affectedCards.add(card);
+            }
         }  
     }
-
-    @Override
-    public void disCard() {
-        //FIXME later
-    }
     
-    public void magicMethod() {
+    private void removeEffects() {
+        
         for(AbstractCard card : affectedCards) {
             card.setDefence(card.getDefence() + 2);
             affectedCards.remove(card);
         }
     }
 
-    @Override
-    public void complete() {
-        // TODO Auto-generated method stub
-        
+    public void turnChecking() {
+        removeEffects();
     }
-    
+   
 }
