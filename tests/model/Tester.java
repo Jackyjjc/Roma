@@ -21,6 +21,7 @@ public class Tester {
         new CardActivatorTribunusPlebisBasicTest(),
         new CardActivatorSenatorBasicTest(),
         new CardActivatorSicariusBasicTest(),
+        new CardActivatorScaenicusMimicLegatTest(),
     };
     
     public static void main(String[] args) {
