@@ -1,9 +1,10 @@
-package model;
+package tests.unverified;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import framework.Test;
 import framework.Rules;
 import framework.cards.Card;
 import framework.interfaces.GameState;
@@ -28,6 +29,8 @@ public class CardActivatorAesculapinumBasicTest extends Test {
     @Override
     public void run(GameState gameState, MoveMaker move) throws AssertionError,
             UnsupportedOperationException, IllegalArgumentException {
+        
+        out.println("Testing Aesculapinum");
         
         //only has one card in hand
         Collection<Card> hand = new ArrayList<Card>();

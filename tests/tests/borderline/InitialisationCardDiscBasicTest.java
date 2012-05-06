@@ -1,12 +1,13 @@
-package model;
+package tests.borderline;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import framework.Rules;
+import framework.Test;
 import framework.cards.Card;
 import framework.interfaces.GameState;
 import framework.interfaces.MoveMaker;
+import javax.naming.OperationNotSupportedException;
+import java.util.*;
+import framework.Rules;
+import framework.cards.*;
 /**
  * Testing the basic mechanics of victory point addition and removal.
  * @author Damon (Stacey damon.stacey)
@@ -32,7 +33,7 @@ public class InitialisationCardDiscBasicTest extends Test {
          gameState.setPlayerCardsOnDiscs (i, discCards);
          discCards = gameState.getPlayerCardsOnDiscs(i);
          for (int j = 0; j < Rules.NUM_DICE_DISCS; j++) {
-            assert(discCards[j].toString().equals(Card.NOT_A_CARD.toString()));
+            assert(discCards[j].toString().equals(Card.NOT_A_CARD.toString()));         
          }
 
          //checking players can lay thier cards on discs individually
@@ -65,7 +66,7 @@ public class InitialisationCardDiscBasicTest extends Test {
    }
 
    private List<Card> getPopulatedCards() {
-      List<Card> cards = new LinkedList<Card>();
+      List<Card> cards = new LinkedList();
       cards.add(Card.AESCULAPINUM);
       cards.add(Card.ARCHITECTUS);
       cards.add(Card.BASILICA);

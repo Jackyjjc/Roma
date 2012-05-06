@@ -1,5 +1,6 @@
-package model;
+package tests.unverified;
 
+import framework.Test;
 import framework.cards.Card;
 import framework.interfaces.GameState;
 import framework.interfaces.MoveMaker;

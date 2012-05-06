@@ -27,7 +27,7 @@ public class JBackground extends JPanel implements IListener {
         actionDice = new DieDisplayManager(rm, DieDisplayManager.Type.ACTION);
         battleDice = new DieDisplayManager(rm, DieDisplayManager.Type.BATTLE);
         
-        leftBar = new JGameBarLeft(rm, actionDice, handler);
+        leftBar = new JGameBarLeft(rm, actionDice, handler, cdm);
         gameArea = new JGameArea(rm, cdm, handler);
         rightBar = new JGameBarRight(rm, battleDice);
         

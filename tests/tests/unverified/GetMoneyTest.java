@@ -1,5 +1,6 @@
-package model;
+package tests.unverified;
 
+import framework.Test;
 import framework.interfaces.GameState;
 import framework.interfaces.MoveMaker;
 
@@ -21,6 +22,8 @@ public class GetMoneyTest extends Test {
     @Override
     public void run(GameState gameState, MoveMaker move) throws AssertionError,
             UnsupportedOperationException, IllegalArgumentException {
+        
+        out.println("Testing get Sestertii from stockpile");
         
         gameState.setPlayerSestertii(0, 0);
         gameState.setPlayerSestertii(1, 0);

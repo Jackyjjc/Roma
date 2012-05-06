@@ -1,11 +1,13 @@
-package model;
+package tests.borderline;
 
-import java.util.LinkedList;
-
-import framework.Rules;
+import framework.Test;
 import framework.cards.Card;
 import framework.interfaces.GameState;
 import framework.interfaces.MoveMaker;
+import javax.naming.OperationNotSupportedException;
+import java.util.*;
+import framework.Rules;
+import framework.cards.*;
 /**
  * Testing the basic mechanics of victory point addition and removal.
  * @author Damon (Stacey damon.stacey)
@@ -26,7 +28,7 @@ public class InitialisationPlayerBasicTest extends Test {
       for (int i = 0; i < Rules.NUM_PLAYERS; i++) {
          gameState.setWhoseTurn(i);
          assert(gameState.getWhoseTurn() == i);
-         gameState.setPlayerHand(i, new LinkedList<Card>());
+         gameState.setPlayerHand(i, new LinkedList());
          gameState.setPlayerSestertii (i, 0);
          gameState.setPlayerVictoryPoints (i, (Rules.GAME_VICTORY_POINTS - 16)/2);
       }

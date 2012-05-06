@@ -1,8 +1,9 @@
-package model;
+package tests.unverified;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+import framework.Test;
 import framework.Rules;
 import framework.cards.Card;
 import framework.interfaces.GameState;

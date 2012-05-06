@@ -1,5 +1,6 @@
-package model;
+package tests.unverified;
 
+import framework.Test;
 import framework.interfaces.GameState;
 import framework.interfaces.MoveMaker;
 
@@ -25,6 +26,8 @@ public class TurnAdvanceTest extends Test {
                                           throws AssertionError,
                                           UnsupportedOperationException,
                                           IllegalArgumentException {
+
+        out.println("Testing if the player advances");
 
         gameState.setWhoseTurn(0);
 

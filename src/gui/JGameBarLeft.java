@@ -12,18 +12,20 @@ import controller.ActionDieClickListener;
 
 public class JGameBarLeft extends JPanel implements IListener {
 
+    private CardDisplayManager cdm;
     private DieDisplayManager ddm;
     private ResourceManager rm;
 
     private JStatusBar statusBar;
-    private JDeck deck;
-    private JGrave grave;
+    private JPiles piles;
     private ActionDicePanel dicePanel;
     
-    public JGameBarLeft(ResourceManager rm, DieDisplayManager ddm, InputHandler handler) {
+    public JGameBarLeft(ResourceManager rm, DieDisplayManager ddm, 
+                        InputHandler handler, CardDisplayManager cdm) {
 
         this.rm = rm;
         this.ddm = ddm;
+        this.cdm = cdm;
         
         createElements(handler);
         initUI();
@@ -36,8 +38,7 @@ public class JGameBarLeft extends JPanel implements IListener {
         
         statusBar = new JStatusBar(rm,1);
         dicePanel = new ActionDicePanel(ddm, adListener);
-        deck = new JDeck(rm);
-        grave = new JGrave(rm);
+        piles = new JPiles(rm,cdm);
     }
     
     private void initUI() {
@@ -45,17 +46,16 @@ public class JGameBarLeft extends JPanel implements IListener {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
         add(statusBar);
-        add(deck);
+        add(Box.createRigidArea(new Dimension(0,90)));
         add(dicePanel);
-        add(grave);
-        add(Box.createRigidArea(new Dimension(0,180)));
+        add(piles);
+        add(Box.createRigidArea(new Dimension(0,135)));
     }
     
     public void updateView(IGameDisplayState state) {
         statusBar.updateView(state);
-        deck.updateView(state);
         dicePanel.updateView(state);
-        grave.updateView(state);
+        piles.updateView(state);
     }
 
 }

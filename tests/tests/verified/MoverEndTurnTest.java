@@ -1,7 +1,9 @@
-package model;
+package tests.verified;
 
+import framework.Test;
 import framework.interfaces.GameState;
 import framework.interfaces.MoveMaker;
+import javax.naming.OperationNotSupportedException;
 
 /**
  * An example test.
@@ -28,6 +30,7 @@ public class MoverEndTurnTest extends Test {
         // - any methods called in the MoveMaker interface, with arguments
         // If you do need to print, never print to System.out!
         // Only print to this.out.
+        out.println("This is just an example");
 
         // Set up the GameState for the test
         gameState.setWhoseTurn(0);

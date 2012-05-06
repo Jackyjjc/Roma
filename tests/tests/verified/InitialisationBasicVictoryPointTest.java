@@ -1,7 +1,10 @@
-package model;
+package tests.verified;
 
+import framework.Test;
+import framework.cards.Card;
 import framework.interfaces.GameState;
 import framework.interfaces.MoveMaker;
+import javax.naming.OperationNotSupportedException;
 
 /**
  * Testing the basic mechanics of victory point addition and removal.
