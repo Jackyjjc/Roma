@@ -7,19 +7,22 @@ import model.ICardResources;
 import model.IDisc;
 import model.IField;
 import model.IGameIO;
+import model.TurnNotifier;
 import framework.cards.Card;
 
-class Essedum extends AbstractCard implements ITurnCards {
+class Essedum extends AbstractCard implements ITurnListener {
 
     private static final int COST = 6;
     private static final int DEFENCE = 3;
     
+    private TurnNotifier turnNotifier;
     private List<AbstractCard> affectedCards;
      
     Essedum(ICardResources cardResources, IGameIO gameIO) {
         super(Card.ESSEDUM, CardType.CHARACTER,
               COST, DEFENCE, cardResources, gameIO);
         
+        this.turnNotifier = cardResources.getTurnNotifier();
         this.affectedCards = new ArrayList<AbstractCard>();
     }
     
@@ -44,7 +47,9 @@ class Essedum extends AbstractCard implements ITurnCards {
                 card.setDefence(card.getDefence() - 2);
                 affectedCards.add(card);
             }
-        }  
+        }
+        
+        turnNotifier.addTurnListener(this);
     }
     
     private void removeEffects() {
@@ -53,9 +58,11 @@ class Essedum extends AbstractCard implements ITurnCards {
             card.setDefence(card.getDefence() + 2);
             affectedCards.remove(card);
         }
+        
+        turnNotifier.removeTurnListener(this);
     }
-
-    public void turnChecking() {
+    
+    public void turnChecking(int turnNum) {
         removeEffects();
     }
    

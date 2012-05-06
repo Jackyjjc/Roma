@@ -10,4 +10,6 @@ public interface ICardResources {
     
     public DiceManager getDiceManager();
     
+    public TurnNotifier getTurnNotifier();
+    
 }

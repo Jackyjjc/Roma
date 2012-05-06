@@ -25,6 +25,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
     private DiceManager diceManager;
     private CardFactory cardFactory;
     private CardActivateManager activateManager;
+    private TurnNotifier turnNotifier;
     
 	private IResourceStorage bank;
 	private IPlayer currentPlayer;
@@ -46,7 +47,8 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 		
         this.cardFactory = new CardFactory(this, this);
         this.activateManager = new CardActivateManager(this, this);
-		
+		this.turnNotifier = new TurnNotifier();
+        
 		this.deck = CardCollectionFactory.create(DECK, cardFactory);
 		this.discard = CardCollectionFactory.create(!DECK, cardFactory);
 		
@@ -120,6 +122,10 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
     
     public CardActivateManager getCardActivateManager() {
         return activateManager;
+    }
+    
+    public TurnNotifier getTurnNotifier() {
+        return turnNotifier;
     }
     
     /* =========================================================================*
