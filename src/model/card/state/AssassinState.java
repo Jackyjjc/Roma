@@ -1,5 +1,6 @@
 package model.card.state;
 
+import model.IDisc;
 import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.ICardChecker;
@@ -19,7 +20,8 @@ public class AssassinState extends CardState implements ICardState {
         
         InputHandler handler = getOwner().getGameIO().getInputHandler();
         
-        AbstractCard target = handler.getCardInput();
+        IDisc disc = handler.getDiscInput();
+        AbstractCard target = disc.getCard();
         
         if(checker.isValidCard(target)) {
             target.disCard();

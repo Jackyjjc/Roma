@@ -9,6 +9,7 @@ import framework.Rules;
 public class InputHandler {
 
     private Game g;
+    private IListener inputListener;
     
     private List<AbstractCard> cardInputQueue;
     private List<IDisc> discInputQueue;
@@ -36,7 +37,8 @@ public class InputHandler {
            && index >= 0 && index < currentPlayer.getHand().size()) {
             
             cardInputQueue.add(currentPlayer.getHand().getCard(index));
-        
+            
+            notifyListener();
         }
     }
     
@@ -58,6 +60,8 @@ public class InputHandler {
         
         if(index >= 0 && index < Rules.NUM_DICE_DISCS) {
             discInputQueue.add(field.getDisc(index));
+            
+            notifyListener();
         }
         
     }
@@ -80,6 +84,8 @@ public class InputHandler {
         
         if(die != null && !die.isUsed()) {
             dieInputQueue.add(die);
+            
+            notifyListener();
         }
         
     }
@@ -97,6 +103,7 @@ public class InputHandler {
     
     public void addIntInput(int amount) {
         this.intInput = amount;
+        notifyListener();
     }
     
     public int getIntInput() {
@@ -105,6 +112,7 @@ public class InputHandler {
     
     public void addBooleanInput(boolean value) {
         this.boolInput = value;
+        notifyListener();
     }
     
     public boolean getBooleanInput() {
@@ -113,10 +121,21 @@ public class InputHandler {
     
     public void addBattleDieInput(int roll) {
         this.battleDieInput = roll;
+        notifyListener();
     }
     
     public int getBattleDieInput() {
         return battleDieInput;
     }
 
+    public void setInputListener(IListener l) {
+        this.inputListener = l;
+    }
+    
+    private void notifyListener() {
+        if(inputListener != null) {
+            inputListener.update();
+        }
+    }
+    
 }

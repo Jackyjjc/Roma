@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.ICardResources;
 import model.IGameIO;
+import model.card.state.ChooseCardState;
 import model.card.state.LayCardState;
 import model.card.state.SetCardCostFreeState;
 import framework.cards.Card;
@@ -26,12 +27,15 @@ class Consiliarius extends AbstractCard implements ICardChecker{
         charCards = getOwner().getField().removeCardsOf(CardType.CHARACTER);
         
         SetCardCostFreeState setCardFree = new SetCardCostFreeState(this, charCards);
-        LayCardState layCard = new LayCardState(this, charCards, this);
+        ChooseCardState chooseCard = new ChooseCardState(this, charCards, this);
+        LayCardState layCard = new LayCardState(this, chooseCard);
         
         setCardFree.setNextState(layCard);
-        layCard.setNextState(null);
+        chooseCard.setNextState(layCard);
+        layCard.setNextState(chooseCard);
         
         setState(setCardFree);
+        runState();
     }
     
     public boolean isValidCard(AbstractCard c) {

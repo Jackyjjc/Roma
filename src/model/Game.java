@@ -38,6 +38,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 	    
 	    this.numPlayers = numPlayers;
 	    
+	    inputHandler = new InputHandler(this);
 	    this.notifier = new Notifier(this);
 	    this.diceManager = new DiceManager(NUM_ACTION_DICE, notifier);
 	   

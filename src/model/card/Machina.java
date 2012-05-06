@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.ICardResources;
 import model.IGameIO;
+import model.card.state.ChooseCardState;
 import model.card.state.LayCardState;
 import model.card.state.SetCardCostFreeState;
 import framework.cards.Card;
@@ -27,12 +28,14 @@ class Machina extends AbstractCard implements ICardChecker {
         buildingCards =  getOwner().getField().removeCardsOf(CardType.BUILDING);
 
         SetCardCostFreeState setCardFree = new SetCardCostFreeState(this, buildingCards);
-        LayCardState layCard = new LayCardState(this, buildingCards, this);
-        
+        ChooseCardState chooseCard = new ChooseCardState(this, buildingCards, this);
+        LayCardState layCard = new LayCardState(this, chooseCard);
         setCardFree.setNextState(layCard);
-        layCard.setNextState(null);
+        chooseCard.setNextState(layCard);
+        layCard.setNextState(chooseCard);
         
         setState(setCardFree);
+        runState();
     }
     
     public boolean isValidCard(AbstractCard c) {

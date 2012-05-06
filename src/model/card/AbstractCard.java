@@ -107,6 +107,16 @@ public abstract class AbstractCard {
         return defaultDefence;
     }
     
+    public boolean isFinishActivate() {
+        return (state == null);
+    }
+    
+    public void runState() {
+        if(!isFinishActivate()) {
+            state.run();
+        }
+    }
+    
     public void setState(ICardState state) {
         this.state = state;
     }

@@ -12,6 +12,9 @@ public class TransferVpState extends CardState implements ICardState {
     public TransferVpState(AbstractCard owner, 
                            IResourceStorage from, IResourceStorage to, int amount) {
         super(owner);
+        this.from = from;
+        this.to = to;
+        this.amount = amount;
     }
 
     public boolean run() {

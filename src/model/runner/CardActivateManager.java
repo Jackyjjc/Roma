@@ -1,9 +1,13 @@
 package model.runner;
 
+import java.util.List;
+
 import model.IGameIO;
+import model.IListener;
 import model.IPlayer;
 import model.IPlayerManager;
 import model.InputHandler;
+import model.card.AbstractCard;
 import framework.cards.Card;
 import framework.interfaces.activators.AesculapinumActivator;
 import framework.interfaces.activators.ArchitectusActivator;
@@ -36,14 +40,16 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
 CenturioActivator, ConsiliariusActivator, ConsulActivator, EssedumActivator, ForumActivator, GladiatorActivator,
 HaruspexActivator, LegatActivator, LegionariusActivator, MachinaActivator, MercatorActivator, MercatusActivator,
 NeroActivator, OnagerActivator, PraetorianusActivator, ScaenicusActivator, SenatorActivator, SicariusActivator,
-TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator{
+TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IListener{
 
     private IPlayerManager manager;
     private InputHandler handler;
+    private AbstractCard activatedCard;
     
     public CardActivateManager(IGameIO gameIO, IPlayerManager manager) {
         this.handler = gameIO.getInputHandler();
         this.manager = manager;
+        this.handler.setInputListener(this);
     }
 
     public void chooseCardFromPile(int indexOfCard) {
@@ -51,7 +57,9 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator{
     }
     
     public void complete() {
-        
+        while(!activatedCard.isFinishActivate()) {
+            activatedCard.runState();
+        }
     }
 
     public void giveAttackDieRoll(int roll) {
@@ -68,6 +76,19 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator{
 
     public void placeCard(Card card, int diceDisc) {
         
+        IPlayer player = manager.getCurrentPlayer();
+        
+        List<Card> hand = player.getHand().getCardsWithNames();
+        int index = -1;
+        for(int i = 0; i < hand.size() && index == -1; i++) {
+            if(hand.get(i) == card) {
+                index = i;
+            }
+        }
+        
+        handler.addCardInput(player.getId(), index);
+        handler.addDiscInput(player.getId(), diceDisc - 1);
+        
     }
 
     public void chooseConsulChangeAmount(int amount) {
@@ -82,7 +103,7 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator{
         
         IPlayer opponent = manager.getCurrentPlayer().getOpponent();
         
-        handler.addDiscInput(opponent.getId(), diceDisc);
+        handler.addDiscInput(opponent.getId(), diceDisc - 1);
     }
 
     public void chooseActivateTemplum(boolean activate) {
@@ -97,10 +118,18 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator{
         
         IPlayer player = manager.getCurrentPlayer();
         
-        handler.addDiscInput(player.getId(), diceDisc);
+        handler.addDiscInput(player.getId(), diceDisc - 1);
         
         return this;
     }
     
+    public void activate(AbstractCard card) {
+        this.activatedCard = card;
+        card.activate();
+    }
+
+    public void update() {
+        this.activatedCard.runState();
+    }
     
 }

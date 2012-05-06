@@ -25,7 +25,11 @@ class Legat extends AbstractCard {
         IPlayer opponent = owner.getOpponent();
         int amount = opponent.getField().countUnoccupiedDiscs();
 
-        new TransferVpState(this, bank, owner, amount).run();
+        TransferVpState transferVP = new TransferVpState(this, bank, owner, amount);
+        transferVP.setNextState(null);
+        
+        setState(transferVP);
+        runState();
     }
 
 }

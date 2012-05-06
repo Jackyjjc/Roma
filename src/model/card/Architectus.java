@@ -32,7 +32,7 @@ class Architectus extends AbstractCard {
         setCardDefault.setNextState(null);
        
         setState(setCardFree);
-
+        runState();
     }
  
 }

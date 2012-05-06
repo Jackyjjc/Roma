@@ -10,13 +10,12 @@ public class SetCardCostFreeState extends SetCardCostState implements ICardState
         super(owner, cards);
     }
     
-    @Override
     public boolean run() {
         
         List<AbstractCard> cards = super.getCards();
         
         for(AbstractCard card : cards) {
-            card.setCost(card.getDefaultCost());
+            card.setCost(0);
         }
         
         changeState();

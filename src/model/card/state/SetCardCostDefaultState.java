@@ -16,7 +16,7 @@ public class SetCardCostDefaultState extends SetCardCostState implements ICardSt
         List<AbstractCard> cards = super.getCards();
         
         for(AbstractCard card : cards) {
-            card.setCost(0);
+            card.setCost(card.getDefaultCost());
         }
         
         changeState();

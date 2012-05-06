@@ -33,7 +33,7 @@ public class GetCardFromPileState extends CardState implements ICardState {
         
         if(checker.isValidCard(cardInput)) {
             hand.appendCard(cardInput);
-            pile.shuffle();
+            //pile.shuffle();
             succeed = true;
             
             changeState();

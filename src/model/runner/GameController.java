@@ -37,7 +37,7 @@ public class GameController implements MoveMaker {
         
         //disc is from 1 - 7
         AbstractCard card = player.getField().getCard(disc - 1);
-        card.activate();
+        activateManager.activate(card);
         
         return (CardActivator)activateManager;
     }
