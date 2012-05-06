@@ -6,10 +6,11 @@ import java.util.List;
 import model.card.AbstractCard;
 import model.card.CardFactory;
 import model.cardcollection.CardCollectionFactory;
+import model.runner.CardActivateManager;
 import framework.cards.Card;
 import framework.interfaces.GameState;
 
-public class Game implements GameState, IGameDisplayState, ICardResources, IGameIO {
+public class Game implements GameState, IGameDisplayState, ICardResources, IGameIO, IPlayerManager {
 	
     private static final int TOTAL_MONEY = Integer.MAX_VALUE;
     private static final int TOTAL_VP = 36;
@@ -23,6 +24,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
     private ICardStorage discard;
     private DiceManager diceManager;
     private CardFactory cardFactory;
+    private CardActivateManager activateManager;
     
 	private IResourceStorage bank;
 	private IPlayer currentPlayer;
@@ -42,6 +44,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 		this.bank = new ResourceStorage(TOTAL_MONEY, TOTAL_VP);
 		
         this.cardFactory = new CardFactory(this, this);
+        this.activateManager = new CardActivateManager(this, this);
 		
 		this.deck = CardCollectionFactory.create(DECK, cardFactory);
 		this.discard = CardCollectionFactory.create(!DECK, cardFactory);
@@ -88,7 +91,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
     void setState(State state) {
         this.state = state;
     }
-
+    
     public DiceManager getDiceManager() {
         return diceManager;
     }
@@ -112,6 +115,10 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 
     public InputHandler getInputHandler() {
         return inputHandler;
+    }
+    
+    public CardActivateManager getCardActivateManager() {
+        return activateManager;
     }
     
     /* =========================================================================*
@@ -254,7 +261,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
         return bank.getVP();
     }
     
-    private IPlayer getPlayer(int id) {
+    public IPlayer getPlayer(int id) {
         
         IPlayer temp = currentPlayer;
         

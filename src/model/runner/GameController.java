@@ -33,12 +33,13 @@ public class GameController implements MoveMaker {
     public CardActivator chooseCardToActivate(int disc) {
         
         IPlayer player = g.getCurrentPlayer();
+        CardActivateManager activateManager = g.getCardActivateManager();
         
         //disc is from 1 - 7
         AbstractCard card = player.getField().getCard(disc - 1);
         card.activate();
-        return (CardActivator)card;
-    
+        
+        return (CardActivator)activateManager;
     }
 
     public void activateCardsDisc(int diceToUse, Card chosen)
