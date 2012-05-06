@@ -11,8 +11,7 @@ import controller.HandClickListener;
 
 public class JGameArea extends JPanel implements IListener {
     
-    private ResourceManager rm;
-    private CardDisplayManager cdm;
+    private IDisplayManager idm;
     
     private JHand hand0;
     private JHand hand1;
@@ -20,12 +19,11 @@ public class JGameArea extends JPanel implements IListener {
     private JField field1;
     private JDiscList discs;
     
-    public JGameArea(ResourceManager rm, CardDisplayManager cdm, InputHandler handler) {
+    public JGameArea(IDisplayManager idm) {
         
-        this.rm = rm;
-        this.cdm = cdm;
+        this.idm = idm;
         
-        createElements(handler);
+        createElements();
         initUI();
         setOpaque(false);
     }
@@ -38,17 +36,13 @@ public class JGameArea extends JPanel implements IListener {
         
     }
     
-    private void createElements(InputHandler handler) {
+    private void createElements() {
         
-        FieldClickListener fListener = new FieldClickListener(handler);
-        HandClickListener hListener = new HandClickListener(handler);
-        DiscClickListener dListener = new DiscClickListener(handler);
-        
-        hand0 = new JHand(0, cdm, hListener);
-        hand1 = new JHand(1,cdm, hListener);
-        field0 = new JField(0,cdm, fListener);
-        field1 = new JField(1,cdm, fListener);
-        discs = new JDiscList(rm, dListener);
+        hand0 = new JHand(0, idm);
+        hand1 = new JHand(1,idm);
+        field0 = new JField(0, idm);
+        field1 = new JField(1, idm);
+        discs = new JDiscList(idm);
     }
     
     private void initUI() {

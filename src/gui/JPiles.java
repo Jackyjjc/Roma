@@ -12,16 +12,18 @@ import framework.cards.Card;
 
 public class JPiles extends JPanel implements IListener {
 
+    private IDisplayManager idm;
     private ResourceManager rm;
     private CardDisplayManager cdm;
     private Card discardTopCard;
     private int deckThickness;
     private int discardThickness;
     
-    public JPiles(ResourceManager rm, CardDisplayManager cdm) {
+    public JPiles(IDisplayManager idm) {
         
-        this.rm = rm;
-        this.cdm = cdm;
+        this.rm = idm.getResourceManager();
+        this.cdm = idm.getCardDisplayManager();
+        this.idm = idm;
         
         setPreferredSize(new Dimension(rm.blank.getWidth() * 2,rm.blank.getHeight()));
         setOpaque(false);
@@ -52,23 +54,23 @@ public class JPiles extends JPanel implements IListener {
         
         int i = 0;
         while(i < deckThickness - 1) {
-            g.drawImage(rm.card, 30 + i, 0, null);
+            g.drawImage(rm.card, idm.scale(30) + i, 0, null);
             i++;
         }
         
-        g.drawImage(rm.card, 30 + i, 0, null);
+        g.drawImage(rm.card, idm.scale(30) + i, 0, null);
         
         //this is the grave yard
         
         if(discardTopCard == null) {
-            g.drawImage(rm.blank, 140, 0, null);
+            g.drawImage(rm.blank, idm.scale(140), 0, null);
         } else {
             i = 0;
             while(i < discardThickness - 1) {
-                g.drawImage(rm.card, 140 + i, 0, null);
+                g.drawImage(rm.card, idm.scale(140) + i, 0, null);
                 i++;
             }
-            g.drawImage(cdm.getCard(discardTopCard), 140 + i, 0, null);
+            g.drawImage(cdm.getCard(discardTopCard), idm.scale(140) + i, 0, null);
         }
         
     }

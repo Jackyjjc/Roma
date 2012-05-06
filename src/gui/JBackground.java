@@ -11,25 +11,18 @@ import model.InputHandler;
 public class JBackground extends JPanel implements IListener {
     
     private ResourceManager rm;
-    private CardDisplayManager cdm;
-    private DieDisplayManager actionDice;
-    private DieDisplayManager battleDice;
     
     private JGameBarLeft leftBar;
     private JGameArea gameArea;
     private JGameBarRight rightBar;
     
-    public JBackground(ResourceManager rm, InputHandler handler) {
+    public JBackground(IDisplayManager idm) {
         
-        this.rm = rm;
+        this.rm = idm.getResourceManager();
         
-        cdm = new CardDisplayManager(rm);
-        actionDice = new DieDisplayManager(rm, DieDisplayManager.Type.ACTION);
-        battleDice = new DieDisplayManager(rm, DieDisplayManager.Type.BATTLE);
-        
-        leftBar = new JGameBarLeft(rm, actionDice, handler, cdm);
-        gameArea = new JGameArea(rm, cdm, handler);
-        rightBar = new JGameBarRight(rm, battleDice);
+        leftBar = new JGameBarLeft(idm);
+        gameArea = new JGameArea(idm);
+        rightBar = new JGameBarRight(idm);
         
         setLayout(new BorderLayout());
         

@@ -7,28 +7,32 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.omg.PortableServer.IdAssignmentPolicy;
+
 import model.IGameDisplayState;
 
 public class JStatusBar extends JPanel implements IListener {
     
     private static final int PADDING = 5;
-    private final ResourceManager rm;
+    
+    private IDisplayManager idm;
+    private ResourceManager rm;
+    
     private int player;
     private int money;
     private int vp;
     
-    public JStatusBar(ResourceManager rm, int player) {
+    public JStatusBar(IDisplayManager idm, int player) {
         
-        this.rm = rm;
+        this.rm = idm.getResourceManager();
+        this.idm = idm;
         this.player = player;
-        
-        setPreferredSize(new Dimension(rm.player1.getWidth() + PADDING, 
-                                       rm.player2.getHeight() + PADDING));
-        
-        System.out.println(rm.player1.getHeight());
-        
         this.money = 0;
         this.vp = 0;
+        
+        setPreferredSize(new Dimension(rm.player1.getWidth() + idm.scale(PADDING), 
+                                       rm.player2.getHeight() + idm.scale(PADDING)));
+        
         
         setOpaque(false);
     }
@@ -52,8 +56,8 @@ public class JStatusBar extends JPanel implements IListener {
                         rm.player2.getWidth(), rm.player2.getHeight(), null);
         }
         
-        g.drawString(String.valueOf(money), 157, 85);
-        g.drawString(String.valueOf(vp), 197, 85);
+        g.drawString(String.valueOf(money), idm.scale(157), idm.scale(85));
+        g.drawString(String.valueOf(vp), idm.scale(197), idm.scale(85));
         
     }
     

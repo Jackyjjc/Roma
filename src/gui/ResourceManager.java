@@ -1,4 +1,6 @@
 package gui;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -70,7 +72,10 @@ public class ResourceManager {
     public BufferedImage turris;
     public BufferedImage velites;
     
-    public ResourceManager() {
+    private double scalingFactor;
+    
+    public ResourceManager(double scalingFactor) {
+        this.scalingFactor = scalingFactor;
         load();
     }
     
@@ -160,6 +165,26 @@ public class ResourceManager {
     
     private BufferedImage read(String name) throws IOException {
         
-        return ImageIO.read(ResourceManager.class.getResource("/resource/" + name));
+        BufferedImage origin = ImageIO.read(ResourceManager.class.getResource("/resource/" + name));
+        
+        return scale(origin);
+    }
+    
+    private BufferedImage scale(BufferedImage original) {
+        
+        /*
+         * Credit is given to http://stackoverflow.com/questions/4216123/how-to-scale-a-bufferedimage
+         */
+        
+        int width = new Double(original.getWidth() * scalingFactor).intValue();
+        int height = new Double(original.getHeight() * scalingFactor).intValue();
+        
+        BufferedImage resized = new BufferedImage(width, height, original.getType());
+        Graphics2D g = resized.createGraphics();
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.drawImage(original, 0, 0, width, height, 0, 0, original.getWidth(), original.getHeight(), null);
+        g.dispose();
+        
+        return resized;
     }
 }

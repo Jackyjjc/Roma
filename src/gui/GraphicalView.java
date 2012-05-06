@@ -1,35 +1,61 @@
 package gui;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import controller.ActionDieClickListener;
+import controller.DiscClickListener;
+import controller.FieldClickListener;
+import controller.HandClickListener;
+
 import model.IGameDisplayState;
 import model.InputHandler;
 
-public class GraphicalView extends JFrame implements IListener {
+public class GraphicalView extends JFrame implements IListener, IDisplayManager {
     
     private static final String NAME = "Roma 2.2";
     
     private static final int WIDTH = 1366;
     private static final int HEIGHT = 768;
     
+    private double scalingFactor;
+    
+    private CardDisplayManager cdm;
+    private DieDisplayManager actionDiceManager;
+    private DieDisplayManager battleDieManager;
+    private DiscDisplayManager ddm;
     private ResourceManager rm;
     private JBackground background;
+    private FieldClickListener fListener;
+    private HandClickListener hListener;
+    private DiscClickListener dListener;
+    private ActionDieClickListener adListener;
 
     public GraphicalView(InputHandler handler) {
         
         super(NAME);
+       
+        initElements(handler);
+        initUI();
         
-        rm = new ResourceManager();
-        background = new JBackground(rm, handler);
+        //setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }
+    
+    private void initUI() {
+        
+        background = new JBackground(this);
         
         setContentPane(background);
         setIconImage(rm.icon);
         
-        setPreferredSize(new Dimension(WIDTH,HEIGHT));
+        int width = (int) (WIDTH * scalingFactor);
+        int height = (int) (HEIGHT * scalingFactor);
+        
+        setPreferredSize(new Dimension(width,height));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        
     }
     
     public void printTurn(int numTurn, String name) {
@@ -43,4 +69,72 @@ public class GraphicalView extends JFrame implements IListener {
         background.updateView(state);
         validate();
     }
+    
+    private double calculateScalingFactor() {
+        
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        double scalingFactor = (double) dim.width / WIDTH;
+        
+        if(scalingFactor > 1) {
+            scalingFactor = 1;
+        }
+        
+        return scalingFactor;    
+    }
+    
+    private void initElements(InputHandler handler) {
+        
+        this.scalingFactor = calculateScalingFactor();
+        this.rm = new ResourceManager(scalingFactor);
+        this.cdm = new CardDisplayManager(rm);
+        this.actionDiceManager = new DieDisplayManager(rm, DieDisplayManager.Type.ACTION);
+        this.battleDieManager = new DieDisplayManager(rm, DieDisplayManager.Type.BATTLE);
+        this.ddm = new DiscDisplayManager(rm);
+        this.fListener = new FieldClickListener(handler);
+        this.hListener = new HandClickListener(handler);
+        this.dListener = new DiscClickListener(handler);
+        this.adListener = new ActionDieClickListener(handler);
+    }
+
+    public int scale(int original) {
+
+        return new Double(original * scalingFactor).intValue();
+    }
+    
+    public ResourceManager getResourceManager() {
+        return rm;
+    }
+
+    public CardDisplayManager getCardDisplayManager() {
+        return cdm;
+    }
+
+    public DiscDisplayManager getDiscDisplayManager() {
+        return ddm;
+    }
+
+    public DieDisplayManager getActionDiceDisplayManager() {
+        return actionDiceManager;
+    }
+
+    public DieDisplayManager getBattleDieDisplayManager() {
+        return battleDieManager;
+    }
+
+    public ActionDieClickListener getActionDieClickListener() {
+        return adListener;
+    }
+
+    public DiscClickListener getDiscClickListener() {
+        return dListener;
+    }
+
+    public FieldClickListener getFieldClickListener() {
+        return fListener;
+    }
+
+    public HandClickListener getHandClickListener() {
+        return hListener;
+    }
+    
 }

@@ -29,8 +29,6 @@ public class DealCardState implements State {
             player = player.getOpponent();
         }
         
-        System.out.println("hhihihih");
-        
         g.getNotifier().notifyListeners();
         
         //g.setState(new SwapCardState(g));

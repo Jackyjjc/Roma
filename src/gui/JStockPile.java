@@ -14,13 +14,15 @@ public class JStockPile extends JPanel implements IListener {
 
     private int poolVP;
     private ResourceManager rm;
+    private IDisplayManager idm;
     
-    public JStockPile(ResourceManager rm) {
+    public JStockPile(IDisplayManager idm) {
 
-        this.rm = rm;
+        this.rm = idm.getResourceManager();
+        this.idm = idm;
         this.poolVP = 0;
         
-        setPreferredSize(new Dimension(rm.stockpile.getWidth() + 30, rm.stockpile.getHeight()));
+        setPreferredSize(new Dimension(rm.stockpile.getWidth() + idm.scale(30), rm.stockpile.getHeight()));
         
         setOpaque(false);
     }
@@ -36,11 +38,11 @@ public class JStockPile extends JPanel implements IListener {
         
         g.drawImage(rm.stockpile, 0, 0, null);
         
-        Font font = new Font("Arial", Font.PLAIN, 16);
+        Font font = new Font("Arial", Font.PLAIN, idm.scale(16));
         
         g2d.setFont(font);
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.drawString(String.valueOf(poolVP), rm.stockpile.getWidth() + 15, 55);
+        g2d.drawString(String.valueOf(poolVP), rm.stockpile.getWidth() + idm.scale(15), idm.scale(55));
     }
     
 }

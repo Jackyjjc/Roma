@@ -15,12 +15,12 @@ public class JHand extends JPanel implements IListener {
     private int handSize;
     private int playerId;
     
-    public JHand(int playerId, CardDisplayManager cdm, HandClickListener listener) {
+    public JHand(int playerId, IDisplayManager idm) {
         
-        this.cdm = cdm;
+        this.cdm = idm.getCardDisplayManager();
         handSize = 0;
         this.playerId = playerId;
-        this.listener = listener;
+        this.listener = idm.getHandClickListener();
         
         setOpaque(false);
     }

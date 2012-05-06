@@ -1,7 +1,5 @@
 package gui;
 
-import gui.DieDisplayManager.Type;
-
 import java.awt.FlowLayout;
 
 import javax.swing.JPanel;
@@ -12,10 +10,10 @@ public class BattleDiePanel extends JPanel implements IListener {
     
     private JDie battleDie;
     
-    public BattleDiePanel(ResourceManager rm) {
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
+    public BattleDiePanel(IDisplayManager idm) {
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, idm.scale(15), 0));
         
-        initUI(new DieDisplayManager(rm, Type.BATTLE));
+        initUI(idm.getBattleDieDisplayManager());
         setOpaque(false);
     }
 

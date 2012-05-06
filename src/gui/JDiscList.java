@@ -15,12 +15,12 @@ public class JDiscList extends JPanel implements IListener {
     private final DiscDisplayManager ddm;
     private JDisc[] discs;
     
-    public JDiscList (ResourceManager rm, DiscClickListener listener) {
+    public JDiscList (IDisplayManager idm) {
         
-        this.ddm = new DiscDisplayManager(rm);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 40, 0));
+        this.ddm = idm.getDiscDisplayManager();
+        this.setLayout(new FlowLayout(FlowLayout.CENTER,idm.scale(40), 0));
         
-        initUI(listener);
+        initUI(idm.getDiscClickListener());
         setOpaque(false);
     }
 

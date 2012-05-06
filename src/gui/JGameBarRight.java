@@ -11,17 +11,15 @@ import model.IGameDisplayState;
 
 public class JGameBarRight extends JPanel implements IListener {
 
-    private DieDisplayManager ddm;
-    private ResourceManager rm;
+    private IDisplayManager idm;
 
     private JStockPile stockpile;
     private BattleDiePanel diePanel;
     private JStatusBar statusBar;
     
-    public JGameBarRight(ResourceManager rm, DieDisplayManager ddm) {
-
-        this.rm = rm;
-        this.ddm = ddm;
+    public JGameBarRight(IDisplayManager idm) {
+        
+        this.idm = idm;
         
         createElements();
         initUI();
@@ -30,9 +28,9 @@ public class JGameBarRight extends JPanel implements IListener {
 
     private void createElements() {
         
-        stockpile = new JStockPile(rm);
-        diePanel = new BattleDiePanel(rm);
-        statusBar = new JStatusBar(rm, 0);
+        stockpile = new JStockPile(idm);
+        diePanel = new BattleDiePanel(idm);
+        statusBar = new JStatusBar(idm, 0);
     }
     
     private void initUI() {
@@ -41,11 +39,11 @@ public class JGameBarRight extends JPanel implements IListener {
         
         add(Box.createVerticalGlue());
         
-        add(Box.createRigidArea(new Dimension(0,100)));
+        add(Box.createRigidArea(new Dimension(0,idm.scale(100))));
         add(stockpile);
-        add(Box.createRigidArea(new Dimension(0,115)));
+        add(Box.createRigidArea(new Dimension(0,idm.scale(115))));
         add(diePanel);
-        add(Box.createRigidArea(new Dimension(0,190)));
+        add(Box.createRigidArea(new Dimension(0,idm.scale(190))));
         add(statusBar);
     }
 

@@ -13,19 +13,19 @@ public class ActionDicePanel extends JPanel implements IListener {
     private static final int NUM_DICES = 3;
     private JDie[] dice;
     
-    public ActionDicePanel(DieDisplayManager ddm, ActionDieClickListener listener) {
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 0));
-        initUI(ddm, listener);
+    public ActionDicePanel(IDisplayManager idm) {
+        this.setLayout(new FlowLayout(FlowLayout.CENTER, idm.scale(15), 0));
+        initUI(idm);
         setOpaque(false);
     }
 
-    private void initUI(DieDisplayManager ddm, ActionDieClickListener listener) {
+    private void initUI(IDisplayManager idm) {
         
         dice = new JDie[NUM_DICES];
         
         for(int i = 0; i < NUM_DICES; i++) {
-            dice[i] = new JDie(i,ddm);
-            dice[i].addActionListener(listener);
+            dice[i] = new JDie(i,idm.getActionDiceDisplayManager());
+            dice[i].addActionListener(idm.getActionDieClickListener());
             add(dice[i]);
         }
     }

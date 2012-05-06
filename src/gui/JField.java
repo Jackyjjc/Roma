@@ -13,18 +13,21 @@ public class JField extends JPanel implements IListener {
 
     private static int NUM_CARDS = 6;
     
+    private FieldClickListener listener;
+    private IDisplayManager idm;
     private CardDisplayManager cdm;
     private JCard[] cards;
     private int playerId;
     
-    public JField(int playerId, CardDisplayManager cdm, FieldClickListener listener) {
+    public JField(int playerId, IDisplayManager idm) {
         
-        this.cdm = cdm;
+        this.cdm = idm.getCardDisplayManager();
+        this.listener = idm.getFieldClickListener();
         this.playerId = playerId;
         
-        this.setLayout(new FlowLayout(FlowLayout.CENTER, 17, 0));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER,idm.scale(17), 0));
         
-        initUI(listener);
+        initUI();
         setOpaque(false);
     }
     
@@ -36,7 +39,7 @@ public class JField extends JPanel implements IListener {
         setCards(state.getPlayerCardsOnDiscs(playerId));
     }
     
-    private void initUI(FieldClickListener listener) {
+    private void initUI() {
         
         JCard card;
         cards = new JCard[NUM_CARDS];

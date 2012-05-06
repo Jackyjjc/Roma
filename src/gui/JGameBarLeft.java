@@ -12,33 +12,27 @@ import controller.ActionDieClickListener;
 
 public class JGameBarLeft extends JPanel implements IListener {
 
-    private CardDisplayManager cdm;
-    private DieDisplayManager ddm;
-    private ResourceManager rm;
+    private IDisplayManager idm;
 
     private JStatusBar statusBar;
     private JPiles piles;
     private ActionDicePanel dicePanel;
     
-    public JGameBarLeft(ResourceManager rm, DieDisplayManager ddm, 
-                        InputHandler handler, CardDisplayManager cdm) {
-
-        this.rm = rm;
-        this.ddm = ddm;
-        this.cdm = cdm;
+    public JGameBarLeft(IDisplayManager idm) {
         
-        createElements(handler);
+        this.idm = idm;
+        createElements();
         initUI();
         setOpaque(false);
     }
 
-    private void createElements(InputHandler handler) {
+    private void createElements() {
         
-        ActionDieClickListener adListener = new ActionDieClickListener(handler);
+
         
-        statusBar = new JStatusBar(rm,1);
-        dicePanel = new ActionDicePanel(ddm, adListener);
-        piles = new JPiles(rm,cdm);
+        statusBar = new JStatusBar(idm,1);
+        dicePanel = new ActionDicePanel(idm);
+        piles = new JPiles(idm);
     }
     
     private void initUI() {
@@ -46,10 +40,10 @@ public class JGameBarLeft extends JPanel implements IListener {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
         add(statusBar);
-        add(Box.createRigidArea(new Dimension(0,90)));
+        add(Box.createRigidArea(new Dimension(0,idm.scale(90))));
         add(dicePanel);
         add(piles);
-        add(Box.createRigidArea(new Dimension(0,135)));
+        add(Box.createRigidArea(new Dimension(0,idm.scale(135))));
     }
     
     public void updateView(IGameDisplayState state) {
