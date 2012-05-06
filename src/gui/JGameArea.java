@@ -4,7 +4,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import model.IGameDisplayState;
-import view.InputHandler;
+import model.InputHandler;
 import controller.DiscClickListener;
 import controller.FieldClickListener;
 import controller.HandClickListener;
@@ -19,7 +19,6 @@ public class JGameArea extends JPanel implements IListener {
     private JField field0;
     private JField field1;
     private JDiscList discs;
-    
     
     public JGameArea(ResourceManager rm, CardDisplayManager cdm, InputHandler handler) {
         

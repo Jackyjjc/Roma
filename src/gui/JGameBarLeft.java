@@ -7,7 +7,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import model.IGameDisplayState;
-import view.InputHandler;
+import model.InputHandler;
 import controller.ActionDieClickListener;
 
 public class JGameBarLeft extends JPanel implements IListener {

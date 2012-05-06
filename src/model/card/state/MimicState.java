@@ -28,6 +28,8 @@ public class MimicState extends CardState implements ICardState {
         
         if(checker.isValidCard(target)) {
             AbstractCard mimic = factory.create(target.getName());
+            mimic.setOwner(getOwner().getOwner());
+            mimic.setDisc(getOwner().getDisc());
             mimic.activate();
             succeed = true;
             

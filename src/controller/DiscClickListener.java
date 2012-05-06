@@ -21,7 +21,7 @@ public class DiscClickListener implements ActionListener {
         
         disc = (JDisc) e.getSource();
 
-        handler.addDieUseInput(disc.getIndex());
+        //handler.addDieUseInput(disc.getIndex());
     }
 
 }

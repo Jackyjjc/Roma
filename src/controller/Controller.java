@@ -16,7 +16,5 @@ public class Controller {
         notifier.addListener(view);
         view.pack();
         view.setVisible(true);
-        g.run();
-        
     }
 }

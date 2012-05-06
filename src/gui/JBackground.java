@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import model.IGameDisplayState;
-import view.InputHandler;
+import model.InputHandler;
 
 public class JBackground extends JPanel implements IListener {
     
