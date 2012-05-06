@@ -60,6 +60,7 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IL
         while(!activatedCard.isFinishActivate()) {
             activatedCard.runState();
         }
+        activatedCard = null;
     }
 
     public void giveAttackDieRoll(int roll) {

@@ -7,7 +7,7 @@ import model.card.AbstractCard;
 import framework.Rules;
 
 public class InputHandler {
-
+    
     private Game g;
     private IListener inputListener;
     
@@ -17,6 +17,7 @@ public class InputHandler {
     private int intInput;
     private boolean boolInput;
     private int battleDieInput;
+    private int dieUsedInput;
     
     public InputHandler(Game g) {
         this.g = g;
@@ -136,6 +137,16 @@ public class InputHandler {
         if(inputListener != null) {
             inputListener.update();
         }
+    }
+
+    public void addDieUseInput(int index) {
+        if(index >= 0 && index < Rules.NUM_DICE_DISCS + 2) {
+            dieUsedInput = index;
+        }
+    }
+
+    public int getDieUsedInput() {
+        return dieUsedInput;
     }
     
 }

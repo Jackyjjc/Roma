@@ -18,7 +18,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
     
     private static final boolean DECK = true;
     
-    private State state;
+    private IGameRunState state;
     
     private ICardStorage deck;
     private ICardStorage discard;
@@ -91,8 +91,12 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
         return numPlayers;
     }
     
-    void setState(State state) {
+    void setState(IGameRunState state) {
         this.state = state;
+    }
+    
+    void runState(IGameRunState state) {
+        state.run();
     }
     
     public DiceManager getDiceManager() {
@@ -230,7 +234,6 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
         IPlayer p = getPlayer(playerNum);
         int numDiscs = p.getField().getNumDiscs();
         AbstractCard card = null;
-        IDisc disc = null;
         
         for (int i = 0; i < numDiscs; i++) {
             if(discCards[i] != Card.NOT_A_CARD) {

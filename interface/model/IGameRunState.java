@@ -1,6 +1,6 @@
 package model;
 
-public interface State {
+public interface IGameRunState {
 
     public void run();
     
