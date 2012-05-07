@@ -12,17 +12,17 @@ import framework.interfaces.activators.ForumActivator;
 
 /**
  * 
- * Test the basic functionality of Basilica
+ * Test the basic functionality of Templum
  * 
  * @author Jacky CHEN
  *
  */
 
-public class CardActivatorBasilicaBasicTest extends Test {
+public class CardActivatorTemplumBasicTest extends Test {
 
     @Override
     public String getShortDescription() {
-        return "Test the basic functionality of Basilica";
+        return "Test the basic functionality of Templum";
     }
 
     @Override
@@ -39,6 +39,7 @@ public class CardActivatorBasilicaBasicTest extends Test {
         Collection<Card> hand = new ArrayList<Card>();
         hand.add(Card.FORUM);
         hand.add(Card.BASILICA);
+        hand.add(Card.TEMPLUM);
         
         gameState.setPlayerHand(0, hand);
         
@@ -57,13 +58,16 @@ public class CardActivatorBasilicaBasicTest extends Test {
         move.placeCard(Card.BASILICA, Rules.DICE_DISC_1);
         assert(gameState.getPlayerSestertii(0) == 19);
         
+        move.placeCard(Card.TEMPLUM, Rules.DICE_DISC_3);
+        
         ForumActivator activator = (ForumActivator) move.chooseCardToActivate(Rules.DICE_DISC_2);
         activator.chooseActionDice(2);
-        activator.chooseActivateTemplum(false);
+        activator.chooseActivateTemplum(true);
+        activator.chooseActionDice(2);
         activator.complete();
         
-        assert(gameState.getPlayerVictoryPoints(0) == 14);
-        assert(gameState.getPoolVictoryPoints() == 12);
+        assert(gameState.getPlayerVictoryPoints(0) == 16);
+        assert(gameState.getPoolVictoryPoints() == 10);
         
     }
 
