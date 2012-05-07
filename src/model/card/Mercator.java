@@ -8,10 +8,10 @@ import framework.cards.Card;
 
 class Mercator extends AbstractCard implements IAmountChecker {
     
+    private static final int TRADING_PRICE = 2;
     private static final int TRADING_REWARD = 1;
     private static final int COST = 7;
     private static final int DEFENCE = 2;
-    private static final int TRADING_PRICE = 2;
     
     Mercator(ICardResources cardResources, IGameIO gameIO) {
         super(Card.MERCATOR, CardType.CHARACTER,
