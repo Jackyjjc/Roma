@@ -7,6 +7,7 @@ import model.Die;
 import model.ICardResources;
 import model.IDisc;
 import model.IDiscListener;
+import model.IField;
 import model.IGameIO;
 import model.IListener;
 import model.IPlayer;
@@ -37,9 +38,25 @@ class Forum extends AbstractCard implements IDieChecker, IDiscListener {
         
         boolean succeed = super.lay(disc);
         
-        disc.addDiscListener(this);
+        IField field = getOwner().getField();
+        
+        for(IDisc d : field) {
+            d.addDiscListener(this);
+        }
 
         return succeed;
+    }
+    
+    @Override
+    public void disCard() {
+        
+        IField field = getOwner().getField();
+        
+        for(IDisc d : field) {
+            d.removeDiscListener(this);
+        }
+        
+        super.disCard();
     }
 
     public void activate() {
