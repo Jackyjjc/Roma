@@ -59,6 +59,6 @@ public class JHand extends JPanel implements IListener {
             add(displayCard);
         }
         
-        validate();
+        revalidate();
     }
 }

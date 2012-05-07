@@ -67,8 +67,7 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
     
     public void updateView(IGameDisplayState state) {
         background.updateView(state);
-        update(getGraphics());
-//        /paintAll(getGraphics());
+        repaint();
     }
     
     private double calculateScalingFactor() {

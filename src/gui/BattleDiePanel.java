@@ -25,6 +25,7 @@ public class BattleDiePanel extends JPanel implements IListener {
 
     public void updateView(IGameDisplayState state) {
         battleDie.setValue(6);
+        revalidate();
     }
     
 }

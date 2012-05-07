@@ -29,7 +29,7 @@ public class JStockPile extends JPanel implements IListener {
 
     public void updateView(IGameDisplayState state) {
         poolVP = state.getPoolVictoryPoints();
-        validate();
+        revalidate();
     }
     
     @Override

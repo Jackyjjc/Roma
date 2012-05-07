@@ -50,6 +50,8 @@ public class JStatusBar extends JPanel implements IListener {
         
         this.money = state.getPlayerSestertii(player);
         this.vp = state.getPlayerVictoryPoints(player);
+        
+        repaint();
     }
     
     @Override

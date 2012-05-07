@@ -50,7 +50,7 @@ public class JField extends JPanel implements IListener {
         }
         
         setCards(cards);
-        validate();
+        repaint();
     }
     
     private void initUI() {

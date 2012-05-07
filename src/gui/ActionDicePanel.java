@@ -37,5 +37,7 @@ public class ActionDicePanel extends JPanel implements IListener {
         for(int i = 0; i < NUM_DICES; i++) {
             dice[i].setValue(actionDice[i]);
         }
+        
+        revalidate();
     }
 }
