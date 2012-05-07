@@ -53,6 +53,8 @@ class Turris extends AbstractCard implements IDiscListener {
         }
         
         affectedCards.clear();
+        
+        super.disCard();
     }
     
     public void update(IDisc disc) {

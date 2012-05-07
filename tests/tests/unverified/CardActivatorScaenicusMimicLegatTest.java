@@ -32,7 +32,8 @@ public class CardActivatorScaenicusMimicLegatTest extends Test {
 		assert(gameState.getPoolVictoryPoints() == 11);
 
 		//Place cards on player discs
-		Card[] cardsOnCurrentPlayerDisc = {Card.NOT_A_CARD,
+		Card[] cardsOnCurrentPlayerDisc = {
+		        Card.NOT_A_CARD,
 				Card.SCAENICUS,
 				Card.AESCULAPINUM,
 				Card.ARCHITECTUS,
@@ -40,7 +41,8 @@ public class CardActivatorScaenicusMimicLegatTest extends Test {
 				Card.LEGAT,
 				Card.NOT_A_CARD};
 		gameState.setPlayerCardsOnDiscs(0, cardsOnCurrentPlayerDisc);
-		Card[] cardsOnOpponentPlayerDisc = {Card.NOT_A_CARD,
+		Card[] cardsOnOpponentPlayerDisc = {
+		        Card.NOT_A_CARD,
 				Card.LEGAT,
 				Card.CONSILIARIUS,
 				Card.CONSUL,
