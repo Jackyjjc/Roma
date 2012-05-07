@@ -9,7 +9,7 @@ import framework.Rules;
 public class InputHandler {
     
     private Game g;
-    private IListener inputListener;
+    private List<IListener> inputListeners;
     
     private List<AbstractCard> cardInputQueue;
     private List<IDisc> discInputQueue;
@@ -28,6 +28,7 @@ public class InputHandler {
         intInput = 0;
         boolInput = false;
         battleDieInput = 0;
+        this.inputListeners = new ArrayList<IListener>();
     }
     
     public void addCardInput(int playerId, int index) {
@@ -38,6 +39,8 @@ public class InputHandler {
            && index >= 0 && index < currentPlayer.getHand().size()) {
             
             cardInputQueue.add(currentPlayer.getHand().getCard(index));
+            
+            System.out.println(currentPlayer.getHand().getCard(index).getName());
             
             notifyListener();
         }
@@ -88,7 +91,6 @@ public class InputHandler {
             
             notifyListener();
         }
-        
     }
     
     public Die getDieInput() {
@@ -129,13 +131,17 @@ public class InputHandler {
         return battleDieInput;
     }
 
-    public void setInputListener(IListener l) {
-        this.inputListener = l;
+    public void addInputListener(IListener l) {
+        inputListeners.add(l);
+    }
+    
+    public void removeInputListener(IListener l) {
+        inputListeners.remove(l);
     }
     
     private void notifyListener() {
-        if(inputListener != null) {
-            inputListener.update();
+        for(IListener l : inputListeners) {
+            l.update();
         }
     }
 

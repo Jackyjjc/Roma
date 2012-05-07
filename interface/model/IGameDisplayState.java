@@ -23,4 +23,6 @@ public interface IGameDisplayState {
     
     public int getPoolVictoryPoints ();
     
+    public int getWhoseTurn();
+    
 }

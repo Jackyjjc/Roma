@@ -34,8 +34,8 @@ public class JPiles extends JPanel implements IListener {
         List<Card> discardPile = state.getDiscard();
         List<Card> deck = state.getDeck();
         
-        deckThickness = deck.size() / 10;
-        discardThickness = discardPile.size() / 10;
+        deckThickness = deck.size()/10;
+        discardThickness = discardPile.size()/10;
         
         if(discardPile.size() > 0) {
             discardTopCard = discardPile.get(0);
@@ -54,11 +54,11 @@ public class JPiles extends JPanel implements IListener {
         
         int i = 0;
         while(i < deckThickness - 1) {
-            g.drawImage(rm.card, idm.scale(30) + i, 0, null);
+            g.drawImage(rm.card, idm.scale(30 + i*3), 0, null);
             i++;
         }
         
-        g.drawImage(rm.card, idm.scale(30) + i, 0, null);
+        g.drawImage(rm.card, idm.scale(30 + i*3), 0, null);
         
         //this is the grave yard
         

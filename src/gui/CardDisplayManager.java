@@ -55,6 +55,10 @@ public class CardDisplayManager {
         maps.put(Card.VELITES, rm.velites);
     }
     
+    public BufferedImage getFaceDownCard() {
+        return rm.card;
+    }
+    
     public BufferedImage getCard(Card card) {
         
         BufferedImage img = rm.blank;

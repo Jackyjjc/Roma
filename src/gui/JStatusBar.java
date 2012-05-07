@@ -18,6 +18,8 @@ public class JStatusBar extends JPanel implements IListener {
     private IDisplayManager idm;
     private ResourceManager rm;
     
+    private int panelId;
+    
     private int player;
     private int money;
     private int vp;
@@ -27,6 +29,7 @@ public class JStatusBar extends JPanel implements IListener {
         this.rm = idm.getResourceManager();
         this.idm = idm;
         this.player = player;
+        this.panelId = player;
         this.money = 0;
         this.vp = 0;
         
@@ -38,14 +41,20 @@ public class JStatusBar extends JPanel implements IListener {
     }
     
     public void updateView(IGameDisplayState state) {
+
+        if(panelId == 0) {
+            player = state.getWhoseTurn();
+        } else {
+            player = (state.getWhoseTurn() == 0) ? 1 : 0;
+        }
         
         this.money = state.getPlayerSestertii(player);
         this.vp = state.getPlayerVictoryPoints(player);
-        
     }
     
     @Override
     protected void paintComponent(Graphics g) {
+
         if(player == 0) {
             g.drawImage(rm.player1, 
                         0, 0, 

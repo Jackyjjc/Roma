@@ -10,16 +10,18 @@ import framework.cards.Card;
 
 public class JHand extends JPanel implements IListener {
 
+    private final boolean FACE_UP = true;
+    private final boolean FACE_DOWN = false;
+    
     private final HandClickListener listener;
     private final CardDisplayManager cdm;
-    private int handSize;
-    private int playerId;
+    private int panelId;
+    private int currentPlayer;
     
-    public JHand(int playerId, IDisplayManager idm) {
+    public JHand(int panelID, IDisplayManager idm) {
         
         this.cdm = idm.getCardDisplayManager();
-        handSize = 0;
-        this.playerId = playerId;
+        this.panelId = panelID;
         this.listener = idm.getHandClickListener();
         
         setOpaque(false);
@@ -27,44 +29,36 @@ public class JHand extends JPanel implements IListener {
     
     public void updateView(IGameDisplayState state) {
         
-        if(state.getPlayerHand(playerId) instanceof List) {
-            List<Card> cards = (List<Card>) state.getPlayerHand(playerId);
-            setHand(cards);
+        List<Card> cards;
+        this.currentPlayer = state.getWhoseTurn();
+        
+        if (panelId == 0) {
+            cards = (List<Card>) state.getPlayerHand(currentPlayer);
+            setHand(cards, FACE_UP);
+        } else {
+            cards = (List<Card>) state.getPlayerHand((currentPlayer + 1) % 2);
+            setHand(cards, FACE_DOWN);
         }
     }
     
     public int getPlayerId() {
-        return playerId;
+        return currentPlayer;
     }
     
-    public void setHand(List<Card> cards) {
+    public void setHand(List<Card> cards, boolean display) {
         
-        int inputLength = cards.size();
-        int currentLength = handSize;
-        JCard card;
+        removeAll();
         
-        for(int i = 0; i < currentLength; i++) {
-            card = (JCard) getComponent(i);
-            card.setIndex(i);
-            card.setCard(cards.get(i));
+        for(int i = 0; i < cards.size(); i++) {
+            JCard displayCard = new JCard(cdm, i, cards.get(i));
+            if (!display) {
+                displayCard.setCard();
+            } else {
+                displayCard.addActionListener(listener);
+            }
+            add(displayCard);
         }
         
-        if(currentLength < inputLength) {
-            
-            for(int i = handSize; i < inputLength; i++) {
-                card = new JCard(cdm, i, cards.get(i));
-                card.addActionListener(listener);
-                add(card);
-                handSize++;
-            }
-            
-        } else if(currentLength > inputLength){
-            
-            for(int i = inputLength; i < currentLength; i++) {
-                remove(i);
-                handSize--;
-            }
-            
-        }
+        validate();
     }
 }

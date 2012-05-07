@@ -48,8 +48,9 @@ public class JGameBarRight extends JPanel implements IListener {
     }
 
     public void updateView(IGameDisplayState state) {
-        // TODO Auto-generated method stub
-        
+        stockpile.updateView(state);
+        diePanel.updateView(state);
+        statusBar.updateView(state);
     }
     
 }

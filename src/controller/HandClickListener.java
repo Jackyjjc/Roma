@@ -23,7 +23,7 @@ public class HandClickListener implements ActionListener {
         
         card = (JCard) e.getSource();
         hand = (JHand) card.getParent();
-
+        
         handler.addCardInput(hand.getPlayerId(), card.getIndex());
     }
 

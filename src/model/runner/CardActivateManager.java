@@ -49,7 +49,7 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IL
     public CardActivateManager(IGameIO gameIO, IPlayerManager manager) {
         this.handler = gameIO.getInputHandler();
         this.manager = manager;
-        this.handler.setInputListener(this);
+        this.handler.addInputListener(this);
     }
 
     public void chooseCardFromPile(int indexOfCard) {
@@ -130,7 +130,9 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IL
     }
 
     public void update() {
-        this.activatedCard.runState();
+        if(activatedCard != null) {
+            activatedCard.runState();
+        }
     }
     
 }

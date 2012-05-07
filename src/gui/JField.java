@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.FlowLayout;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -17,13 +18,15 @@ public class JField extends JPanel implements IListener {
     private IDisplayManager idm;
     private CardDisplayManager cdm;
     private JCard[] cards;
-    private int playerId;
+    private int panelId;
+    private int currentPlayer;
     
-    public JField(int playerId, IDisplayManager idm) {
+    public JField(int panelId, IDisplayManager idm) {
         
         this.cdm = idm.getCardDisplayManager();
         this.listener = idm.getFieldClickListener();
-        this.playerId = playerId;
+        this.panelId = panelId;
+        this.currentPlayer = 0;
         
         this.setLayout(new FlowLayout(FlowLayout.CENTER,idm.scale(17), 0));
         
@@ -32,11 +35,22 @@ public class JField extends JPanel implements IListener {
     }
     
     public int getPlayerId() {
-        return playerId;
+        return currentPlayer;
     }
     
     public void updateView(IGameDisplayState state) {
-        setCards(state.getPlayerCardsOnDiscs(playerId));
+        
+        Card[] cards;
+        this.currentPlayer = state.getWhoseTurn();
+        
+        if (panelId == 0) {
+            cards = state.getPlayerCardsOnDiscs(currentPlayer);
+        } else {
+            cards = state.getPlayerCardsOnDiscs((currentPlayer + 1) % 2);
+        }
+        
+        setCards(cards);
+        validate();
     }
     
     private void initUI() {

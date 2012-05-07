@@ -18,8 +18,6 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
     
     private static final boolean DECK = true;
     
-    private IGameRunState state;
-    
     private ICardStorage deck;
     private ICardStorage discard;
     private DiceManager diceManager;
@@ -89,14 +87,6 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 
     public int getNumPlayers() {
         return numPlayers;
-    }
-    
-    void setState(IGameRunState state) {
-        this.state = state;
-    }
-    
-    void runState(IGameRunState state) {
-        state.run();
     }
     
     public DiceManager getDiceManager() {
