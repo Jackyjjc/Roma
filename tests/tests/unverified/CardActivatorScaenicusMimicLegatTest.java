@@ -42,7 +42,7 @@ public class CardActivatorScaenicusMimicLegatTest extends Test {
 		gameState.setPlayerCardsOnDiscs(0, cardsOnCurrentPlayerDisc);
 		Card[] cardsOnOpponentPlayerDisc = {Card.NOT_A_CARD,
 				Card.LEGAT,
-				Card.CONSILIARUS,
+				Card.CONSILIARIUS,
 				Card.CONSUL,
 				Card.NOT_A_CARD,
 				Card.NOT_A_CARD,

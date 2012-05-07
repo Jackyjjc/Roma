@@ -38,7 +38,7 @@ public class CardActivatorNeroBasicTest extends Test {
         
         gameState.setPlayerHand(0, hand);
         
-        //the opponent's field would have 3 character cards
+        //the opponent's field would have 3 building cards
         Card[] field = new Card[Rules.NUM_DICE_DISCS];
         for(int i = 0; i < field.length; i++) {
             field[i] = Card.NOT_A_CARD;
