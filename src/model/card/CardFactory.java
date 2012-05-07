@@ -33,7 +33,7 @@ public class CardFactory {
             case CENTURIO:
                 card = new Centurio(cardResources, gameIO);
                 break;
-            case CONSILIARUS:
+            case CONSILIARIUS:
                 card = new Consiliarius(cardResources, gameIO);
                 break;
             case CONSUL:

@@ -18,7 +18,8 @@ public class Disc implements IDisc {
     private IDisc prev;
     private IDisc next;
     
-    public Disc () {
+    public Disc (int index) {
+        this.index = index;
         isBlocked = false;
         discListeners = new ArrayList<IDiscListener>();
     }

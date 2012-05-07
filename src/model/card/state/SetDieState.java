@@ -25,7 +25,7 @@ public class SetDieState extends CardState implements ICardState {
         
         if(checker.isValidDie(die)) {
             if(die.getValue() + amount >= 0 && die.getValue() + amount <= 6) {
-                die.setValue(amount);
+                die.setValue(die.getValue() + amount);
                 succeed = true;
                 
                 changeState();

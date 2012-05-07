@@ -72,7 +72,7 @@ public class Field implements IField {
         discs = new Disc[NUM_DISCS];
         
         for(int i = 0; i < discs.length; i++) {
-            discs[i] = new Disc();
+            discs[i] = new Disc(i);
             discs[i].setOwner(player);
         }
         

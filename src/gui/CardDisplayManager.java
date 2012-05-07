@@ -31,7 +31,7 @@ public class CardDisplayManager {
         maps.put(Card.ARCHITECTUS, rm.architectus);
         maps.put(Card.BASILICA, rm.basilica);
         maps.put(Card.CENTURIO, rm.centurio);
-        maps.put(Card.CONSILIARUS, rm.consiliarus);
+        maps.put(Card.CONSILIARIUS, rm.consiliarus);
         maps.put(Card.CONSUL, rm.consul);
         maps.put(Card.ESSEDUM, rm.essedum);
         maps.put(Card.FORUM, rm.forum);

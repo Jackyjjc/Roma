@@ -40,7 +40,7 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
 CenturioActivator, ConsiliariusActivator, ConsulActivator, EssedumActivator, ForumActivator, GladiatorActivator,
 HaruspexActivator, LegatActivator, LegionariusActivator, MachinaActivator, MercatorActivator, MercatusActivator,
 NeroActivator, OnagerActivator, PraetorianusActivator, ScaenicusActivator, SenatorActivator, SicariusActivator,
-TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IListener{
+TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IListener {
 
     private IPlayerManager manager;
     private InputHandler handler;

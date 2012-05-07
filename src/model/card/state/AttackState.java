@@ -21,11 +21,10 @@ public class AttackState extends CardState implements ICardState {
         
         if(checker.isValidCard(target)) {
             if(target.getDefence() <= getDieValue()) {
-                target.disCard();
-                succeed = true;
-                
-                changeState();
+                target.disCard(); 
             }
+            succeed = true;
+            changeState();
         }
         
         return succeed;

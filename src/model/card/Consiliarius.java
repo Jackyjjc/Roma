@@ -17,7 +17,7 @@ class Consiliarius extends AbstractCard implements ICardChecker{
     private List<AbstractCard> charCards;
     
     Consiliarius(ICardResources cardResources, IGameIO gameIO) {
-        super(Card.CONSILIARUS, CardType.CHARACTER,
+        super(Card.CONSILIARIUS, CardType.CHARACTER,
                COST, DEFENCE, cardResources, gameIO);
 
     }
