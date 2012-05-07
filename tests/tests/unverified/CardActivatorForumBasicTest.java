@@ -47,6 +47,9 @@ public class CardActivatorForumBasicTest extends Test {
             field[i] = Card.NOT_A_CARD;
         }
         
+        gameState.setPlayerCardsOnDiscs(0, field);
+        gameState.setPlayerCardsOnDiscs(1, field);
+        
         gameState.setActionDice(new int[] {2,2,2});
         
         //================ test starts ===================
