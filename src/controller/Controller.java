@@ -28,31 +28,15 @@ public class Controller {
         view.pack();
         view.setVisible(true);
         
-//        getName(1);
-//        getAge(1);
-//        getName(2);
-//        getAge(2);
-        
         notifier.notifyListeners();
         
         dealCard(g);
         
         JOptionPane.showMessageDialog(null, "Please select " +SWAP_NUM_CARDS +" cards to swap with your opponent! :) " , "Roma", 1);
         
-        //SwapCard.initiate(g);
+        SwapCard.initiate(g);
         //LayCard.initiate(g);
         
-//        notifier.notifyListeners();
-//        
-//        g.advanceTurn();
-//        
-//        //asdf.lay(g.getCurrentPlayer().getField().getDisc(1));
-//        
-//        notifier.notifyListeners();
-//        
-//        JOptionPane.showMessageDialog(null, "Please select " +SWAP_NUM_CARDS +" cards to swap with your opponent! :) " , "Roma", 1);
-//        
-//        notifier.notifyListeners();
     }
     
     public static String getName(int playerId) {

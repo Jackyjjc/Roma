@@ -5,12 +5,14 @@ import java.util.List;
 
 import model.card.AbstractCard;
 import framework.Rules;
+import framework.cards.Card;
 
 public class InputHandler {
     
     private Game g;
     private List<IListener> inputListeners;
     private List<IListener> actionDiceInputListeners;
+    private ISwapCardInputListener swapListener;
     
     private List<AbstractCard> cardInputQueue;
     private List<IDisc> discInputQueue;
@@ -147,7 +149,15 @@ public class InputHandler {
             l.update();
         }
     }
-
+    
+    public void addSwapListener(ISwapCardInputListener l) {
+        swapListener = l;
+    }
+    
+    public void removeSwapListener() {
+        swapListener = null;
+    }
+    
     public void addDieInputListener(IListener l) {
         inputListeners.add(l);
     }
@@ -186,4 +196,12 @@ public class InputHandler {
         card = null;
         
     }
+    
+    public void addSwapCardInput(Card[] cards) {
+        if(swapListener != null) {
+            swapListener.update(cards);
+        }
+    }
+    
+    
 }

@@ -5,14 +5,13 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import model.IGameDisplayState;
+import model.InputHandler;
 import controller.ActionDieClickListener;
 import controller.DiscClickListener;
 import controller.FieldClickListener;
-import controller.FieldTransferHandler;
 import controller.HandClickListener;
-
-import model.IGameDisplayState;
-import model.InputHandler;
+import controller.SwapConfirmListener;
 
 public class GraphicalView extends JFrame implements IListener, IDisplayManager {
     
@@ -33,7 +32,8 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
     private HandClickListener hListener;
     private DiscClickListener dListener;
     private ActionDieClickListener adListener;
-    private FieldTransferHandler fieldTransferHandler;
+    private InputHandler handler;
+    private SwapConfirmListener confimrListener;
 
     public GraphicalView(InputHandler handler) {
         
@@ -96,7 +96,8 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
         this.hListener = new HandClickListener(handler);
         this.dListener = new DiscClickListener(handler);
         this.adListener = new ActionDieClickListener(handler);
-        this.fieldTransferHandler = new FieldTransferHandler(handler);
+        this.confimrListener = new SwapConfirmListener(handler);
+        this.handler = handler;
     }
 
     public int scale(int original) {
@@ -140,8 +141,12 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
         return hListener;
     }
 
-    public FieldTransferHandler getFieldTransferHandler() {
-        return fieldTransferHandler;
+    public InputHandler getInputHandler() {
+        return handler;
+    }
+    
+    public SwapConfirmListener getConfirmListener() {
+        return confimrListener;
     }
     
 }

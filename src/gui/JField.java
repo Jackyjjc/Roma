@@ -1,14 +1,14 @@
 package gui;
 
 import java.awt.FlowLayout;
-import java.util.List;
+import java.awt.dnd.DropTarget;
 
 import javax.swing.JPanel;
-import javax.swing.TransferHandler;
 
 import model.IGameDisplayState;
+import controller.CardDropTargetListener;
+import controller.CardTransferHandler;
 import controller.FieldClickListener;
-import controller.FieldTransferHandler;
 import framework.cards.Card;
 
 
@@ -64,13 +64,11 @@ public class JField extends JPanel implements IListener {
         for(int i = 0; i < cards.length; i++) {
             card = new JCard(cdm, i, Card.NOT_A_CARD);
             //card.addActionListener(listener);
-            card.setTransferHandler(new TransferHandler("E:\\JavaWorkspace\\ROMA\\src\\resource\\bd3.png"));
-            card.setEnabled(true);
+            card.setTransferHandler(new CardTransferHandler());
+            card.setDropTarget(new DropTarget(this, new CardDropTargetListener(card, idm.getInputHandler())));
             add(card);
             cards[i] = card;
         }
-        
-        setTransferHandler(idm.getFieldTransferHandler());
     }
     
     private void setCards(Card[] cardList) {

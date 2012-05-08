@@ -12,6 +12,7 @@ import javax.swing.TransferHandler;
 import model.IGameDisplayState;
 import controller.CardTransferHandler;
 import controller.HandClickListener;
+import controller.MouseDraggingAdapter;
 import framework.cards.Card;
 
 public class JHand extends JPanel implements IListener {
@@ -62,8 +63,7 @@ public class JHand extends JPanel implements IListener {
             if (!display) {
                 displayCard.setCard();
             } else {
-                displayCard.addMouseListener(new DragMouseAdapter());
-                //displayCard.addActionListener(listener);
+                displayCard.addMouseListener(new MouseDraggingAdapter());
                 displayCard.setTransferHandler(new CardTransferHandler());
             }
             add(displayCard);
@@ -71,23 +71,5 @@ public class JHand extends JPanel implements IListener {
         
         
         revalidate();
-    }
-    
-    class DragMouseAdapter extends MouseAdapter {
-        
-        public void  mouseReleased(MouseEvent me) {
-            System.out.println("here mouse released");
-       }
-        
-        public void mousePressed(MouseEvent e) {
-            JComponent c = (JComponent) e.getSource();
-            TransferHandler handler = c.getTransferHandler();
-            
-            System.out.println(handler.getSourceActions(c) & TransferHandler.COPY);
-            System.out.println(e instanceof MouseEvent);
-            System.out.println(GraphicsEnvironment.isHeadless());
-            
-            handler.exportAsDrag(c, e, TransferHandler.COPY);
-        }
     }
 }

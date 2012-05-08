@@ -1,10 +1,11 @@
 package gui;
 
+import model.InputHandler;
 import controller.ActionDieClickListener;
 import controller.DiscClickListener;
 import controller.FieldClickListener;
-import controller.FieldTransferHandler;
 import controller.HandClickListener;
+import controller.SwapConfirmListener;
 
 public interface IDisplayManager {
 
@@ -28,5 +29,7 @@ public interface IDisplayManager {
     
     public HandClickListener getHandClickListener();
     
-    public FieldTransferHandler getFieldTransferHandler();
+    public InputHandler getInputHandler();
+    
+    public SwapConfirmListener getConfirmListener();
 }

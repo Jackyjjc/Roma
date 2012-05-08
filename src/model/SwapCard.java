@@ -4,8 +4,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import model.card.AbstractCard;
+import framework.cards.Card;
 
-public class SwapCard implements IListener {
+public class SwapCard implements ISwapCardInputListener {
 
     private Game g;
     private List<AbstractCard> cardsToSwap;
@@ -19,40 +20,29 @@ public class SwapCard implements IListener {
 
     public static void initiate (Game g) {
         SwapCard swapCard = new SwapCard(g);
-        g.getInputHandler().addInputListener(swapCard);
+        g.getInputHandler().addSwapListener(swapCard);
     }
     
-    public void update() {
+    public void update(Card[] cards) {
         
-        System.out.println(count);
+        IPlayer currentPlayer = g.getCurrentPlayer();
+        AbstractCard card = null;
         
-        if (count <= 1) {
-            AbstractCard card = g.getInputHandler().getCardInput();
-            g.getCurrentPlayer().getHand().removeCard(card);
+            
+        for (Card c : cards) {
+            card = currentPlayer.getHand().getCard(c);
             cardsToSwap.add(card);
-            g.getNotifier().notifyListeners();
+            currentPlayer.getHand().removeCard(card);
         }
+
+        g.advanceTurn();
         
-        if (count == 1) {
-            g.advanceTurn();
-            g.getNotifier().notifyListeners();
-        }
-        
-        if(count > 1 && count <= 3) {
-            AbstractCard card = g.getInputHandler().getCardInput();
-            g.getCurrentPlayer().getHand().removeCard(card);
-            cardsToSwap.add(card);
-            g.getNotifier().notifyListeners();
-        }
-    
-        if (count == 3) {
+        if(cardsToSwap.size() == 4) {
             swapCard();
-            g.advanceTurn();
-            g.getNotifier().notifyListeners();
-            g.getInputHandler().removeInputListener(this);
+            g.getInputHandler().removeSwapListener();
         }
         
-        count++;
+        g.getNotifier().notifyListeners();
     }
     
     private void swapCard() {

@@ -1,40 +1,36 @@
 package gui;
 
 import java.awt.Dimension;
-import java.awt.dnd.DropTarget;
-import java.awt.dnd.DropTargetDragEvent;
-import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
-import java.awt.dnd.DropTargetListener;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.JButton;
 
 import framework.cards.Card;
 
 
-public class JCard extends JLabel implements DropTargetListener {
+public class JCard extends JButton implements Transferable {
 
+    private static DataFlavor supportedData = null;
+    
     private CardDisplayManager cdm;
     
+    Card card = null;
     private int index;
 
     public JCard(CardDisplayManager cdm, int index, Card card) {
 
         this.cdm = cdm;
         this.index = index;
+        this.card = card;
         
         setPreferredSize(new Dimension(cdm.getWidth(), cdm.getHeight()));
         setCard(card);
-
-        setDropTarget(new DropTarget(this, this));
-        setEnabled(true);
     }
     
     public void setCard() {
-        
         setOpaque(true);
-        
         setIcon(new ImageIcon(cdm.getFaceDownCard()));
     }
     
@@ -44,10 +40,12 @@ public class JCard extends JLabel implements DropTargetListener {
         
         if(card == Card.NOT_A_CARD) {
             setOpaque(false);
-            //setContentAreaFilled(false);
+            setContentAreaFilled(false);
         }
         
         setIcon(new ImageIcon(cdm.getCard(card)));
+        
+        this.card = card;
     }
     
     public void setIndex(int index) {
@@ -58,33 +56,66 @@ public class JCard extends JLabel implements DropTargetListener {
         return index;
     }
 
-    @Override
-    public void dragEnter(DropTargetDragEvent dtde) {
-        System.out.println("enter");
+    public static DataFlavor getSupportedDataFlavor() throws ClassNotFoundException {
         
-    }
+        if (supportedData == null) {
+            supportedData = new DataFlavor(DataFlavor.javaJVMLocalObjectMimeType);
+        }
 
-    @Override
-    public void dragExit(DropTargetEvent dte) {
-        System.out.println("exit");
+        return supportedData;
+    }
+    
+    public Object getTransferData(DataFlavor flavor) {
+
+        Object returnObject = null;
+        DataFlavor supportedData = null;
         
-    }
-
-    @Override
-    public void dragOver(DropTargetDragEvent dtde) {
-        System.out.println("over");
-    }
-
-    @Override
-    public void drop(DropTargetDropEvent dtde) {
-        System.out.println("drop");
+        try {
+            supportedData = getSupportedDataFlavor();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         
+        if(supportedData != null && flavor.equals(supportedData)) {
+            returnObject = this;
+        }
+        
+        return returnObject;
     }
 
-    @Override
-    public void dropActionChanged(DropTargetDragEvent dtde) {
-        // TODO Auto-generated method stub
+    public DataFlavor[] getTransferDataFlavors() {
+        
+        DataFlavor[] flavors = new DataFlavor[1];
+        
+        try {
+            flavors[0] = getSupportedDataFlavor();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+        return flavors;
+    }
+
+    public boolean isDataFlavorSupported(DataFlavor flavor) {
+        
+        boolean isSupported = false;
+        DataFlavor supportedFlavor = null;
+        
+        try {
+            supportedFlavor = getSupportedDataFlavor();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        
+        if(flavor.equals(supportedFlavor)) {
+            isSupported = true;
+        }
+        
+        return isSupported;
         
     }
     
+    public Card getCard() {
+        return card;
+    }
 }

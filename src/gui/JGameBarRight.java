@@ -16,6 +16,7 @@ public class JGameBarRight extends JPanel implements IListener {
     private JStockPile stockpile;
     private BattleDiePanel diePanel;
     private JStatusBar statusBar;
+    private SwapArea swapArea;
     
     public JGameBarRight(IDisplayManager idm) {
         
@@ -31,6 +32,7 @@ public class JGameBarRight extends JPanel implements IListener {
         stockpile = new JStockPile(idm);
         diePanel = new BattleDiePanel(idm);
         statusBar = new JStatusBar(idm, 0);
+        swapArea = new SwapArea(idm);
     }
     
     private void initUI() {
@@ -43,7 +45,8 @@ public class JGameBarRight extends JPanel implements IListener {
         add(stockpile);
         add(Box.createRigidArea(new Dimension(0,idm.scale(115))));
         add(diePanel);
-        add(Box.createRigidArea(new Dimension(0,idm.scale(190))));
+        add(Box.createRigidArea(new Dimension(0,idm.scale(60))));
+        add(swapArea);
         add(statusBar);
     }
 
