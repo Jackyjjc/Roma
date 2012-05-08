@@ -2,6 +2,7 @@ package controller;
 
 import gui.JCard;
 
+import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 
 import javax.swing.JComponent;
@@ -18,7 +19,17 @@ public class FieldTransferHandler extends TransferHandler {
     }
     
     @Override
+    public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
+        System.out.println("let me see");
+        
+        return true;
+    }
+    
+    @Override
     public boolean canImport(TransferHandler.TransferSupport support) {
+        
+        System.out.println("let me see");
+        
         return true;
     }
     

@@ -4,6 +4,7 @@ import java.awt.FlowLayout;
 import java.util.List;
 
 import javax.swing.JPanel;
+import javax.swing.TransferHandler;
 
 import model.IGameDisplayState;
 import controller.FieldClickListener;
@@ -62,11 +63,14 @@ public class JField extends JPanel implements IListener {
         
         for(int i = 0; i < cards.length; i++) {
             card = new JCard(cdm, i, Card.NOT_A_CARD);
-            card.addActionListener(listener);
-            card.setTransferHandler(idm.getFieldTransferHandler());
+            //card.addActionListener(listener);
+            card.setTransferHandler(new TransferHandler("E:\\JavaWorkspace\\ROMA\\src\\resource\\bd3.png"));
+            card.setEnabled(true);
             add(card);
             cards[i] = card;
         }
+        
+        setTransferHandler(idm.getFieldTransferHandler());
     }
     
     private void setCards(Card[] cardList) {
