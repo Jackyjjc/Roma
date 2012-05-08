@@ -3,44 +3,38 @@ package model;
 import model.card.AbstractCard;
 
 
-public class LayCard implements IListener {
+public class LayCard implements ILayCardInputListener {
 
+    private IPlayer firstPlayer;
     private Game g;
-    private AbstractCard card;
-    private IDisc disc;
     
     private LayCard(Game g) {
         this.g = g;
+        this.firstPlayer = g.getCurrentPlayer();
     }
 
     public static void initiate (Game g) {
-        LayCard swapCard = new LayCard(g);
-        g.getInputHandler().addInputListener(swapCard);
+        LayCard layCard = new LayCard(g);
+        g.getInputHandler().addLayCardListener(layCard);
     }
-    
-    public void update() {
-        // asdfasdf
-        if (card == null) {
-            card = g.getInputHandler().getCardInput();
-        } else {
-            disc = g.getInputHandler().getDiscInput();
-            card.setCost(0);
-            g.getCurrentPlayer().getHand().removeCard(card);
-            layCard();
-            card.setCost(card.getDefaultCost());
-            card = null;
-        }
 
+    public void layCard(int fromIndex, int toIndex) {
+
+        IPlayer currentPlayer = g.getCurrentPlayer();
+        AbstractCard card = currentPlayer.getHand().getCard(fromIndex);
+        IDisc disc = currentPlayer.getField().getDisc(toIndex);
+        
+        g.getCurrentPlayer().getHand().removeCard(card);
+        card.setCost(0);
+        card.lay(disc);
+        card.setCost(card.getDefaultCost());
+        
         if (g.getCurrentPlayer().getHand().size() == 0) {
             g.advanceTurn();
-            g.getNotifier().notifyListeners();
+            if(firstPlayer == g.getCurrentPlayer()) {
+                g.getInputHandler().removeLayCardListener();
+            }
         }
-    }
-
-    private void layCard() {
-        
-        card.lay(disc);
         g.getNotifier().notifyListeners();
-        
     }
 }

@@ -13,6 +13,7 @@ public class InputHandler {
     private List<IListener> inputListeners;
     private List<IListener> actionDiceInputListeners;
     private ISwapCardInputListener swapListener;
+    private ILayCardInputListener layCardListener;
     
     private List<AbstractCard> cardInputQueue;
     private List<IDisc> discInputQueue;
@@ -158,6 +159,14 @@ public class InputHandler {
         swapListener = null;
     }
     
+    public void addLayCardListener(ILayCardInputListener l) {
+        layCardListener = l;
+    }
+    
+    public void removeLayCardListener() {
+        layCardListener = null;
+    }
+    
     public void addDieInputListener(IListener l) {
         inputListeners.add(l);
     }
@@ -184,16 +193,7 @@ public class InputHandler {
     
     public void placeCardInput(int fromIndex, int toIndex) {
         
-        IPlayer current = g.getCurrentPlayer();
-        AbstractCard card = current.getHand().getCard(fromIndex);
-        IDisc disc = current.getField().getDisc(toIndex);
-        
-        card.setCost(0);
-        g.getCurrentPlayer().getHand().removeCard(card);
-        card.lay(disc);
-        g.getNotifier().notifyListeners();
-        card.setCost(card.getDefaultCost());
-        card = null;
+        layCardListener.layCard(fromIndex, toIndex);
         
     }
     

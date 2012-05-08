@@ -35,7 +35,7 @@ public class Controller {
         JOptionPane.showMessageDialog(null, "Please select " +SWAP_NUM_CARDS +" cards to swap with your opponent! :) " , "Roma", 1);
         
         SwapCard.initiate(g);
-        //LayCard.initiate(g);
+        LayCard.initiate(g);
         
     }
     
