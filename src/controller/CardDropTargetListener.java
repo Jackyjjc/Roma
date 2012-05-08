@@ -1,6 +1,7 @@
 package controller;
 
 import gui.JCard;
+import gui.TransferableImp;
 
 import java.awt.Cursor;
 import java.awt.datatransfer.DataFlavor;
@@ -50,7 +51,7 @@ public class CardDropTargetListener implements DropTargetListener {
         DataFlavor supported = null;
         
         try {
-            supported = JCard.getSupportedDataFlavor();
+            supported = TransferableImp.getSupportedDataFlavor();
             if (transferable.isDataFlavorSupported(supported)) {
                 transferableObj = transferable.getTransferData(supported);
             }
@@ -76,8 +77,7 @@ public class CardDropTargetListener implements DropTargetListener {
             }
         }
     }
-
-    @Override
+    
     public void dropActionChanged(DropTargetDragEvent arg0) {
         //nothing to do here atm
     }

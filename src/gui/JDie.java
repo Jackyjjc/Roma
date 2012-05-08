@@ -1,13 +1,19 @@
 package gui;
 
 import java.awt.Dimension;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-public class JDie extends JButton {
+public class JDie extends JButton implements Transferable {
     
     private DieDisplayManager ddm;
+    private TransferableImp traImp;
+    
     private int index;
     private int value;
     
@@ -15,6 +21,7 @@ public class JDie extends JButton {
         
         this.index = index;
         this.ddm = ddm;
+        this.traImp = new TransferableImp(this);
         
         setPreferredSize(new Dimension(ddm.getWidth(), ddm.getHeight()));
         setValue(6);
@@ -31,5 +38,18 @@ public class JDie extends JButton {
     
     public int getValue() {
         return value;
+    }
+
+    public Object getTransferData(DataFlavor arg0)
+            throws UnsupportedFlavorException, IOException {
+        return traImp.getTransferData(arg0);
+    }
+
+    public DataFlavor[] getTransferDataFlavors() {
+        return traImp.getTransferDataFlavors();
+    }
+
+    public boolean isDataFlavorSupported(DataFlavor arg0) {
+        return traImp.isDataFlavorSupported(arg0);
     }
 }

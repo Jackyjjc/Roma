@@ -6,7 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import model.IGameDisplayState;
+import model.IGameIO;
 import model.InputHandler;
+import model.Notifier;
 import controller.ActionDieClickListener;
 import controller.DiscClickListener;
 import controller.FieldClickListener;
@@ -32,14 +34,15 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
     private HandClickListener hListener;
     private DiscClickListener dListener;
     private ActionDieClickListener adListener;
+    private Notifier notifier;
     private InputHandler handler;
     private SwapConfirmListener confimrListener;
 
-    public GraphicalView(InputHandler handler) {
+    public GraphicalView(IGameIO gameIO) {
         
         super(NAME);
-       
-        initElements(handler);
+        
+        initElements(gameIO);
         initUI();
         
         //setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -84,8 +87,10 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
         return scalingFactor;    
     }
     
-    private void initElements(InputHandler handler) {
+    private void initElements(IGameIO gameIO) {
         
+        this.handler = gameIO.getInputHandler();
+        this.notifier = gameIO.getNotifier();
         this.scalingFactor = calculateScalingFactor();
         this.rm = new ResourceManager(scalingFactor);
         this.cdm = new CardDisplayManager(rm);
@@ -97,7 +102,6 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
         this.dListener = new DiscClickListener(handler);
         this.adListener = new ActionDieClickListener(handler);
         this.confimrListener = new SwapConfirmListener(handler);
-        this.handler = handler;
     }
 
     public int scale(int original) {
@@ -147,6 +151,10 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
     
     public SwapConfirmListener getConfirmListener() {
         return confimrListener;
+    }
+
+    public Notifier getNotifier() {
+        return notifier;
     }
     
 }

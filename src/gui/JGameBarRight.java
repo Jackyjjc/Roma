@@ -1,7 +1,7 @@
 package gui;
 
+import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -9,13 +9,14 @@ import javax.swing.JPanel;
 
 import model.IGameDisplayState;
 
-public class JGameBarRight extends JPanel implements IListener {
+public class JGameBarRight extends JPanel implements ISwapListener {
 
     private IDisplayManager idm;
 
     private JStockPile stockpile;
     private BattleDiePanel diePanel;
     private JStatusBar statusBar;
+    private Component rigidArea;
     private SwapArea swapArea;
     
     public JGameBarRight(IDisplayManager idm) {
@@ -33,6 +34,7 @@ public class JGameBarRight extends JPanel implements IListener {
         diePanel = new BattleDiePanel(idm);
         statusBar = new JStatusBar(idm, 0);
         swapArea = new SwapArea(idm);
+        idm.getNotifier().addSwapListener(this);
     }
     
     private void initUI() {
@@ -45,7 +47,8 @@ public class JGameBarRight extends JPanel implements IListener {
         add(stockpile);
         add(Box.createRigidArea(new Dimension(0,idm.scale(115))));
         add(diePanel);
-        add(Box.createRigidArea(new Dimension(0,idm.scale(60))));
+        rigidArea = Box.createRigidArea(new Dimension(0,idm.scale(60)));
+        add(rigidArea);
         add(swapArea);
         add(statusBar);
     }
@@ -54,6 +57,18 @@ public class JGameBarRight extends JPanel implements IListener {
         stockpile.updateView(state);
         diePanel.updateView(state);
         statusBar.updateView(state);
+    }
+
+    public void swapFinish() {
+        
+        remove(statusBar);
+        
+        remove(swapArea);
+        remove(rigidArea);
+        
+        rigidArea = Box.createRigidArea(new Dimension(0,idm.scale(225)));
+        add(rigidArea);
+        add(statusBar);
     }
     
 }

@@ -23,7 +23,7 @@ public class Controller {
         
         Game g = new Game(NUM_PLAYERS);        
         Notifier notifier = g.getNotifier();
-        GraphicalView view = new GraphicalView(g.getInputHandler());
+        GraphicalView view = new GraphicalView(g);
         notifier.addListener(view);
         view.pack();
         view.setVisible(true);

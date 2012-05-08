@@ -1,6 +1,7 @@
 package gui;
 
 import model.InputHandler;
+import model.Notifier;
 import controller.ActionDieClickListener;
 import controller.DiscClickListener;
 import controller.FieldClickListener;
@@ -32,4 +33,6 @@ public interface IDisplayManager {
     public InputHandler getInputHandler();
     
     public SwapConfirmListener getConfirmListener();
+    
+    public Notifier getNotifier();
 }

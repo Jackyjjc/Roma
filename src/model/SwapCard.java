@@ -40,6 +40,7 @@ public class SwapCard implements ISwapCardInputListener {
         if(cardsToSwap.size() == 4) {
             swapCard();
             g.getInputHandler().removeSwapListener();
+            g.getNotifier().notifySwapFinished();
         }
         
         g.getNotifier().notifyListeners();
