@@ -10,6 +10,7 @@ public class InputHandler {
     
     private Game g;
     private List<IListener> inputListeners;
+    private List<IListener> actionDiceInputListeners;
     
     private List<AbstractCard> cardInputQueue;
     private List<IDisc> discInputQueue;
@@ -42,7 +43,7 @@ public class InputHandler {
             
             System.out.println(currentPlayer.getHand().getCard(index).getName());
             
-            notifyListener();
+            notifyInputListener();
         }
     }
     
@@ -65,7 +66,7 @@ public class InputHandler {
         if(index >= 0 && index < Rules.NUM_DICE_DISCS) {
             discInputQueue.add(field.getDisc(index));
             
-            notifyListener();
+            notifyInputListener();
         }
         
     }
@@ -89,7 +90,9 @@ public class InputHandler {
         if(die != null && !die.isUsed()) {
             dieInputQueue.add(die);
             
-            notifyListener();
+            notifyDieInputListener();
+            
+            notifyInputListener();
         }
     }
     
@@ -106,7 +109,7 @@ public class InputHandler {
     
     public void addIntInput(int amount) {
         this.intInput = amount;
-        notifyListener();
+        notifyInputListener();
     }
     
     public int getIntInput() {
@@ -115,7 +118,7 @@ public class InputHandler {
     
     public void addBooleanInput(boolean value) {
         this.boolInput = value;
-        notifyListener();
+        notifyInputListener();
     }
     
     public boolean getBooleanInput() {
@@ -124,7 +127,7 @@ public class InputHandler {
     
     public void addBattleDieInput(int roll) {
         this.battleDieInput = roll;
-        notifyListener();
+        notifyInputListener();
     }
     
     public int getBattleDieInput() {
@@ -139,12 +142,26 @@ public class InputHandler {
         inputListeners.remove(l);
     }
     
-    private void notifyListener() {
+    private void notifyInputListener() {
         for(IListener l : inputListeners) {
             l.update();
         }
     }
 
+    public void addDieInputListener(IListener l) {
+        inputListeners.add(l);
+    }
+    
+    public void removeDieInputListener(IListener l) {
+        inputListeners.remove(l);
+    }
+    
+    private void notifyDieInputListener() {
+        for(IListener l : actionDiceInputListeners) {
+            l.update();
+        }
+    }
+    
     public void addDieUseInput(int index) {
         if(index >= 0 && index < Rules.NUM_DICE_DISCS + 2) {
             dieUsedInput = index;
@@ -155,4 +172,18 @@ public class InputHandler {
         return dieUsedInput;
     }
     
+    public void placeCardInput(int fromIndex, int toIndex) {
+        
+        IPlayer current = g.getCurrentPlayer();
+        AbstractCard card = current.getHand().getCard(fromIndex);
+        IDisc disc = current.getField().getDisc(toIndex);
+        
+        card.setCost(0);
+        g.getCurrentPlayer().getHand().removeCard(card);
+        card.lay(disc);
+        g.getNotifier().notifyListeners();
+        card.setCost(card.getDefaultCost());
+        card = null;
+        
+    }
 }

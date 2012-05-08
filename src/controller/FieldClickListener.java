@@ -16,6 +16,7 @@ public class FieldClickListener implements ActionListener {
         this.handler = handler;
     }
     
+    
     public void actionPerformed(ActionEvent e) {
         
         JCard card = null;

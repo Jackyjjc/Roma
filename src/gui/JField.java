@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import model.IGameDisplayState;
 import controller.FieldClickListener;
+import controller.FieldTransferHandler;
 import framework.cards.Card;
 
 
@@ -23,6 +24,7 @@ public class JField extends JPanel implements IListener {
     
     public JField(int panelId, IDisplayManager idm) {
         
+        this.idm = idm;
         this.cdm = idm.getCardDisplayManager();
         this.listener = idm.getFieldClickListener();
         this.panelId = panelId;
@@ -61,6 +63,7 @@ public class JField extends JPanel implements IListener {
         for(int i = 0; i < cards.length; i++) {
             card = new JCard(cdm, i, Card.NOT_A_CARD);
             card.addActionListener(listener);
+            card.setTransferHandler(idm.getFieldTransferHandler());
             add(card);
             cards[i] = card;
         }

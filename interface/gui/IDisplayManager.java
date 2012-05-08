@@ -3,6 +3,7 @@ package gui;
 import controller.ActionDieClickListener;
 import controller.DiscClickListener;
 import controller.FieldClickListener;
+import controller.FieldTransferHandler;
 import controller.HandClickListener;
 
 public interface IDisplayManager {
@@ -27,4 +28,5 @@ public interface IDisplayManager {
     
     public HandClickListener getHandClickListener();
     
+    public FieldTransferHandler getFieldTransferHandler();
 }

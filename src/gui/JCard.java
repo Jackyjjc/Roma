@@ -1,9 +1,13 @@
 package gui;
 
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.TransferHandler;
 
 import framework.cards.Card;
 
@@ -49,4 +53,5 @@ public class JCard extends JButton {
     public int getIndex() {
         return index;
     }
+    
 }

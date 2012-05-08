@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import controller.ActionDieClickListener;
 import controller.DiscClickListener;
 import controller.FieldClickListener;
+import controller.FieldTransferHandler;
 import controller.HandClickListener;
 
 import model.IGameDisplayState;
@@ -32,6 +33,7 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
     private HandClickListener hListener;
     private DiscClickListener dListener;
     private ActionDieClickListener adListener;
+    private FieldTransferHandler fieldTransferHandler;
 
     public GraphicalView(InputHandler handler) {
         
@@ -94,6 +96,7 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
         this.hListener = new HandClickListener(handler);
         this.dListener = new DiscClickListener(handler);
         this.adListener = new ActionDieClickListener(handler);
+        this.fieldTransferHandler = new FieldTransferHandler(handler);
     }
 
     public int scale(int original) {
@@ -135,6 +138,10 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
 
     public HandClickListener getHandClickListener() {
         return hListener;
+    }
+
+    public FieldTransferHandler getFieldTransferHandler() {
+        return fieldTransferHandler;
     }
     
 }

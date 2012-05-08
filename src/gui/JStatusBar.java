@@ -2,6 +2,8 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -11,7 +13,7 @@ import org.omg.PortableServer.IdAssignmentPolicy;
 
 import model.IGameDisplayState;
 
-public class JStatusBar extends JPanel implements IListener {
+public class JStatusBar extends JPanel implements IListener, MouseListener {
     
     private static final int PADDING = 5;
     
@@ -35,6 +37,9 @@ public class JStatusBar extends JPanel implements IListener {
         
         setPreferredSize(new Dimension(rm.player1.getWidth() + idm.scale(PADDING), 
                                        rm.player2.getHeight() + idm.scale(PADDING)));
+        
+        
+        addMouseListener(this);
         
         
         setOpaque(false);
@@ -69,6 +74,36 @@ public class JStatusBar extends JPanel implements IListener {
         
         g.drawString(String.valueOf(money), idm.scale(157), idm.scale(85));
         g.drawString(String.valueOf(vp), idm.scale(197), idm.scale(85));
+        
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
         
     }
     
