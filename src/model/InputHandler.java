@@ -34,6 +34,7 @@ public class InputHandler {
         boolInput = false;
         battleDieInput = 0;
         this.inputListeners = new ArrayList<IListener>();
+        this.actionDiceInputListeners = new ArrayList<IListener>();
     }
     
     public void addCardInput(int playerId, int index) {

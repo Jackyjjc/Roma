@@ -272,5 +272,9 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
         return temp;
         
     }
+
+    public boolean isGameCompleted() {
+        return false;
+    }
     
 }

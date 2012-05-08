@@ -34,10 +34,10 @@ public enum Card {
    TRIBUNUSPLEBIS ("Tribunusplebis"),
    TURRIS ("Turris"),
    VELITES ("Velites"),
-   NOT_A_CARD ("Not A Card"),
-   KAT("Kat"),
-   GRIM_REAPER("Grim Reaper"),
-   TELEPHONE_BOX("Telephone Box");
+   GRIMREAPER ("Grimreaper"),
+   KAT ("Kat"),
+   TELEPHONEBOX ("Telephonebox"),
+   NOT_A_CARD ("Not A Card");
 
    // Member to hold the name as a string.
    private String string;
