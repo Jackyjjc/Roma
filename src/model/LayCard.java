@@ -33,6 +33,7 @@ public class LayCard implements ILayCardInputListener {
             g.advanceTurn();
             if(firstPlayer == g.getCurrentPlayer()) {
                 g.getInputHandler().removeLayCardListener();
+                PlayGame.initiate(g);
             }
         }
         g.getNotifier().notifyListeners();

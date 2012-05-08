@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 import model.IGameDisplayState;
 
 import controller.ActionDieClickListener;
+import controller.CustomizedTransferHandler;
+import controller.MouseDraggingAdapter;
 
 public class ActionDicePanel extends JPanel implements IListener {
     
@@ -25,7 +27,9 @@ public class ActionDicePanel extends JPanel implements IListener {
         
         for(int i = 0; i < NUM_DICES; i++) {
             dice[i] = new JDie(i,idm.getActionDiceDisplayManager());
-            dice[i].addActionListener(idm.getActionDieClickListener());
+            //dice[i].addActionListener(idm.getActionDieClickListener());
+            dice[i].addMouseListener(new MouseDraggingAdapter());
+            dice[i].setTransferHandler(new CustomizedTransferHandler());
             add(dice[i]);
         }
     }

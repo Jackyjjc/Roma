@@ -14,6 +14,7 @@ public class InputHandler {
     private List<IListener> actionDiceInputListeners;
     private ISwapCardInputListener swapListener;
     private ILayCardInputListener layCardListener;
+    private IUseDieInputListener useDieInputListener;
     
     private List<AbstractCard> cardInputQueue;
     private List<IDisc> discInputQueue;
@@ -159,6 +160,14 @@ public class InputHandler {
         swapListener = null;
     }
     
+    public void addDieUseListener(IUseDieInputListener l) {
+        useDieInputListener = l;
+    }
+    
+    public void removeDieUseListener() {
+        useDieInputListener = null;
+    }
+    
     public void addLayCardListener(ILayCardInputListener l) {
         layCardListener = l;
     }
@@ -192,9 +201,7 @@ public class InputHandler {
     }
     
     public void placeCardInput(int fromIndex, int toIndex) {
-        
         layCardListener.layCard(fromIndex, toIndex);
-        
     }
     
     public void addSwapCardInput(Card[] cards) {
@@ -203,5 +210,7 @@ public class InputHandler {
         }
     }
     
-    
+    public void addUseActionDieInput(int dieIndex, int discIndex) {
+        useDieInputListener.useDice(dieIndex, discIndex);
+    }
 }

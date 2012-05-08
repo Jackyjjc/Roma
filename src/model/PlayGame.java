@@ -1,28 +1,57 @@
 package model;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import model.card.AbstractCard;
 
-public class PlayGame implements IListener {
+public class PlayGame implements IUseDieInputListener, ILayCardInputListener {
 
     private Game g;
-    private List<AbstractCard> cardsToSwap;
-    private int count;
     
     private PlayGame(Game g) {
         this.g = g;
-        this.count = 0;
-        this.cardsToSwap = new LinkedList<AbstractCard>();
     }
 
     public static void initiate (Game g) {
-        PlayGame swapCard = new PlayGame(g);
-        g.getInputHandler().addInputListener(swapCard);
+        PlayGame playGame = new PlayGame(g);
+        g.getInputHandler().addLayCardListener(playGame);
+        g.getInputHandler().addDieUseListener(playGame);
     }
     
     public void update() {
         
+    }
+
+    public void layCard(int fromIndex, int toIndex) {
+        IPlayer currentPlayer = g.getCurrentPlayer();
+        AbstractCard card = currentPlayer.getHand().getCard(fromIndex);
+        IDisc disc = currentPlayer.getField().getDisc(toIndex);
+        
+        g.getCurrentPlayer().getHand().removeCard(card);
+        card.lay(disc);
+        
+        g.getNotifier().notifyListeners();
+    }
+
+    public void useDice(int dieIndex, int diceIndex) {
+        
+        ICardStorage deck = g.getDeckStorage();
+        IResourceStorage bank = g.getBank();
+        IPlayer currentPlayer = g.getCurrentPlayer();
+        
+        Die[] dice = g.getDiceManager().getActionDice();
+        Die die = dice[dieIndex];
+        
+        if(diceIndex == 0) {
+            
+            for(int i = 0; i < die.getValue(); i++) {
+                currentPlayer.getHand().appendCard(deck.popCard());
+            }
+            
+        } else if(diceIndex == 7) {
+            
+            bank.transferMoney(currentPlayer, die.getValue());
+            
+        }
+        
+        g.getNotifier().notifyListeners();
     }
 }

@@ -1,16 +1,11 @@
 package gui;
 
-import java.awt.GraphicsEnvironment;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 
-import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.TransferHandler;
 
 import model.IGameDisplayState;
-import controller.CardTransferHandler;
+import controller.CustomizedTransferHandler;
 import controller.HandClickListener;
 import controller.MouseDraggingAdapter;
 import framework.cards.Card;
@@ -64,7 +59,7 @@ public class JHand extends JPanel implements IListener {
                 displayCard.setCard();
             } else {
                 displayCard.addMouseListener(new MouseDraggingAdapter());
-                displayCard.setTransferHandler(new CardTransferHandler());
+                displayCard.setTransferHandler(new CustomizedTransferHandler());
             }
             add(displayCard);
         }

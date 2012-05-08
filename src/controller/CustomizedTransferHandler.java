@@ -1,6 +1,7 @@
 package controller;
 
 import gui.JCard;
+import gui.JDie;
 
 import java.awt.datatransfer.Transferable;
 import java.awt.dnd.DragSourceDragEvent;
@@ -9,9 +10,7 @@ import java.awt.dnd.DragSourceMotionListener;
 import javax.swing.JComponent;
 import javax.swing.TransferHandler;
 
-public class CardTransferHandler extends TransferHandler implements DragSourceMotionListener {
-
-
+public class CustomizedTransferHandler extends TransferHandler implements DragSourceMotionListener {
     
     @Override
     public Transferable createTransferable(JComponent c) {
@@ -32,7 +31,7 @@ public class CardTransferHandler extends TransferHandler implements DragSourceMo
     @Override()
     public int getSourceActions(JComponent c) {
         
-        if (c instanceof JCard) {
+        if (c instanceof JCard || c instanceof JDie) {
             return TransferHandler.COPY;
         }
         

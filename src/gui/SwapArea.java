@@ -7,8 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import controller.CardDropTargetListener;
-import controller.CardTransferHandler;
-
+import controller.CustomizedTransferHandler;
 import framework.cards.Card;
 
 public class SwapArea extends JPanel {
@@ -58,7 +57,7 @@ public class SwapArea extends JPanel {
         private JCard initializeCard(int id) {
             
             JCard card = new JCard(idm.getCardDisplayManager(), id, Card.NOT_A_CARD);
-            card.setTransferHandler(new CardTransferHandler());
+            card.setTransferHandler(new CustomizedTransferHandler());
             card.setDropTarget(new DropTarget(card, new CardDropTargetListener(card, idm.getInputHandler())));
             
             return card;
