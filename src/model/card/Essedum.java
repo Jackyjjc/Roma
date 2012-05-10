@@ -44,12 +44,15 @@ class Essedum extends AbstractCard implements ITurnListener {
             
             if(disc != null) {
                 card = disc.getCard();
-                card.setDefence(card.getDefence() - 2);
-                affectedCards.add(card);
+                if (card != null) {
+                	card.setDefence(card.getDefence() - 2);
+                	affectedCards.add(card);
+                }
             }
         }
         
         turnNotifier.addTurnListener(this);
+        
     }
     
     private void removeEffects() {

@@ -132,7 +132,7 @@ public class TestRunner {
             } else if ((numTestFailed[interfaceTestNumber] > 0)) {
                 System.out.println("Needs work: " +  acceptanceInterface.getClass());
             } else {
-                System.out.println("Accepted: " +  acceptanceInterface.getClass() + "is awesome!!!");
+                System.out.println("Accepted: " +  acceptanceInterface.getClass() + " is awesome!!!");
             }
             interfaceTestNumber++;
         }

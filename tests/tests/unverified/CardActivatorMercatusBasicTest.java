@@ -69,7 +69,7 @@ public class CardActivatorMercatusBasicTest extends Test {
         
         MercatusActivator activator = (MercatusActivator) move.chooseCardToActivate(Rules.DICE_DISC_4);
         activator.complete();
-        
+
         assert(gameState.getPlayerVictoryPoints(0) == 13);
         assert(gameState.getPlayerVictoryPoints(1) == 7);
         

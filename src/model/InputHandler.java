@@ -46,11 +46,23 @@ public class InputHandler {
             
             cardInputQueue.add(currentPlayer.getHand().getCard(index));
             
-            System.out.println(currentPlayer.getHand().getCard(index).getName());
-            
             notifyInputListener();
         }
+        
     }
+    
+	public void addCardInput(int playerId, AbstractCard c) {
+        
+        IPlayer currentPlayer = g.getCurrentPlayer();
+        
+        if(playerId == currentPlayer.getId()) {
+        	
+        	cardInputQueue.add(c);
+           notifyInputListener();
+
+        }
+        		
+	}
     
     public AbstractCard getCardInput() {
         
@@ -214,4 +226,5 @@ public class InputHandler {
     public void addUseActionDieInput(int dieIndex, int discIndex) {
         useDieInputListener.useDice(dieIndex, discIndex);
     }
+
 }

@@ -12,7 +12,11 @@ public class Die {
     }
     
     public int roll() {
-        return (int) (Math.random() * MAX_VALUE + 1);
+        
+        int roll = (int) (Math.random() * MAX_VALUE + 1);
+        reset();
+        
+        return roll;
     }
     
     public int getValue() {
@@ -20,7 +24,14 @@ public class Die {
     }
     
     public void setValue(int value) {
+        
+        assert(isValidValue(value));
+        
         this.value = value;
+    }
+    
+    public void reset() {
+        used = false;
     }
     
     public void use() {
@@ -28,9 +39,16 @@ public class Die {
     }
     
     public boolean isUsed() {
-        return (used == true);
+        return used;
     }
     
+    /**
+     * 
+     * This function must be called before setting the dice value
+     * 
+     * @param value
+     * @return if the die value is valid or not
+     */
     public static boolean isValidValue(int value) {
         
         boolean isValid = false;

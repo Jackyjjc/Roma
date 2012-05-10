@@ -50,7 +50,7 @@ public class CardActivatorNeroBasicTest extends Test {
         gameState.setPlayerCardsOnDiscs(1, field);
         
         gameState.setPlayerSestertii(0, 24);
-        gameState.setActionDice(new int[] {2,3,5});
+        gameState.setActionDice(new int[] {1,3,4});
         
         //place the Nero here
         move.placeCard(Card.NERO, Rules.DICE_DISC_1);

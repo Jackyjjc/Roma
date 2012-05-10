@@ -1,12 +1,20 @@
 package model;
+
+/**
+ * 
+ * Class that manage the dice and battle dice
+ * 
+ * @author Jacky CHEN
+ * @author Chris Fong
+ *
+ */
+
 public class DiceManager {
 	
     private Die battleDie;
 	private Die[] actionDice;
 	
-	private Notifier notifier;
-	
-	public DiceManager (int numDice, Notifier notifier) {
+	public DiceManager (int numDice) {
 		
 	    battleDie = new Die();
 		actionDice = new Die[numDice];
@@ -14,8 +22,6 @@ public class DiceManager {
 		for(int i = 0; i < actionDice.length; i++) {
 		    actionDice[i] = new Die();
 		}
-		
-		this.notifier = notifier;
 	}
 	
 	public void rollActionDice() {
@@ -44,17 +50,49 @@ public class DiceManager {
 		return theSame;
 	}
 	
+    public void setActionDice(int[] dice) {
+
+        for(int i = 0; i < dice.length; i++) {
+            actionDice[i].setValue(dice[i]);
+            actionDice[i].reset();
+        }
+    }
+	
 	public Die getActionDie(int value) {
 	    
 	    Die die = null;
 	    
 	    for(int i = 0; i < actionDice.length; i++) {
-	        if(actionDice[i].getValue() == value) {
+	        if(actionDice[i].getValue() == value 
+	            && !actionDice[i].isUsed()) {
 	            die = actionDice[i];
 	        }
 	    }
 	    
 	    return die;
+	}
+	
+	public int[] getActionDiceValues() {
+	    
+	    int numUnused = 0;
+	    
+	    for(Die die : actionDice) {
+	        if(!die.isUsed()) {
+	            numUnused++;
+	        }
+	    }
+	    
+	    int[] values = new int[numUnused];
+	    
+	    int i = 0;
+	    for(Die die : actionDice) {
+	        if(!die.isUsed()) {
+	            values[i] = die.getValue();
+	            i++;
+	        }
+	    }
+	    
+	    return values;
 	}
 	
 	public Die[] getActionDice() {

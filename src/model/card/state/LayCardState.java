@@ -1,5 +1,7 @@
 package model.card.state;
 
+import java.util.*;
+
 import model.IDisc;
 import model.InputHandler;
 import model.card.AbstractCard;
@@ -7,11 +9,13 @@ import model.card.AbstractCard;
 public class LayCardState extends CardState implements ICardState {
 
     private ChooseCardState state;
+    private List<AbstractCard> cards;
     
-    public LayCardState(AbstractCard owner, ChooseCardState state) {
+    public LayCardState(AbstractCard owner, ChooseCardState state, List<AbstractCard> floatingCards) {
         
         super(owner);
         this.state = state;
+        this.cards = floatingCards;
     }
     
     public boolean run() {
@@ -27,6 +31,10 @@ public class LayCardState extends CardState implements ICardState {
             state.getChosenCard().setCost(state.getChosenCard().getDefaultCost());
             
             succeed = true;
+            
+            if(cards.isEmpty()) {
+            	setNextState(null);
+            }
             
             changeState();
         }

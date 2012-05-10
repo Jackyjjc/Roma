@@ -34,8 +34,9 @@ class Praetorianus extends AbstractCard implements ITurnListener {
         block.setNextState(null);
         
         setState(block);
-        
+        lastBlockTurn = turnNotifier.getTurn();
         turnNotifier.addTurnListener(this);
+        
     }
 
     public void turnChecking(int turnNum) {

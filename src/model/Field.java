@@ -1,6 +1,6 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class Field implements IField {
         List<AbstractCard> result = new ArrayList<AbstractCard>();
         
         for(int i = 0; i < length; i++) {
-            if(getCard(i).getType() == type) {
+            if(getCard(i) != null && getCard(i).getType() == type) {
                 result.add(discs[i].removeCard());
             }
         }

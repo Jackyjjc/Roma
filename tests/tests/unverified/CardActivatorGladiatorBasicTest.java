@@ -30,8 +30,6 @@ public class CardActivatorGladiatorBasicTest extends Test {
 	public void run(GameState gameState, MoveMaker move) throws AssertionError,
 		UnsupportedOperationException, IllegalArgumentException {
 		
-		System.out.println("Testing Gladiator");
-		
 		//player 1 only has two gladiator cards in hand
 		Collection<Card> hand = new ArrayList<Card>();
 		hand.add(Card.GLADIATOR);

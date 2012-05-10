@@ -15,10 +15,9 @@ public class TurnNotifier {
     }
     
     public void addTurnListener(ITurnListener listener) {
-        if(!turnCards.contains(listener)) {
+    	if(!turnCards.contains(listener)) {
             turnCards.add(listener);
         }
-
     }
     
     public void removeTurnListener(ITurnListener listener) {

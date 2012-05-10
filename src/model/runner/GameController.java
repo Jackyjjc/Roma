@@ -33,6 +33,8 @@ public class GameController implements MoveMaker {
     public CardActivator chooseCardToActivate(int disc) {
         
         IPlayer player = g.getCurrentPlayer();
+        g.getDiceManager().getActionDie(disc).use();
+        
         CardActivateManager activateManager = g.getCardActivateManager();
         
         //disc is from 1 - 7
@@ -40,6 +42,7 @@ public class GameController implements MoveMaker {
         activateManager.activate(card);
         
         return (CardActivator)activateManager;
+        
     }
 
     public void activateCardsDisc(int diceToUse, Card chosen)

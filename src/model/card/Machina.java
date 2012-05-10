@@ -9,7 +9,7 @@ import model.card.state.LayCardState;
 import model.card.state.SetCardCostFreeState;
 import framework.cards.Card;
 
-class Machina extends AbstractCard implements ICardChecker {
+public class Machina extends AbstractCard implements ICardChecker {
 
     private static final int COST = 4;
     private static final int DEFENCE = 4;
@@ -28,9 +28,10 @@ class Machina extends AbstractCard implements ICardChecker {
         buildingCards =  getOwner().getField().removeCardsOf(CardType.BUILDING);
 
         SetCardCostFreeState setCardFree = new SetCardCostFreeState(this, buildingCards);
-        ChooseCardState chooseCard = new ChooseCardState(this, buildingCards, this);
-        LayCardState layCard = new LayCardState(this, chooseCard);
-        setCardFree.setNextState(layCard);
+        ChooseCardState chooseCard = new ChooseCardState(this, buildingCards);
+        LayCardState layCard = new LayCardState(this, chooseCard, buildingCards);
+        
+        setCardFree.setNextState(chooseCard);
         chooseCard.setNextState(layCard);
         layCard.setNextState(chooseCard);
         
@@ -49,4 +50,8 @@ class Machina extends AbstractCard implements ICardChecker {
         return isValid;
     }
 
+    public List<AbstractCard> getFloatingCards () {
+    	return buildingCards;
+    }
+    
 }

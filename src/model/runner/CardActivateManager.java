@@ -8,6 +8,8 @@ import model.IPlayer;
 import model.IPlayerManager;
 import model.InputHandler;
 import model.card.AbstractCard;
+import model.card.Consiliarius;
+import model.card.Machina;
 import framework.cards.Card;
 import framework.interfaces.activators.AesculapinumActivator;
 import framework.interfaces.activators.ArchitectusActivator;
@@ -57,7 +59,7 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IL
     }
     
     public void complete() {
-        while(!activatedCard.isFinishActivate()) {
+		while(!activatedCard.isFinishActivate()) {
             activatedCard.runState();
         }
         activatedCard = null;
@@ -78,16 +80,25 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IL
     public void placeCard(Card card, int diceDisc) {
         
         IPlayer player = manager.getCurrentPlayer();
+        List<AbstractCard> floatingCards = null;
         
-        List<Card> hand = player.getHand().getCardsWithNames();
-        int index = -1;
-        for(int i = 0; i < hand.size() && index == -1; i++) {
-            if(hand.get(i) == card) {
-                index = i;
-            }
+        if (activatedCard.getName() == Card.CONSILIARIUS) {
+        	floatingCards = ((Consiliarius)activatedCard).getFloatingCards();
+        } else if (activatedCard.getName() == Card.MACHINA) {
+        	floatingCards = ((Machina)activatedCard).getFloatingCards();
         }
         
-        handler.addCardInput(player.getId(), index);
+        AbstractCard c = null;
+        
+        for (AbstractCard search : floatingCards) {
+        	
+        	if (search.getName() == card) {
+        		c = search;
+        	}
+        	
+        }
+        
+        handler.addCardInput(player.getId(), c);
         handler.addDiscInput(player.getId(), diceDisc - 1);
         
     }

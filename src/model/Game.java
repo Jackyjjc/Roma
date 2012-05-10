@@ -39,7 +39,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 	    
 	    inputHandler = new InputHandler(this);
 	    this.notifier = new Notifier(this);
-	    this.diceManager = new DiceManager(NUM_ACTION_DICE, notifier);
+	    this.diceManager = new DiceManager(NUM_ACTION_DICE);
 	   
 		this.bank = new ResourceStorage(TOTAL_MONEY, TOTAL_VP);
 		
@@ -63,10 +63,6 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 	
 	public IResourceStorage getBank() {
 		return bank;
-	}
-
-	public boolean isFinished() {
-		return false;
 	}
 
     private void createPlayers(int numPlayers) {
@@ -236,25 +232,11 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
     }
 
     public int[] getActionDice() {
-        
-        Die[] dies = diceManager.getActionDice();
-        
-        int[] diceValues = new int[dies.length];
-        
-        for(int i = 0; i < dies.length; i++) {
-            diceValues[i] = dies[i].getValue();
-        }
-        
-        return diceValues;
+        return diceManager.getActionDiceValues();
     }
 
     public void setActionDice(int[] dice) {
-        
-        Die[] dies = diceManager.getActionDice();
-        
-        for(int i = 0; i < dice.length; i++) {
-            dies[i].setValue(dice[i]);
-        }
+        diceManager.setActionDice(dice);
     }
 
     public int getPoolVictoryPoints() {

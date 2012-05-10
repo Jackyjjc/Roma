@@ -12,10 +12,10 @@ public class ChooseCardState extends CardState implements ICardState {
     private List<AbstractCard> cards;
     private ICardChecker checker;
     
-    public ChooseCardState(AbstractCard owner, List<AbstractCard> cards, ICardChecker checker) {
+    public ChooseCardState(AbstractCard owner, List<AbstractCard> cards) {
         super(owner);
         this.cards = cards;
-        this.checker = checker;
+        this.checker = (ICardChecker)owner;
     }
 
     public boolean run() {
@@ -30,11 +30,11 @@ public class ChooseCardState extends CardState implements ICardState {
             this.cardChosen = card;
             cards.remove(card);
             
+            changeState();
+            
             if(cards.isEmpty()) {
                 setNextState(null);
             }
-            
-            changeState();
             
             succeed = true;
         }
