@@ -42,7 +42,7 @@ public class CardActivatorTribunusPlebisBasicTest extends Test {
         hand.add(Card.TRIBUNUSPLEBIS);
         gameState.setPlayerHand(0, hand);
                 
-        // Place the Tribunus Plebis on disc 3 and activate it
+        // Place the Tribunus Plebis on disc 3 and initialise it
         move.placeCard(Card.TRIBUNUSPLEBIS, 3);
         move.chooseCardToActivate(3).complete();
         

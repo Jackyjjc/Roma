@@ -78,7 +78,7 @@ public class CardActivatorGladiatorBasicTest extends Test {
 		
 		//=================== test2 =====================
 		
-		//activate the card, check dice is used to activate
+		//initialise the card, check dice is used to initialise
 		GladiatorActivator activator = (GladiatorActivator) move.chooseCardToActivate(Rules.DICE_DISC_3);
 		activator.chooseDiceDisc(Rules.DICE_DISC_5);
 		activator.complete();
@@ -126,7 +126,7 @@ public class CardActivatorGladiatorBasicTest extends Test {
 		player2Field = gameState.getPlayerCardsOnDiscs(1);
 		assert(player2Field[5] == Card.GLADIATOR);
 		
-		//activate the card
+		//initialise the card
 		activator = (GladiatorActivator) move.chooseCardToActivate(Rules.DICE_DISC_6);
 		activator.chooseDiceDisc(Rules.DICE_DISC_3);
 		activator.complete();

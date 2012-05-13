@@ -40,7 +40,7 @@ public class CardActivatorLegatBasicTest extends Test {
         hand.add(Card.LEGAT);
         gameState.setPlayerHand(0, hand);
                 
-        // Place the Legat on disc 3 and activate it
+        // Place the Legat on disc 3 and initialise it
         move.placeCard(Card.LEGAT, 3);
         move.chooseCardToActivate(3).complete();
         

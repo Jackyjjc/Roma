@@ -1,29 +1,29 @@
 package model;
 
 import java.util.*;
-import java.util.Iterator;
-import java.util.List;
 
 import model.card.AbstractCard;
 import model.card.CardType;
+import model.cardcollection.CardCollectionFactory;
 
 public class Field implements IField {
     
     private static final int NUM_DISCS = 7;
     private IDisc[] discs;
     
-    public Field(IPlayer player) {
-        initDiscs(player);
+    public Field(IPlayer player, ITurnMover turnMover) {
+        initDiscs(turnMover, player);
     }
     
-    public List<AbstractCard> removeCardsOf(CardType type) {
+    public ICardStorage removeCardsOf(CardType type) {
         
         int length = NUM_DISCS;
-        List<AbstractCard> result = new ArrayList<AbstractCard>();
+        ICardStorage result = CardCollectionFactory.create(false, null);
+        result.setOwner(discs[0].getOwner());
         
         for(int i = 0; i < length; i++) {
             if(getCard(i) != null && getCard(i).getType() == type) {
-                result.add(discs[i].removeCard());
+                result.appendCard(discs[i].removeCard());
             }
         }
         
@@ -67,12 +67,12 @@ public class Field implements IField {
         return NUM_DISCS;
     }
     
-    private void initDiscs(IPlayer player) {
+    private void initDiscs(ITurnMover turnMover, IPlayer player) {
         
         discs = new Disc[NUM_DISCS];
         
         for(int i = 0; i < discs.length; i++) {
-            discs[i] = new Disc(i);
+            discs[i] = new Disc(turnMover,i);
             discs[i].setOwner(player);
         }
         

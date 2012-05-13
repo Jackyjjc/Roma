@@ -73,7 +73,7 @@ public class CardActivatorAesculapinumBasicTest extends Test {
         
         //=================== test2 =====================
         
-        //activate the card
+        //initialise the card
         AesculapinumActivator activator = (AesculapinumActivator) move.chooseCardToActivate(Rules.DICE_DISC_3);
         activator.chooseCardFromPile(0);
         activator.complete();
@@ -88,7 +88,7 @@ public class CardActivatorAesculapinumBasicTest extends Test {
         
         //================== test3 ======================
         
-        //activate the card
+        //initialise the card
         activator = (AesculapinumActivator) move.chooseCardToActivate(Rules.DICE_DISC_3);
         activator.chooseCardFromPile(1);
         activator.complete();
@@ -155,7 +155,7 @@ public class CardActivatorAesculapinumBasicTest extends Test {
         
         assert(field[3] == Card.AESCULAPINUM);
         
-        //activate the card
+        //initialise the card
         activator = (AesculapinumActivator) move.chooseCardToActivate(Rules.DICE_DISC_4);
         activator.chooseCardFromPile(1);
         activator.complete();

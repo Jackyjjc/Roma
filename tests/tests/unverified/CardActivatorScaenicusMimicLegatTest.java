@@ -51,7 +51,7 @@ public class CardActivatorScaenicusMimicLegatTest extends Test {
 				Card.NOT_A_CARD};
 		gameState.setPlayerCardsOnDiscs(1, cardsOnOpponentPlayerDisc);
 		
-		//Set the action dice to activate card
+		//Set the action dice to initialise card
 		gameState.setActionDice(new int[] {2,4,6});
 		
 		//Activate the scaenicus to mimic Legat

@@ -3,6 +3,7 @@ package model.cardcollection;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import model.ICardStorage;
@@ -12,7 +13,7 @@ import model.card.CardFactory;
 import model.card.CardType;
 import framework.cards.Card;
 
-public class CardCollection implements ICardStorage {
+public class CardCollection implements ICardStorage, Iterable<AbstractCard> {
 
     private IPlayer owner;
     private CardFactory factory;
@@ -137,6 +138,10 @@ public class CardCollection implements ICardStorage {
 
     public void setOwner(IPlayer player) {
         this.owner = player;
+    }
+
+    public Iterator<AbstractCard> iterator() {
+        return cards.iterator();
     }
 
 }

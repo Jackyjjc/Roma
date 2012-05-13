@@ -17,8 +17,6 @@ public interface IDisc {
     
     public void block();
     
-    public void unBlock();
-    
     public int getIndex();
     
     public boolean isDiscEmpty();

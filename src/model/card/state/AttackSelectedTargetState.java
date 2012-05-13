@@ -7,8 +7,8 @@ import model.card.ICardChecker;
 
 public class AttackSelectedTargetState extends AttackState implements ICardState {
 
-    public AttackSelectedTargetState(AbstractCard owner, ICardChecker checker) {
-        super(owner, checker);
+    public AttackSelectedTargetState(AbstractCard owner) {
+        super(owner, (ICardChecker)owner);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package model;
 
-import java.util.List;
-
 import model.card.AbstractCard;
 import model.card.CardType;
 
@@ -13,7 +11,7 @@ public interface IField extends Iterable<IDisc> {
     
     public IDisc getDisc(int index);
     
-    public List<AbstractCard> removeCardsOf(CardType type);
+    public ICardStorage removeCardsOf(CardType type);
     
     public int getNumDiscs();
 }

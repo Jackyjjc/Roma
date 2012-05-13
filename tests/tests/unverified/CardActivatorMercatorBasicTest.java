@@ -58,13 +58,10 @@ public class CardActivatorMercatorBasicTest extends Test {
         activator.chooseMercatorBuyNum(4);
         activator.complete();
         
-        
-        
         assert(gameState.getPlayerSestertii(0) == 15);
         assert(gameState.getPlayerSestertii(1) == 38);
         assert(gameState.getPlayerVictoryPoints(0) == 14);
         assert(gameState.getPlayerVictoryPoints(1) == 6);
-        
         
     }
 

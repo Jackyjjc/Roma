@@ -46,7 +46,7 @@ public class CardActivatorSenatorBasicTest extends Test {
                                  Card.ARCHITECTUS);
         gameState.setPlayerHand(0, hand);
                 
-        // Place the Tribunus Plebis on disc 3 and activate it
+        // Place the Tribunus Plebis on disc 3 and initialise it
         move.placeCard(Card.SENATOR, 3);
         move.chooseCardToActivate(3).complete();
         

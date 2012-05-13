@@ -20,9 +20,11 @@ public class InputHandler {
     private List<IDisc> discInputQueue;
     private List<Die> dieInputQueue;
     private int intInput;
-    private boolean boolInput;
+    private List<Boolean> boolInput;
     private int battleDieInput;
     private int dieUsedInput;
+    
+    private ICardStorage list;
     
     public InputHandler(Game g) {
         this.g = g;
@@ -31,24 +33,28 @@ public class InputHandler {
         discInputQueue = new ArrayList<IDisc>();
         dieInputQueue = new ArrayList<Die>();
         intInput = 0;
-        boolInput = false;
+        boolInput = new ArrayList<Boolean>();
         battleDieInput = 0;
         this.inputListeners = new ArrayList<IListener>();
         this.actionDiceInputListeners = new ArrayList<IListener>();
     }
     
-    public void addCardInput(int playerId, int index) {
+    public void addCardInput(int playerId, Card name) {
         
         IPlayer currentPlayer = g.getCurrentPlayer();
+        AbstractCard card = null;
         
-        if(playerId == currentPlayer.getId()
-           && index >= 0 && index < currentPlayer.getHand().size()) {
-            
-            cardInputQueue.add(currentPlayer.getHand().getCard(index));
-            
-            notifyInputListener();
+        if(playerId == currentPlayer.getId()) {
+            card = list.getCard(name);
+            if(card != null) {
+                cardInputQueue.add(card);
+            }
         }
         
+    }
+    
+    public void setList(ICardStorage list) {
+        this.list = list;
     }
     
 	public void addCardInput(int playerId, AbstractCard c) {
@@ -56,10 +62,7 @@ public class InputHandler {
         IPlayer currentPlayer = g.getCurrentPlayer();
         
         if(playerId == currentPlayer.getId()) {
-        	
         	cardInputQueue.add(c);
-           notifyInputListener();
-
         }
         		
 	}
@@ -82,8 +85,6 @@ public class InputHandler {
         
         if(index >= 0 && index < Rules.NUM_DICE_DISCS) {
             discInputQueue.add(field.getDisc(index));
-            
-            notifyInputListener();
         }
         
     }
@@ -106,10 +107,6 @@ public class InputHandler {
         
         if(die != null && !die.isUsed()) {
             dieInputQueue.add(die);
-            
-            notifyDieInputListener();
-            
-            notifyInputListener();
         }
     }
     
@@ -134,12 +131,20 @@ public class InputHandler {
     }
     
     public void addBooleanInput(boolean value) {
-        this.boolInput = value;
+        this.boolInput.add(value);
         notifyInputListener();
     }
     
     public boolean getBooleanInput() {
-        return boolInput;
+    	
+    	boolean input = false;
+    	
+    	if (!boolInput.isEmpty()) {
+    		input = this.boolInput.remove(0);
+    	}
+    	
+    	return input;
+    
     }
     
     public void addBattleDieInput(int roll) {

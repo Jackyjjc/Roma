@@ -1,15 +1,11 @@
 package model.runner;
 
-import java.util.List;
-
+import model.IDisc;
 import model.IGameIO;
-import model.IListener;
 import model.IPlayer;
 import model.IPlayerManager;
 import model.InputHandler;
 import model.card.AbstractCard;
-import model.card.Consiliarius;
-import model.card.Machina;
 import framework.cards.Card;
 import framework.interfaces.activators.AesculapinumActivator;
 import framework.interfaces.activators.ArchitectusActivator;
@@ -38,11 +34,11 @@ import framework.interfaces.activators.TribunusPlebisActivator;
 import framework.interfaces.activators.TurrisActivator;
 import framework.interfaces.activators.VelitesActivator;
 
-public class CardActivateManager implements AesculapinumActivator, ArchitectusActivator, BasilicaActivator, 
+public class CardActivateManager implements AesculapinumActivator, ArchitectusActivator, BasilicaActivator,
 CenturioActivator, ConsiliariusActivator, ConsulActivator, EssedumActivator, ForumActivator, GladiatorActivator,
 HaruspexActivator, LegatActivator, LegionariusActivator, MachinaActivator, MercatorActivator, MercatusActivator,
 NeroActivator, OnagerActivator, PraetorianusActivator, ScaenicusActivator, SenatorActivator, SicariusActivator,
-TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IListener {
+TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator {
 
     private IPlayerManager manager;
     private InputHandler handler;
@@ -51,7 +47,6 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IL
     public CardActivateManager(IGameIO gameIO, IPlayerManager manager) {
         this.handler = gameIO.getInputHandler();
         this.manager = manager;
-        this.handler.addInputListener(this);
     }
 
     public void chooseCardFromPile(int indexOfCard) {
@@ -59,10 +54,7 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IL
     }
     
     public void complete() {
-		while(!activatedCard.isFinishActivate()) {
-            activatedCard.runState();
-        }
-        activatedCard = null;
+        activatedCard.complete();
     }
 
     public void giveAttackDieRoll(int roll) {
@@ -77,30 +69,17 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IL
         handler.addBooleanInput(attackAgain);
     }
 
-    public void placeCard(Card card, int diceDisc) {
-        
+    public void placeCard(Card name, int diceDisc) {
+
         IPlayer player = manager.getCurrentPlayer();
-        List<AbstractCard> floatingCards = null;
-        
-        if (activatedCard.getName() == Card.CONSILIARIUS) {
-        	floatingCards = ((Consiliarius)activatedCard).getFloatingCards();
-        } else if (activatedCard.getName() == Card.MACHINA) {
-        	floatingCards = ((Machina)activatedCard).getFloatingCards();
-        }
-        
-        AbstractCard c = null;
-        
-        for (AbstractCard search : floatingCards) {
-        	
-        	if (search.getName() == card) {
-        		c = search;
-        	}
-        	
-        }
-        
-        handler.addCardInput(player.getId(), c);
+
+        handler.addCardInput(player.getId(), name);
         handler.addDiscInput(player.getId(), diceDisc - 1);
         
+        //TODO: this looks weird
+        AbstractCard card = handler.getCardInput();
+        IDisc disc = handler.getDiscInput();
+        card.lay(disc);
     }
 
     public void chooseConsulChangeAmount(int amount) {
@@ -122,8 +101,15 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IL
         handler.addBooleanInput(activate);
     }
 
+    public void chooseActivateTemplum(int diceValue) {
+        handler.addDieInput(diceValue);
+    }
+
     public void chooseMercatorBuyNum(int VPToBuy) {
-        handler.addIntInput(VPToBuy);
+        
+        for(int i = 0; i < VPToBuy; i++) {
+            handler.addBooleanInput(true);
+        }
     }
 
     public CardActivator getScaenicusMimicTarget(int diceDisc) {
@@ -135,15 +121,12 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator, IL
         return this;
     }
     
-    public void activate(AbstractCard card) {
+    public void initialise(AbstractCard card) {
         this.activatedCard = card;
-        card.activate();
+        card.initialise();
     }
 
-    public void update() {
-        if(activatedCard != null) {
-            activatedCard.runState();
-        }
+    public void layCard(Card name, int whichDiceDisc) {
+        placeCard(name, whichDiceDisc);
     }
-    
 }

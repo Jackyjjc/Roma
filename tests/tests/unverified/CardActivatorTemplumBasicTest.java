@@ -74,6 +74,4 @@ public class CardActivatorTemplumBasicTest extends Test {
         
     }
 
-    
-    
 }

@@ -5,23 +5,24 @@ import java.util.List;
 
 import model.card.AbstractCard;
 
-public class Disc implements IDisc {
+public class Disc implements IDisc, ITurnListener {
 
     private int index;
     private boolean isBlocked;
     private AbstractCard card;
+    private int count;
     
     private List<IDiscListener> discListeners;
-    
     private IPlayer owner;
     
     private IDisc prev;
     private IDisc next;
     
-    public Disc (int index) {
+    public Disc (ITurnMover turnMover, int index) {
         this.index = index;
         isBlocked = false;
         discListeners = new ArrayList<IDiscListener>();
+        turnMover.addTurnListener(this);
     }
     
     public boolean isDiscEmpty() {
@@ -29,24 +30,24 @@ public class Disc implements IDisc {
     }
     
     public boolean layCard(AbstractCard c) {
-       
+
         boolean succeed = false;
-        
-        if (c != null || !isBlocked()) {
-            
+
+        if (c != null) {
+
             if(!isDiscEmpty()) {
                 card.disCard();
             }
-            
+
             card = c;
             c.setDisc(this);
             c.setOwner(getOwner());
-            
+
             succeed = true;
-            
+
             notifyAllListeners();
         }
-        
+
         return succeed;
     }
     
@@ -85,10 +86,12 @@ public class Disc implements IDisc {
     }
     
     public void block() {
+        count = 0;
         isBlocked = true;
     }
     
-    public void unBlock() {
+    private void unBlock() {
+        count = 0;
         isBlocked = false;
     }
 
@@ -127,6 +130,14 @@ public class Disc implements IDisc {
     private void notifyAllListeners() {
         for(IDiscListener l : discListeners) {
             l.update(this);
+        }
+    }
+
+    public void notifyEndTurn() {
+        if(count == 1) {
+            unBlock();
+        } else {
+            count++;
         }
     }
 }

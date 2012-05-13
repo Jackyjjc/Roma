@@ -74,7 +74,7 @@ public class CardActivatorArchitectusBasicTest extends Test {
 //        field = gameState.getPlayerCardsOnDiscs(0);
 //        assert(field[2] == Card.FORUM);
 //
-//        //activate Architectus
+//        //initialise Architectus
 //        ArchitectusActivator activator = (ArchitectusActivator) move.chooseCardToActivate(Rules.DICE_DISC_1);
 //        // The activation takes no parameters and can now be completed
 //        activator.complete();

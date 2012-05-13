@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import model.runner.CardActivateManager;
 import framework.cards.Card;
 import framework.interfaces.GameState;
 
-public class Game implements GameState, IGameDisplayState, ICardResources, IGameIO, IPlayerManager {
+public class Game implements GameState, IGameDisplayState, ICardResources, IGameIO, IPlayerManager, ITurnMover {
 	
     private static final int TOTAL_MONEY = Integer.MAX_VALUE;
     private static final int TOTAL_VP = 36;
@@ -23,7 +24,6 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
     private DiceManager diceManager;
     private CardFactory cardFactory;
     private CardActivateManager activateManager;
-    private TurnNotifier turnNotifier;
     
 	private IResourceStorage bank;
 	private IPlayer currentPlayer;
@@ -32,7 +32,8 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 	
 	private InputHandler inputHandler;
     private Notifier notifier;
-	
+	List<ITurnListener> turnListeners;
+    
 	public Game (int numPlayers) {
 	    
 	    this.numPlayers = numPlayers;
@@ -43,12 +44,13 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 	   
 		this.bank = new ResourceStorage(TOTAL_MONEY, TOTAL_VP);
 		
-        this.cardFactory = new CardFactory(this, this);
+        this.cardFactory = new CardFactory(this, this, this);
         this.activateManager = new CardActivateManager(this, this);
-		this.turnNotifier = new TurnNotifier();
         
 		this.deck = CardCollectionFactory.create(DECK, cardFactory);
 		this.discard = CardCollectionFactory.create(!DECK, cardFactory);
+		
+		this.turnListeners = new ArrayList<ITurnListener>();
 		
 		createPlayers(numPlayers);
 	}
@@ -70,7 +72,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
         IPlayer[] players = new IPlayer[numPlayers];
         
         for(int i = 0; i < numPlayers; i++) {
-            players[i] = Player.createPlayer(i, bank, cardFactory);
+            players[i] = Player.createPlayer(this, i, bank, cardFactory);
         }
         
         //set up the relationship between players
@@ -98,8 +100,15 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
     }
 
     public void advanceTurn() {
+        
         this.turnNum++;
+        
+        for(ITurnListener l : turnListeners) {
+            l.notifyEndTurn();
+        }
+        
         currentPlayer = currentPlayer.getOpponent();
+        inputHandler.setList(currentPlayer.getHand());
     }
     
     public Notifier getNotifier() {
@@ -114,8 +123,14 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
         return activateManager;
     }
     
-    public TurnNotifier getTurnNotifier() {
-        return turnNotifier;
+    public void addTurnListener(ITurnListener listener) {
+        if(!turnListeners.contains(listener)) {
+            turnListeners.add(listener);
+        }
+    }
+    
+    public void removeTurnListener(ITurnListener listener) {
+        turnListeners.remove(listener);
     }
     
     /* =========================================================================*
@@ -130,9 +145,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
     }
 
     public void setWhoseTurn(int player) {
-        
-        currentPlayer = getPlayer(player);
-        
+        currentPlayer = getPlayer(player); 
     }
 
     public List<Card> getDeck() {

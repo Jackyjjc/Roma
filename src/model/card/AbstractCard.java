@@ -1,14 +1,10 @@
 package model.card;
 
-import model.ICardResources;
-import model.IDisc;
-import model.IGameIO;
-import model.IPlayer;
-import model.IResourceStorage;
-import model.card.state.ICardState;
 import framework.cards.Card;
+import model.*;
+import model.card.attribute.Attribute;
 
-public abstract class AbstractCard {
+public class AbstractCard {
     
     private final int defaultCost;
     private final int defaultDefence;
@@ -18,33 +14,35 @@ public abstract class AbstractCard {
     
     private int cost;
     private int defence;
-    private IPlayer owner;
     private IDisc disc;
     
-    private ICardState state;
-    private ICardResources cardResources;
-    private IGameIO gameIO;
-    
-    public AbstractCard(Card name, CardType type, int cost, int defence,
-                        ICardResources cardResources, IGameIO gameIO) {
+    private Attribute attributes;
+
+    public AbstractCard(Attribute attributes) {
         
-        this.name = name;
-        this.type = type;
-        this.defaultCost = cost;
-        this.defaultDefence = defence;
-        this.cost = cost;
-        this.defence = defence;
-        this.owner = null;
-        this.gameIO = gameIO;
-        this.cardResources = cardResources;
+    	this.attributes = attributes;
+    	
+        this.name = attributes.getName();
+        this.type = attributes.getType();
+        this.defaultCost = attributes.getDefaultCost();
+        this.defaultDefence = attributes.getDefaultDefence();
+        this.cost = this.defaultCost;
+        this.defence = this.defaultDefence;
+        
     }
 
-    public abstract void activate();
+    public void initialise() {
+        attributes.initialise();
+    }
+
+    public void complete() {
+    	attributes.complete();
+    }
     
     public boolean lay(IDisc disc) {
         
         boolean succeed = false;
-        IResourceStorage bank = cardResources.getBank();
+        IResourceStorage bank = attributes.getCardResources().getBank();
         
         if(getOwner().getMoney() >= getCost()) {
             disc.layCard(this);
@@ -63,7 +61,7 @@ public abstract class AbstractCard {
         setCost(getDefaultCost());
         setDefence(getDefaultDefence());
         
-        cardResources.getDiscardStorage().pushCard(this);
+        attributes.getCardResources().getDiscardStorage().pushCard(this);
     }
     
     public Card getName() {
@@ -106,31 +104,13 @@ public abstract class AbstractCard {
     public int getDefaultDefence() {
         return defaultDefence;
     }
-    
-    public boolean isFinishActivate() {
-        return (state == null);
-    }
-    
-    public void runState() {
-        if(!isFinishActivate()) {
-            state.run();
-        }
-    }
-    
-    public void setState(ICardState state) {
-        this.state = state;
-    }
-    
-    public ICardState getState() {
-        return state;
-    }
-    
+
     public IPlayer getOwner() {
-        return owner;
+        return attributes.getOwner();
     }
 
     public void setOwner(IPlayer owner) {
-        this.owner = owner;
+        this.attributes.setOwner(owner);
     }
 
     public void setDisc(IDisc disc) {
@@ -139,14 +119,6 @@ public abstract class AbstractCard {
     
     public IDisc getDisc() {
         return disc;
-    }
-    
-    public IGameIO getGameIO() {
-        return gameIO;
-    }
-    
-    public ICardResources getCardResources() {
-        return cardResources;
     }
     
 }

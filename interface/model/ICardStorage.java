@@ -17,7 +17,7 @@ import framework.cards.Card;
  * @author Chris Fong
  */
 
-public interface ICardStorage {
+public interface ICardStorage extends Iterable<AbstractCard> {
 
     public void pushCard(AbstractCard c);
     
