@@ -11,7 +11,7 @@ import framework.interfaces.MoveMaker;
 
 /**
  * 
- * Test the behavior of the get card disc.
+ * Test the behaviour of the get card disc.
  * 
  * @author Junjie CHEN
  *
@@ -20,7 +20,7 @@ import framework.interfaces.MoveMaker;
 public class GetCardsTest extends Test {
 
     public String getShortDescription() {
-        return "Test the behavior of the get card disc.";
+        return "Test the behaviour of the get card disc.";
     }
 
     public void run(GameState gameState, MoveMaker move) throws AssertionError,

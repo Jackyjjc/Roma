@@ -6,8 +6,6 @@ import java.awt.dnd.DropTarget;
 import javax.swing.JPanel;
 
 import model.IGameDisplayState;
-
-import controller.CardDropTargetListener;
 import controller.CustomizedTransferHandler;
 import controller.DieDropTargetListener;
 import controller.DiscClickListener;

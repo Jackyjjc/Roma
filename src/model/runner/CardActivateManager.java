@@ -6,10 +6,10 @@ import model.IPlayer;
 import model.IPlayerManager;
 import model.InputHandler;
 import model.card.AbstractCard;
+import model.card.behaviour.ScaenicusBehaviour;
 import framework.cards.Card;
 import framework.interfaces.activators.AesculapinumActivator;
 import framework.interfaces.activators.ArchitectusActivator;
-import framework.interfaces.activators.BasilicaActivator;
 import framework.interfaces.activators.CardActivator;
 import framework.interfaces.activators.CenturioActivator;
 import framework.interfaces.activators.ConsiliariusActivator;
@@ -29,16 +29,14 @@ import framework.interfaces.activators.PraetorianusActivator;
 import framework.interfaces.activators.ScaenicusActivator;
 import framework.interfaces.activators.SenatorActivator;
 import framework.interfaces.activators.SicariusActivator;
-import framework.interfaces.activators.TemplumActivator;
 import framework.interfaces.activators.TribunusPlebisActivator;
-import framework.interfaces.activators.TurrisActivator;
 import framework.interfaces.activators.VelitesActivator;
 
-public class CardActivateManager implements AesculapinumActivator, ArchitectusActivator, BasilicaActivator,
+public class CardActivateManager implements AesculapinumActivator, ArchitectusActivator,
 CenturioActivator, ConsiliariusActivator, ConsulActivator, EssedumActivator, ForumActivator, GladiatorActivator,
 HaruspexActivator, LegatActivator, LegionariusActivator, MachinaActivator, MercatorActivator, MercatusActivator,
 NeroActivator, OnagerActivator, PraetorianusActivator, ScaenicusActivator, SenatorActivator, SicariusActivator,
-TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator {
+TribunusPlebisActivator, VelitesActivator {
 
     private IPlayerManager manager;
     private InputHandler handler;
@@ -118,13 +116,16 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator {
         
         handler.addDiscInput(player.getId(), diceDisc - 1);
         
+        ScaenicusBehaviour behaviour = (ScaenicusBehaviour)activatedCard.getBehaviour();
+        behaviour.mimic();
+        
         return this;
     }
     
     public void initialise(AbstractCard card) {
         this.activatedCard = card;
         card.initialise();
-    }
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
     public void layCard(Card name, int whichDiceDisc) {
         placeCard(name, whichDiceDisc);

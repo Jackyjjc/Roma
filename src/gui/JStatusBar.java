@@ -5,11 +5,7 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import org.omg.PortableServer.IdAssignmentPolicy;
 
 import model.IGameDisplayState;
 

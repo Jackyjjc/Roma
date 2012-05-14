@@ -11,7 +11,8 @@ import model.runner.CardActivateManager;
 import framework.cards.Card;
 import framework.interfaces.GameState;
 
-public class Game implements GameState, IGameDisplayState, ICardResources, IGameIO, IPlayerManager, ITurnMover {
+public class Game implements GameState, IGameDisplayState, ICardResources, 
+                             IGameIO, IPlayerManager, ITurnMover, IGameFinishManager {
 	
     private static final int TOTAL_MONEY = Integer.MAX_VALUE;
     private static final int TOTAL_VP = 36;
@@ -32,7 +33,9 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 	
 	private InputHandler inputHandler;
     private Notifier notifier;
-	List<ITurnListener> turnListeners;
+	private List<ITurnListener> turnListeners;
+	
+	private boolean isFinished;
     
 	public Game (int numPlayers) {
 	    
@@ -42,9 +45,9 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 	    this.notifier = new Notifier(this);
 	    this.diceManager = new DiceManager(NUM_ACTION_DICE);
 	   
-		this.bank = new ResourceStorage(TOTAL_MONEY, TOTAL_VP);
+		this.bank = new ResourceStorage(TOTAL_MONEY, TOTAL_VP, this);
 		
-        this.cardFactory = new CardFactory(this, this, this);
+        this.cardFactory = new CardFactory(this);
         this.activateManager = new CardActivateManager(this, this);
         
 		this.deck = CardCollectionFactory.create(DECK, cardFactory);
@@ -53,6 +56,8 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 		this.turnListeners = new ArrayList<ITurnListener>();
 		
 		createPlayers(numPlayers);
+		
+		isFinished = false;
 	}
 	
 	public int getTurn() {
@@ -72,7 +77,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
         IPlayer[] players = new IPlayer[numPlayers];
         
         for(int i = 0; i < numPlayers; i++) {
-            players[i] = Player.createPlayer(this, i, bank, cardFactory);
+            players[i] = Player.createPlayer(i, bank, cardFactory,this, this);
         }
         
         //set up the relationship between players
@@ -101,6 +106,8 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
 
     public void advanceTurn() {
         
+        assert(!isFinished);
+        
         this.turnNum++;
         
         for(ITurnListener l : turnListeners) {
@@ -109,6 +116,9 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
         
         currentPlayer = currentPlayer.getOpponent();
         inputHandler.setList(currentPlayer.getHand());
+        
+        int VPdeductAmount = currentPlayer.getField().countUnoccupiedDiscs();
+        currentPlayer.transferMoney(bank, VPdeductAmount);
     }
     
     public Notifier getNotifier() {
@@ -131,6 +141,11 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
     
     public void removeTurnListener(ITurnListener listener) {
         turnListeners.remove(listener);
+    }
+    
+    public void finish() {
+        isFinished = true;
+        System.out.println("Game Over");
     }
     
     /* =========================================================================*
@@ -269,7 +284,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources, IGame
     }
 
     public boolean isGameCompleted() {
-        return false;
+        return isFinished;
     }
     
 }

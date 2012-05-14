@@ -1,14 +1,14 @@
 package tests.unverified;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import framework.Rules;
 import framework.Test;
 import framework.cards.Card;
 import framework.interfaces.GameState;
 import framework.interfaces.MoveMaker;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

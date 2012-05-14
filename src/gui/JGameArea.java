@@ -4,10 +4,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import model.IGameDisplayState;
-import model.InputHandler;
-import controller.DiscClickListener;
-import controller.FieldClickListener;
-import controller.HandClickListener;
 
 public class JGameArea extends JPanel implements IListener {
     

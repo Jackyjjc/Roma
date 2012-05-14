@@ -87,7 +87,7 @@ public class CardActivatorNeroBasicTest extends Test {
         field = gameState.getPlayerCardsOnDiscs(0);
         assert(field[2] == Card.NERO);
         
-        //kill the Onager
+        //kill the OnagerBehaviour
         activator = (NeroActivator) move.chooseCardToActivate(Rules.DICE_DISC_3);
         activator.chooseDiceDisc(Rules.DICE_DISC_4);
         activator.complete();
@@ -97,7 +97,7 @@ public class CardActivatorNeroBasicTest extends Test {
         assert(field[2] == Card.NOT_A_CARD);
         assert(gameState.getDiscard().contains(Card.NERO));
         
-        //Onager died as well
+        //OnagerBehaviour died as well
         field = gameState.getPlayerCardsOnDiscs(1);
         assert(field[3] == Card.NOT_A_CARD);
         assert(gameState.getDiscard().contains(Card.ONAGER));

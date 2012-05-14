@@ -1,6 +1,5 @@
 package controller;
 
-import gui.JCard;
 import gui.JDie;
 import gui.JDisc;
 import gui.TransferableImp;

@@ -1,5 +1,8 @@
 package tests.unverified;
 
+import java.util.Collection;
+import java.util.LinkedList;
+
 import framework.Rules;
 import framework.Test;
 import framework.cards.Card;
@@ -7,8 +10,6 @@ import framework.interfaces.GameState;
 import framework.interfaces.MoveMaker;
 import framework.interfaces.activators.CenturioActivator;
 import framework.interfaces.activators.LegionariusActivator;
-
-import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.

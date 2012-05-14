@@ -36,7 +36,7 @@ public interface MoveMaker {
      * This will never be called if:
      * <ul>
      * <li>the player does not have the appropriate action dice to
-     * initialise the chosen card</li>
+     * activate the chosen card</li>
      * <li>the card cannot be activated at the current time</li>
      * <li>the ActionData parameter does not match the activated
      * card</li>
@@ -79,7 +79,7 @@ public interface MoveMaker {
      * card</li>
      * </ul>
      *
-     * @param diceToUse which value dice to use to initialise the disc
+     * @param diceToUse which value dice to use to activate the disc
      * @param chosen which card to keep from the group drawn from the
      * deck
      *
@@ -108,7 +108,7 @@ public interface MoveMaker {
      * value</li>
      * </ul>
      *
-     * @param diceToUse which value dice to initialise the disc with
+     * @param diceToUse which value dice to activate the disc with
      * @throws UnsupportedOperationException if the move is not yet
      * implemented
      */
@@ -139,7 +139,7 @@ public interface MoveMaker {
      * card</li>
      * </ul>
      *
-     * @param diceToUse which value dice to initialise the disc with
+     * @param diceToUse which value dice to activate the disc with
      * @throws UnsupportedOperationException if the move is not yet
      * implemented
      */

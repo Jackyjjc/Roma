@@ -3,7 +3,6 @@ package model.runner;
 import framework.cards.Card;
 import framework.interfaces.activators.AesculapinumActivator;
 import framework.interfaces.activators.ArchitectusActivator;
-import framework.interfaces.activators.BasilicaActivator;
 import framework.interfaces.activators.CardActivator;
 import framework.interfaces.activators.CenturioActivator;
 import framework.interfaces.activators.ConsiliariusActivator;
@@ -23,20 +22,18 @@ import framework.interfaces.activators.PraetorianusActivator;
 import framework.interfaces.activators.ScaenicusActivator;
 import framework.interfaces.activators.SenatorActivator;
 import framework.interfaces.activators.SicariusActivator;
-import framework.interfaces.activators.TemplumActivator;
 import framework.interfaces.activators.TribunusPlebisActivator;
-import framework.interfaces.activators.TurrisActivator;
 import framework.interfaces.activators.VelitesActivator;
 
 
-public class BlockedManager implements AesculapinumActivator, ArchitectusActivator, BasilicaActivator, 
+public class BlockedManager implements AesculapinumActivator, ArchitectusActivator, 
 CenturioActivator, ConsiliariusActivator, ConsulActivator, EssedumActivator, ForumActivator, GladiatorActivator,
 HaruspexActivator, LegatActivator, LegionariusActivator, MachinaActivator, MercatorActivator, MercatusActivator,
 NeroActivator, OnagerActivator, PraetorianusActivator, ScaenicusActivator, SenatorActivator, SicariusActivator,
-TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator {
+TribunusPlebisActivator, VelitesActivator {
 	
 	public BlockedManager () {
-		
+		doNothing();
 	}
 
 	public void chooseCardFromPile(int indexOfCard) {
@@ -87,8 +84,17 @@ TemplumActivator, TurrisActivator, TribunusPlebisActivator, VelitesActivator {
 		doNothing();	
 	}
 	
-	private void doNothing() {
-	
+	public void chooseActivateTemplum(int diceValue) {
+		doNothing();	
 	}
+
+	public void layCard(Card myCard, int whichDiceDisc) {
+		doNothing();
+	}
+	
+	private void doNothing() {
+		
+	}
+
 	
 }

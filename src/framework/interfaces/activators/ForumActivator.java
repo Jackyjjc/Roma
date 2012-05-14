@@ -13,8 +13,8 @@ package framework.interfaces.activators;
 public interface ForumActivator extends ActionDiceUser, CardActivator {
 
     /**
-     * Choose whether to initialise a Templum with your forum activation
-     * @param activate true if the user wishes to initialise a Templum.
+     * Choose whether to activate a Templum with your forum activation
+     * @param activate true if the user wishes to activate a Templum.
      */
     void chooseActivateTemplum(boolean activate);
 

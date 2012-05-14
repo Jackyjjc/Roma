@@ -9,5 +9,9 @@ public interface ICardResources {
     public ICardStorage getDiscardStorage();
     
     public DiceManager getDiceManager();
+
+    public void addTurnListener(ITurnListener listener);
+    
+    public void removeTurnListener(ITurnListener listener);
     
 }

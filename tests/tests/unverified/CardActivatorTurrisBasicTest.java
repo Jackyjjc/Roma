@@ -3,7 +3,6 @@ package tests.unverified;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import framework.Rules;
 import framework.Test;
 import framework.cards.Card;
 import framework.interfaces.GameState;

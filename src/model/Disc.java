@@ -36,7 +36,7 @@ public class Disc implements IDisc, ITurnListener {
         if (c != null) {
 
             if(!isDiscEmpty()) {
-                card.disCard();
+                card.disCard(false);
             }
 
             card = c;

@@ -6,7 +6,7 @@ import framework.interfaces.MoveMaker;
 
 /**
  * 
- * Testing the behavior of get Sestertii using Action Dice
+ * Testing the behaviour of get Sestertii using Action Dice
  * 
  * @author Jacky CHEN
  *
@@ -16,7 +16,7 @@ public class GetMoneyTest extends Test {
 
     @Override
     public String getShortDescription() {
-        return "Testing the behavior of get Sestertii using Action Dice";
+        return "Testing the behaviour of get Sestertii using Action Dice";
     }
 
     @Override

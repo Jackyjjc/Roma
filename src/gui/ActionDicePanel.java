@@ -5,8 +5,6 @@ import java.awt.FlowLayout;
 import javax.swing.JPanel;
 
 import model.IGameDisplayState;
-
-import controller.ActionDieClickListener;
 import controller.CustomizedTransferHandler;
 import controller.MouseDraggingAdapter;
 

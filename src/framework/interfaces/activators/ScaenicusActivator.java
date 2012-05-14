@@ -18,7 +18,7 @@ public interface ScaenicusActivator extends CardActivator {
      * <p>
      * This method selects a card for an activated Scaenicus to mimic.
      * A new CardActivator corresponding to the chosen card is returned,
-     * so the test may use it to initialise the selected card.
+     * so the test may use it to activate the selected card.
      * </p>
      *
      * @param diceDisc

@@ -1,6 +1,29 @@
 package model;
 
-import framework.interfaces.activators.*;
+import framework.interfaces.activators.AesculapinumActivator;
+import framework.interfaces.activators.ArchitectusActivator;
+import framework.interfaces.activators.CardActivator;
+import framework.interfaces.activators.CenturioActivator;
+import framework.interfaces.activators.ConsiliariusActivator;
+import framework.interfaces.activators.ConsulActivator;
+import framework.interfaces.activators.EssedumActivator;
+import framework.interfaces.activators.ForumActivator;
+import framework.interfaces.activators.GladiatorActivator;
+import framework.interfaces.activators.HaruspexActivator;
+import framework.interfaces.activators.LegatActivator;
+import framework.interfaces.activators.LegionariusActivator;
+import framework.interfaces.activators.MachinaActivator;
+import framework.interfaces.activators.MercatorActivator;
+import framework.interfaces.activators.MercatusActivator;
+import framework.interfaces.activators.NeroActivator;
+import framework.interfaces.activators.OnagerActivator;
+import framework.interfaces.activators.PraetorianusActivator;
+import framework.interfaces.activators.ScaenicusActivator;
+import framework.interfaces.activators.SenatorActivator;
+import framework.interfaces.activators.SicariusActivator;
+import framework.interfaces.activators.TelephoneBoxActivator;
+import framework.interfaces.activators.TribunusPlebisActivator;
+import framework.interfaces.activators.VelitesActivator;
 
 public class ActivatorCaster {
 	
@@ -12,9 +35,6 @@ public class ActivatorCaster {
 		return (ArchitectusActivator)activator;
 	}
 	
-	public static BasilicaActivator castToBasilica (CardActivator activator) {
-		return (BasilicaActivator)activator;
-	}
 	
 	public static CenturioActivator castToCenturio (CardActivator activator) {
 		return (CenturioActivator)activator;
@@ -40,16 +60,9 @@ public class ActivatorCaster {
 		return (GladiatorActivator)activator;
 	}
 	
-	public static GrimReaperActivator castToGrimReaper (CardActivator activator) {
-		return (GrimReaperActivator)activator;
-	}
 	
 	public static HaruspexActivator castToHaruspex (CardActivator activator) {
 		return (HaruspexActivator)activator;
-	}
-	
-	public static KatActivator castToKat (CardActivator activator) {
-		return (KatActivator)activator;
 	}
 	
 	public static LegatActivator castToLegat (CardActivator activator) {
@@ -100,79 +113,12 @@ public class ActivatorCaster {
 		return (TelephoneBoxActivator)activator;
 	}
 	
-	public static TemplumActivator castToTemplum (CardActivator activator) {
-		return (TemplumActivator)activator;
-	}
-	
 	public static TribunusPlebisActivator castToTribunusPlebis (CardActivator activator) {
 		return (TribunusPlebisActivator)activator;
-	}
-	
-	public static TurrisActivator castToTurris (CardActivator activator) {
-		return (TurrisActivator)activator;
 	}
 	
 	public static VelitesActivator castToVelites (CardActivator activator) {
 		return (VelitesActivator)activator;
 	}
-	
-//		switch(c) {
-//        case AESCULAPINUM:
-//        	
-//        	return (AesculapinumActivator)activator;
-//        	break;
-//        case ARCHITECTUS: 
-//            break;
-//        case BASILICA:
-//            break;
-//        case CENTURIO:
-//            break;
-//        case CONSILIARIUS:
-//            break;
-//        case CONSUL:
-//            break;
-//        case ESSEDUM:
-//            break;
-//        case FORUM:
-//            break;
-//        case GLADIATOR:
-//            break;
-//        case HARUSPEX:
-//            break;
-//        case LEGAT:
-//            break;
-//        case LEGIONARIUS:
-//            break;
-//        case MACHINA:
-//            break;
-//        case MERCATOR:
-//            break;
-//        case MERCATUS:
-//            break;
-//        case NERO:
-//            break;
-//        case NOT_A_CARD:
-//            break;
-//        case ONAGER:
-//            break;
-//        case PRAETORIANUS:
-//            break;
-//        case SCAENICUS:
-//            break;
-//        case SENATOR:
-//            break;
-//        case SICARIUS:
-//            break;
-//        case TEMPLUM:
-//            break;
-//        case TRIBUNUSPLEBIS:
-//            break;
-//        case TURRIS:
-//            break;
-//        case VELITES:
-//            break;
-//            
-//		}
-	
-	
+		
 }
