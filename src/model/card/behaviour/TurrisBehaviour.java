@@ -47,7 +47,7 @@ public class TurrisBehaviour extends Behaviour implements IDiscListener {
     }
 
     @Override
-    public void disCard(boolean beenKilled) {
+    public void disCard() {
 
         for(AbstractCard card : affectedCards) {
             card.setDefence(card.getDefence() - 1);
@@ -55,7 +55,7 @@ public class TurrisBehaviour extends Behaviour implements IDiscListener {
 
         affectedCards.clear();
 
-        super.disCard(beenKilled);
+        super.disCard();
     }
 
     public void update(IDisc disc) {

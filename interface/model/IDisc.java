@@ -23,6 +23,8 @@ public interface IDisc {
     
     public boolean layCard(AbstractCard c);
     
+    public void activateCard();
+    
     public AbstractCard getCard();
     
     public AbstractCard removeCard();
@@ -42,4 +44,5 @@ public interface IDisc {
     public void setNext(IDisc next);
     
     public IDisc getNext();
+    
 }

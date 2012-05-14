@@ -36,7 +36,7 @@ public class Disc implements IDisc, ITurnListener {
         if (c != null) {
 
             if(!isDiscEmpty()) {
-                card.disCard(false);
+                card.disCard();
             }
 
             card = c;
@@ -65,6 +65,12 @@ public class Disc implements IDisc, ITurnListener {
         return returnCard;
     
     }
+    
+	public void activateCard() {
+		if(!isDiscEmpty()) {
+			getCard().initialise();
+		}
+	}
     
     public AbstractCard getCard() {
         
@@ -140,4 +146,5 @@ public class Disc implements IDisc, ITurnListener {
             count++;
         }
     }
+
 }

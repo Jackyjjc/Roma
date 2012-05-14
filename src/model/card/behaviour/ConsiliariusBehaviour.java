@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.InputHandler;
 import model.ICardStorage;
 import model.IField;
 import model.card.AbstractCard;
@@ -40,7 +41,9 @@ public class ConsiliariusBehaviour extends Behaviour {
             c.setCost(c.getDefaultCost());
         }
 
-        getHost().getGameIO().getInputHandler().setList(getHost().getOwner().getHand());
+        InputHandler handler = getHost().getGameIO().getInputHandler();
+        System.out.println(getHost().getOwner()==null);
+        handler.setList(getHost().getOwner().getHand());
     }
 
     public boolean isValidCard (AbstractCard c) {

@@ -118,7 +118,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
         inputHandler.setList(currentPlayer.getHand());
         
         int VPdeductAmount = currentPlayer.getField().countUnoccupiedDiscs();
-        currentPlayer.transferMoney(bank, VPdeductAmount);
+        currentPlayer.transferVP(bank, VPdeductAmount);
     }
     
     public Notifier getNotifier() {

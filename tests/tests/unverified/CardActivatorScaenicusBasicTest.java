@@ -71,8 +71,10 @@ public class CardActivatorScaenicusBasicTest extends Test {
         gameState.setPlayerSestertii(0, 0);
         gameState.setPlayerSestertii(1, 0);
         
+        
         ScaenicusActivator scaenicusActivator = (ScaenicusActivator) move.chooseCardToActivate(2);
         TribunusPlebisActivator tribActivator = (TribunusPlebisActivator) scaenicusActivator.getScaenicusMimicTarget(1);
+        
         tribActivator.complete();
         scaenicusActivator.complete();
         

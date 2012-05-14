@@ -13,31 +13,54 @@ import model.card.AbstractCard;
 public class ScaenicusBehaviour extends Behaviour {
 
 	private Behaviour mimicBehaviour;
+	private AbstractCard oldHost;
 	
     public ScaenicusBehaviour(AbstractCard host) {
 		super(host);
 	}
 
     public void mimic() {
+    	
 		AbstractCard host = getHost();
 		IDisc disc = host.getGameIO().getInputHandler().getDiscInput();
 		
 		mimicBehaviour = disc.getCard().getBehaviour();
 		
-		getHost().setBehaviour(mimicBehaviour);
+		oldHost = mimicBehaviour.getHost();
+		
+		mimicBehaviour.setHost(getHost());
 		mimicBehaviour.initialise();
 		
     }
     
 	public void complete() {
-		mimicBehaviour.complete();
-		reset();
+		
+		if (mimicBehaviour != null) {
+			mimicBehaviour.complete();
+			reset();
+		}
 	}
 	
 	public void reset() {
+
+		if(mimicBehaviour != null) {
+			mimicBehaviour.setHost(oldHost);
+			mimicBehaviour = null;
+		}
 		
-		getHost().setBehaviour(new ScaenicusBehaviour(getHost()));
+	}
+	
+	public Behaviour getMimicBehaviour() {
 		
+		Behaviour behaviour = null;
+		
+		if(mimicBehaviour != null && mimicBehaviour instanceof ScaenicusBehaviour) {
+			behaviour = ((ScaenicusBehaviour)mimicBehaviour).getMimicBehaviour();
+		} else {
+			behaviour = this;
+		}
+		
+		return behaviour;
 	}
 	
 }

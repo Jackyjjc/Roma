@@ -42,5 +42,9 @@ public interface ICardStorage extends Iterable<AbstractCard> {
     public int size();
     
     public void setOwner(IPlayer player);
+   
+    public void addDiscardListener (IDiscardListener listener);
+    
+    public void removeDiscardListener (IDiscardListener listener);
 
 }

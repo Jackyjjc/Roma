@@ -17,7 +17,7 @@ class Player implements IPlayer {
     public static IPlayer createPlayer(int id, IResourceStorage bank, CardFactory factory, 
                                        ITurnMover turnMover, IGameFinishManager g) {
         
-        IPlayer player = new Player(id, factory, turnMover, g);
+        IPlayer player = new Player(id, factory, turnMover, g, bank);
         
         bank.transferMoney(player, START_MONEY);
         bank.transferVP(player, START_VP);
@@ -26,12 +26,12 @@ class Player implements IPlayer {
     }
     
     //use construction method to solve the problem of initiallizing the player
-    private Player(int id, CardFactory factory, ITurnMover turnMover, IGameFinishManager g) {
+    private Player(int id, CardFactory factory, ITurnMover turnMover, IGameFinishManager g, IResourceStorage bank) {
         this.id = id;
         this.rs = new ResourceStorage(0, 0, g);
         this.hand = CardCollectionFactory.create(false, factory);
         this.hand.setOwner(this);
-        this.field = new Field(this,turnMover);
+        this.field = new Field(this,turnMover,bank);
     }
 
     public int getId() {

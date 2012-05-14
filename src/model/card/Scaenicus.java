@@ -10,7 +10,7 @@ class Scaenicus extends AbstractCard {
     private static final int DEFENCE = 3;
 
     
-    Scaenicus(ICardResources cardResources, IGameIO gameIO, CardFactory factory) {
+    Scaenicus(ICardResources cardResources, IGameIO gameIO) {
         super(Card.SCAENICUS, CardType.CHARACTER,
               COST, DEFENCE, cardResources, gameIO);
 

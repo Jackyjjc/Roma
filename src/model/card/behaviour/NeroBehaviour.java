@@ -25,9 +25,9 @@ public class NeroBehaviour extends Behaviour {
         AbstractCard target = disc.getCard();
 
         if (isValidTarget(target)) {
-            target.disCard(true);
+            target.disCard();
             //TODO:if the acceptance rep changed it then change this line
-            this.disCard(true);
+            this.disCard();
         }
 
     }

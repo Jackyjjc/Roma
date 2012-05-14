@@ -1,5 +1,6 @@
 package model.runner;
 
+import model.BribeDisc;
 import model.DiceManager;
 import model.Game;
 import model.ICardStorage;
@@ -30,18 +31,27 @@ public class GameController implements MoveMaker {
         this.diceManager = g.getDiceManager();
     }
     
-    public CardActivator chooseCardToActivate(int disc) {
-        
+    public CardActivator chooseCardToActivate(int discIndex) {
+       
+    	CardActivator activator = null;
+    	
         IPlayer player = g.getCurrentPlayer();
-        g.getDiceManager().getActionDie(disc).use();
+        g.getDiceManager().getActionDie(discIndex).use();
         
         CardActivateManager activateManager = g.getCardActivateManager();
         
         //disc is from 1 - 7
-        AbstractCard card = player.getField().getCard(disc - 1);
-        activateManager.initialise(card);
+        IDisc disc = player.getField().getDisc(discIndex - 1);
         
-        return (CardActivator)activateManager;
+        if(!disc.isBlocked()) {
+            activator = activateManager; 
+        	activateManager.activate(disc);
+        } else {
+        	activator = new BlockedManager();
+        }
+        
+        
+        return activator;
         
     }
 
@@ -84,7 +94,13 @@ public class GameController implements MoveMaker {
     public CardActivator activateBribeDisc(int diceToUse)
             throws UnsupportedOperationException {
         
-        throw new UnsupportedOperationException();
+    	int bribeDiscIndex = 7;
+    	
+    	IDisc bribeDisc = g.getCurrentPlayer().getField().getDisc(bribeDiscIndex);
+    	((BribeDisc)bribeDisc).giveBribe(diceToUse);
+    	
+        return chooseCardToActivate(bribeDiscIndex);
+        
     }
 
     public void endTurn() throws UnsupportedOperationException {

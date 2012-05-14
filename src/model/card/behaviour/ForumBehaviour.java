@@ -27,10 +27,11 @@ public class ForumBehaviour extends Behaviour {
 
         if (isValidDie(toUse)) {
             bank.transferVP(player,toUse.getValue());
+            toUse.use();
         }
 
         if(disc.getPrev() != null && disc.getPrev().getCard() instanceof IForumListener) {
-            ((IForumListener)disc.getPrev().getCard()).alert();
+        	((IForumListener)disc.getPrev().getCard()).alert();
         }
 
         if (disc.getNext() != null & disc.getNext().getCard() instanceof IForumListener) {

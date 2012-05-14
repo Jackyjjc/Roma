@@ -25,9 +25,9 @@ public class SicariusBehaviour extends Behaviour {
         AbstractCard target = disc.getCard();
 
         if (isValidTarget(target)) {
-            target.disCard(true);
+            target.disCard();
             //TODO: same as Nero
-            getHost().disCard(true);
+            getHost().disCard();
         }
     }
 

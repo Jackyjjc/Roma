@@ -5,6 +5,7 @@ import model.IDisc;
 import model.IGameIO;
 import model.IPlayer;
 import model.card.behaviour.Behaviour;
+import model.card.behaviour.ScaenicusBehaviour;
 import framework.cards.Card;
 
 public class AbstractCard {
@@ -41,8 +42,8 @@ public class AbstractCard {
 
     }
     
-    public void disCard(boolean beenKilled) {
-    	behaviour.disCard(beenKilled);
+    public void disCard() {
+    	behaviour.disCard();
     }
     
     public void lay(IDisc disc) {
@@ -122,6 +123,9 @@ public class AbstractCard {
 	
 	public void complete() {
 		behaviour.complete();
+//		if (this instanceof Scaenicus) {
+//			Scaenicus.getBehaviour(
+//		}
 	}
     
 }

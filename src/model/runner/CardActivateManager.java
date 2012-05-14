@@ -116,15 +116,15 @@ TribunusPlebisActivator, VelitesActivator {
         
         handler.addDiscInput(player.getId(), diceDisc - 1);
         
-        ScaenicusBehaviour behaviour = (ScaenicusBehaviour)activatedCard.getBehaviour();
+        ScaenicusBehaviour behaviour = (ScaenicusBehaviour) ((ScaenicusBehaviour)activatedCard.getBehaviour()).getMimicBehaviour();
         behaviour.mimic();
         
         return this;
     }
     
-    public void initialise(AbstractCard card) {
-        this.activatedCard = card;
-        card.initialise();
+    public void activate(IDisc disc) {
+        this.activatedCard = disc.getCard();
+        disc.activateCard();
     }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
     public void layCard(Card name, int whichDiceDisc) {

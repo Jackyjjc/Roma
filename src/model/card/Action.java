@@ -7,7 +7,7 @@ public class Action {
     
     public static void attack(AbstractCard c, int value) {
         if(c.getDefence() <= value) {
-            c.disCard(true);
+            c.disCard();
         }
     }
     

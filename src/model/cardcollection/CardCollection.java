@@ -5,8 +5,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import model.ICardStorage;
+import model.IDiscardListener;
 import model.IPlayer;
 import model.card.AbstractCard;
 import model.card.CardFactory;
@@ -18,10 +20,12 @@ public class CardCollection implements ICardStorage, Iterable<AbstractCard> {
     private IPlayer owner;
     private CardFactory factory;
     private List<AbstractCard> cards;
+	private List<IDiscardListener> discardListeners;
 
     CardCollection(CardFactory factory) {
         
         this.factory = factory;
+        this.discardListeners = new Vector<IDiscardListener>();
         this.cards = new ArrayList<AbstractCard>();
     }
     
@@ -35,9 +39,17 @@ public class CardCollection implements ICardStorage, Iterable<AbstractCard> {
     }
 
     public void pushCard(AbstractCard c) {
-        
-        c.setOwner(owner);
+    	
         cards.add(0,c);
+    	
+        for (IDiscardListener listener : discardListeners) {
+        	listener.alert();
+        }
+        
+        if (this.cards.contains(c)) {
+        	c.setOwner(owner);
+        }
+        
     }
     
     public AbstractCard popCard() {
@@ -142,6 +154,14 @@ public class CardCollection implements ICardStorage, Iterable<AbstractCard> {
 
     public Iterator<AbstractCard> iterator() {
         return cards.iterator();
+    }
+    
+    public void addDiscardListener (IDiscardListener listener) {
+    	this.discardListeners.add(listener);
+    }
+    
+    public void removeDiscardListener (IDiscardListener listener) {
+    	this.discardListeners.remove(listener);
     }
 
 }

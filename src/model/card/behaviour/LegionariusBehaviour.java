@@ -8,7 +8,6 @@ public class LegionariusBehaviour extends Behaviour {
 
     public LegionariusBehaviour(AbstractCard host) {
         super(host);
-        // TODO Auto-generated constructor stub
     }
 
     public void complete() {

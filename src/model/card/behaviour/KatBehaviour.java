@@ -14,12 +14,13 @@ public class KatBehaviour extends Behaviour {
     }
 
     @Override
-    public void disCard(boolean beenKilled) {
-        if(beenKilled && livesLeft > 0) {
-            livesLeft--;
+    public void disCard() {
+        if (getHost().getOwner() != getHost().getCardResources().getCurrentPlayer()
+        		&& livesLeft > 0) {
+        	livesLeft--;
         } else {
-            super.disCard(beenKilled);
-            reset();
+        	super.disCard();
+        	reset();
         }
     }
     

@@ -1,22 +1,15 @@
 package model.card.behaviour;
 
-import java.util.List;
-
-import model.ICardStorage;
 import model.IDisc;
 import model.IResourceStorage;
 import model.card.AbstractCard;
-import model.card.IDiscardListener;
 
 public abstract class Behaviour {
 
     private AbstractCard host;
-    private ICardStorage discardDestination;
-    private List<IDiscardListener> discardListeners;
     
-    public Behaviour(AbstractCard host){
+    public Behaviour(AbstractCard host) {
          this.host = host;
-         this.discardDestination = getHost().getCardResources().getDiscardStorage(); 
     }
 
     public void initialise() {
@@ -40,39 +33,21 @@ public abstract class Behaviour {
         return succeed;
     }
 
-    public void disCard(boolean beenKilled) {
+    public void disCard() {
 
-        AbstractCard host = getHost();
-        if(host.getDisc() != null) {
-            host.getDisc().removeCard();
-        }
+    	AbstractCard host = getHost();
+    	
+    	if(host.getDisc() != null) {
+    		
+    		host.getDisc().removeCard();
+    		
+    	}
 
-        host.setCost(host.getDefaultCost());
-        host.setDefence(host.getDefaultDefence());
-        host.getBehaviour().setDiscardDestination(host.getCardResources().getDiscardStorage());
-        
-        if(beenKilled) {
-            discardDestination.pushCard(host);
-            notifyDicardListeners();
-        } else {
-            //been covered
-            host.getCardResources().getDiscardStorage().pushCard(host);
-        }       
+    	host.setCost(host.getDefaultCost());
+    	host.setDefence(host.getDefaultDefence());
 
-    }
+    	host.getCardResources().getDiscardStorage().pushCard(host);
 
-    private void notifyDicardListeners() {
-        for(IDiscardListener l : discardListeners) {
-            l.update(getHost());
-        }
-    }
-    
-    public void setDiscardDestination (ICardStorage discardDestination) {
-        this.discardDestination = discardDestination;
-    }
-
-    public ICardStorage getDiscardDestination (ICardStorage discardDestination) {
-        return discardDestination;
     }
 
     public void setHost(AbstractCard newHost) {
@@ -83,11 +58,4 @@ public abstract class Behaviour {
         return host;
     }
     
-    public void addDiscardListener(IDiscardListener listener) {
-        discardListeners.add(listener);
-    }
-    
-    public void removeDiscardListener(IDiscardListener listener) {
-        discardListeners.remove(listener);
-    }
 }

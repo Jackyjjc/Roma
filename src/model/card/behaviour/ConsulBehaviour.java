@@ -24,9 +24,10 @@ public class ConsulBehaviour extends Behaviour {
         InputHandler handler = getHost().getGameIO().getInputHandler();
 
         Die input = handler.getDieInput();
+        int valueChange = handler.getIntInput();
 
         if(isValidDie(input)) {
-            input.setValue(input.getValue() + 1);
+            input.setValue(input.getValue() + valueChange);
         }
     }
 

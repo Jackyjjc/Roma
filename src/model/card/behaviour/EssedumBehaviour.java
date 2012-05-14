@@ -35,8 +35,8 @@ public class EssedumBehaviour extends Behaviour implements ITurnListener {
         addEffects();
     }
 
-    public void disCard(boolean beenKilled) {
-        super.disCard(beenKilled);
+    public void disCard() {
+        super.disCard();
         removeEffects();
         stopListening();
     }

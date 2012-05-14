@@ -23,7 +23,7 @@ public class OnagerBehaviour extends Behaviour {
 
         InputHandler handler = getHost().getGameIO().getInputHandler();
 
-        AbstractCard target = handler.getCardInput();
+        AbstractCard target = handler.getDiscInput().getCard();
 
         if(isValidTarget(target)) {
             int value = handler.getBattleDieInput();
@@ -33,7 +33,6 @@ public class OnagerBehaviour extends Behaviour {
 
     private boolean isValidTarget(AbstractCard c) {
         boolean isValid = false;
-
         if(c.getOwner() != null && c.getOwner() != getHost().getOwner()
                 && c.getType() == CardType.BUILDING) {
             isValid = true;

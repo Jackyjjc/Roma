@@ -1,55 +1,55 @@
 package model.card.behaviour;
 
+import model.ICardStorage;
 import model.IDisc;
-import model.IField;
+import model.IPlayer;
 import model.card.AbstractCard;
-import model.card.IDiscardListener;
+import model.card.CardType;
+import model.IDiscardListener;
 
 public class GrimReaperBehaviour extends Behaviour implements IDiscardListener {
 
+	private ICardStorage discard;
+	
     public GrimReaperBehaviour(AbstractCard host) {
         super(host);
+        this.discard = getHost().getCardResources().getDiscardStorage();
     }
 
     @Override
     public boolean lay(IDisc disc) {
+
+        discard.addDiscardListener(this);
         
-        boolean succeed = super.lay(disc);
+        return super.lay(disc);
         
-        observeCards();
-        
-        return succeed;
     }
     
     @Override
-    public void disCard(boolean beenKilled) {
-        
-        IField discs = getHost().getOwner().getField();
+    public void disCard() {
 
-        for(IDisc disc : discs) {
-            if(!disc.isDiscEmpty()) {
-                disc.getCard().getBehaviour().removeDiscardListener(this);
-            }
-        }
-      
+    	discard.removeDiscardListener(this);
+    	super.disCard();
+    	
     }
     
-    public void complete() {
-        
-    }
-    
-    private void observeCards() {
+	public void alert() {
+		
+		IPlayer current = getHost().getCardResources().getCurrentPlayer();
+		AbstractCard toSave = discard.getCard(0);
+		
+		if (getHost().getOwner() == toSave.getOwner() &&
+				toSave != getHost() && 
+				toSave.getType() == CardType.CHARACTER && current != getHost().getOwner()) {
+		
+			discard.removeCard(toSave);
+			toSave.getOwner().getHand().pushCard(toSave);
 
-        IField discs = getHost().getOwner().getField();
+		}
+	}
 
-        for(IDisc disc : discs) {
-            if(!disc.isDiscEmpty()) {
-                disc.getCard().getBehaviour().addDiscardListener(this);
-            }
-        }
-    }
+	public void complete() {
 
-    public void update(AbstractCard card) {
-        card.getBehaviour().setDiscardDestination(card.getOwner().getHand());
-    }
+	}
+  
 }

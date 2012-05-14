@@ -12,8 +12,8 @@ public class Field implements IField {
     private static final int NUM_DISCS = 7;
     private IDisc[] discs;
     
-    public Field(IPlayer player, ITurnMover turnMover) {
-        initDiscs(turnMover, player);
+    public Field(IPlayer player, ITurnMover turnMover, IResourceStorage bank) {
+        initDiscs(turnMover, player, bank);
     }
     
     public ICardStorage removeCardsOf(CardType type) {
@@ -24,7 +24,7 @@ public class Field implements IField {
         
         for(int i = 0; i < length; i++) {
             if(getCard(i) != null && getCard(i).getType() == type) {
-                result.appendCard(discs[i].removeCard());
+                result.appendCard(discs[i].getCard());
             }
         }
         
@@ -68,14 +68,19 @@ public class Field implements IField {
         return NUM_DISCS;
     }
     
-    private void initDiscs(ITurnMover turnMover, IPlayer player) {
+    private void initDiscs(ITurnMover turnMover, IPlayer player, IResourceStorage bank) {
         
+    	int bribeDiscIndex = NUM_DISCS - 1;
         discs = new Disc[NUM_DISCS];
         
-        for(int i = 0; i < discs.length; i++) {
+        for(int i = 0; i < discs.length - 1; i++) {
             discs[i] = new Disc(turnMover,i);
             discs[i].setOwner(player);
         }
+        
+        
+        discs[bribeDiscIndex] = new BribeDisc(turnMover, bribeDiscIndex, bank);
+        discs[bribeDiscIndex].setOwner(player);
         
         //set up relationships
         for(int i = 0; i < discs.length - 1; i++) {
@@ -85,6 +90,9 @@ public class Field implements IField {
         for(int i = discs.length - 1; i > 0; i--) {
             discs[i].setPrev(discs[i - 1]);
         }
+        
+        
+
     }
     
 }
