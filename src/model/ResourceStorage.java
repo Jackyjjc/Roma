@@ -25,7 +25,7 @@ class ResourceStorage implements IResourceStorage {
 
     public void transferVP(IResourceStorage to, int amount) {
         
-        if(this.getVP() >= amount) {
+        if(this.getVP() < amount) {
             amount = getVP();
         }
         

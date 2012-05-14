@@ -25,6 +25,8 @@ public class GetMoneyTest extends Test {
         
         out.println("Testing get Sestertii from stockpile");
         
+        gameState.setPlayerVictoryPoints(0, 11);
+        gameState.setPlayerVictoryPoints(1, 11);
         gameState.setPlayerSestertii(0, 0);
         gameState.setPlayerSestertii(1, 0);
         assert(gameState.getPlayerSestertii(0) == 0);
