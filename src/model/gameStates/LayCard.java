@@ -1,5 +1,9 @@
-package model;
+package model.gameStates;
 
+import model.Game;
+import model.IDisc;
+import model.ILayCardInputListener;
+import model.IPlayer;
 import model.card.AbstractCard;
 
 
@@ -30,7 +34,7 @@ public class LayCard implements ILayCardInputListener {
         card.setCost(card.getDefaultCost());
         
         if (g.getCurrentPlayer().getHand().size() == 0) {
-            g.advanceTurn();
+            g.getTurnMover().advanceTurn();
             if(firstPlayer == g.getCurrentPlayer()) {
                 g.getInputHandler().removeLayCardListener();
                 PlayGame.initiate(g);

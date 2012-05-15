@@ -33,10 +33,9 @@ public class GameController implements MoveMaker {
     
     public CardActivator chooseCardToActivate(int discIndex) {
        
-    	CardActivator activator = null;
+    	CardActivator activator = new BlockedManager();
     	
         IPlayer player = g.getCurrentPlayer();
-        g.getDiceManager().getActionDie(discIndex).use();
         
         CardActivateManager activateManager = g.getCardActivateManager();
         
@@ -46,8 +45,7 @@ public class GameController implements MoveMaker {
         if(!disc.isBlocked()) {
             activator = activateManager; 
         	activateManager.activate(disc);
-        } else {
-        	activator = new BlockedManager();
+            g.getDiceManager().getActionDie(discIndex).use();
         }
         
         
@@ -94,17 +92,27 @@ public class GameController implements MoveMaker {
     public CardActivator activateBribeDisc(int diceToUse)
             throws UnsupportedOperationException {
         
-    	int bribeDiscIndex = 7;
-    	
-    	IDisc bribeDisc = g.getCurrentPlayer().getField().getDisc(bribeDiscIndex);
-    	((BribeDisc)bribeDisc).giveBribe(diceToUse);
-    	
-        return chooseCardToActivate(bribeDiscIndex);
+    	int bribeDiscIndex = 6;
+        CardActivator activator = new BlockedManager();
+        
+        IDisc bribeDisc = g.getCurrentPlayer().getField().getDisc(bribeDiscIndex);
+        ((BribeDisc)bribeDisc).giveBribe(diceToUse);
+        
+        CardActivateManager activateManager = g.getCardActivateManager();
+        
+        if(!bribeDisc.isBlocked()) {
+            activator = activateManager; 
+            activateManager.activate(bribeDisc);
+            g.getDiceManager().getActionDie(diceToUse).use();
+        }
+        
+        
+        return activator;
         
     }
 
     public void endTurn() throws UnsupportedOperationException {
-        g.advanceTurn();
+        g.getTurnMover().advanceTurn();
     }
 
     public void placeCard(Card toPlace, int discToPlaceOn)

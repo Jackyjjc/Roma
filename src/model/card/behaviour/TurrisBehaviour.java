@@ -55,6 +55,12 @@ public class TurrisBehaviour extends Behaviour implements IDiscListener {
 
         affectedCards.clear();
 
+        IField discs = getHost().getOwner().getField();
+        
+        for(IDisc disc : discs) {
+            disc.removeLayCardListener((IDiscListener)getHost());
+        }
+        
         super.disCard();
     }
 
@@ -80,7 +86,7 @@ public class TurrisBehaviour extends Behaviour implements IDiscListener {
         IField discs = getHost().getOwner().getField();
 
         for(IDisc disc : discs) {
-            disc.addDiscListener((IDiscListener)getHost());
+            disc.addLayCardListener((IDiscListener)getHost());
         }
     }
 }

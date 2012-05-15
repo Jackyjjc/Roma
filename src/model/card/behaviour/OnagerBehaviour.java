@@ -31,10 +31,12 @@ public class OnagerBehaviour extends Behaviour {
         }
     }
 
-    private boolean isValidTarget(AbstractCard c) {
+    private boolean isValidTarget(AbstractCard target) {
+        
         boolean isValid = false;
-        if(c.getOwner() != null && c.getOwner() != getHost().getOwner()
-                && c.getType() == CardType.BUILDING) {
+        if(target != null && target.getOwner() != null 
+                && target.getOwner() != getHost().getOwner()
+                && target.getType() == CardType.BUILDING) {
             isValid = true;
         }
 

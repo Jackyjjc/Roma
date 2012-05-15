@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import framework.cards.Card;
 import framework.interfaces.GameState;
 
 public class Game implements GameState, IGameDisplayState, ICardResources, 
-                             IGameIO, IPlayerManager, ITurnMover, IGameFinishManager {
+                             IGameIO, IPlayerManager{
 	
     private static final int TOTAL_MONEY = Integer.MAX_VALUE;
     private static final int TOTAL_VP = 36;
@@ -33,27 +32,27 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
 	
 	private InputHandler inputHandler;
     private Notifier notifier;
-	private List<ITurnListener> turnListeners;
-	
+	private TurnMover turnMover;
+    
 	private boolean isFinished;
     
 	public Game (int numPlayers) {
 	    
 	    this.numPlayers = numPlayers;
+	    this.turnMover = new TurnMover(this);
 	    
 	    inputHandler = new InputHandler(this);
 	    this.notifier = new Notifier(this);
 	    this.diceManager = new DiceManager(NUM_ACTION_DICE);
 	   
-		this.bank = new ResourceStorage(TOTAL_MONEY, TOTAL_VP, this);
+		this.bank = new ResourceStorage(TOTAL_MONEY, TOTAL_VP, turnMover);
 		
         this.cardFactory = new CardFactory(this);
         this.activateManager = new CardActivateManager(this, this);
         
 		this.deck = CardCollectionFactory.create(DECK, cardFactory);
 		this.discard = CardCollectionFactory.create(!DECK, cardFactory);
-		
-		this.turnListeners = new ArrayList<ITurnListener>();
+
 		
 		createPlayers(numPlayers);
 		
@@ -77,7 +76,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
         IPlayer[] players = new IPlayer[numPlayers];
         
         for(int i = 0; i < numPlayers; i++) {
-            players[i] = Player.createPlayer(i, bank, cardFactory,this, this);
+            players[i] = Player.createPlayer(i, cardFactory, turnMover, bank);
         }
         
         //set up the relationship between players
@@ -103,23 +102,6 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
     public ICardStorage getDiscardStorage() {
         return discard;
     }
-
-    public void advanceTurn() {
-        
-        assert(!isFinished);
-        
-        this.turnNum++;
-        
-        for(ITurnListener l : turnListeners) {
-            l.notifyEndTurn();
-        }
-        
-        currentPlayer = currentPlayer.getOpponent();
-        inputHandler.setList(currentPlayer.getHand());
-        
-        int VPdeductAmount = currentPlayer.getField().countUnoccupiedDiscs();
-        currentPlayer.transferVP(bank, VPdeductAmount);
-    }
     
     public Notifier getNotifier() {
         return notifier;
@@ -133,19 +115,21 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
         return activateManager;
     }
     
-    public void addTurnListener(ITurnListener listener) {
-        if(!turnListeners.contains(listener)) {
-            turnListeners.add(listener);
-        }
+    public TurnMover getTurnMover() {
+        return turnMover;
     }
     
-    public void removeTurnListener(ITurnListener listener) {
-        turnListeners.remove(listener);
-    }
-    
-    public void finish() {
-        isFinished = true;
-        System.out.println("Game Over");
+    public void advanceTurn() {
+        
+        assert(!isFinished);
+        
+        this.turnNum++;
+        
+        currentPlayer = currentPlayer.getOpponent();
+        inputHandler.setList(currentPlayer.getHand());
+        
+        int VPdeductAmount = currentPlayer.getField().countUnoccupiedDiscs();
+        currentPlayer.transferVP(bank, VPdeductAmount);
     }
     
     /* =========================================================================*
@@ -231,8 +215,8 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
         
         for (int i = 0; i < numDiscs; i++) {
         
-            if(p.getField().getCard(i) != null) {
-                temp[i] = p.getField().getCard(i).getName();
+            if(p.getField().getDisc(i).getCard() != null) {
+                temp[i] = p.getField().getDisc(i).getCard().getName();
             } else {
                 temp[i] = Card.NOT_A_CARD;
             }
@@ -283,8 +267,20 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
         
     }
 
+    public void setFinish(boolean isFinished) {
+        this.isFinished = isFinished;
+    }
+    
     public boolean isGameCompleted() {
         return isFinished;
+    }
+
+    public void addTurnListener(ITurnListener listener) {
+        turnMover.addTurnListener(listener);
+    }
+
+    public void removeTurnListener(ITurnListener listener) {
+        turnMover.removeTurnListener(listener);
     }
     
 }

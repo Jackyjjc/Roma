@@ -2,6 +2,6 @@ package model;
 
 public interface ITurnListener {
 
-    public void notifyEndTurn();
+    public void endTurn();
     
 }

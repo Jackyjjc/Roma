@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.IDisc;
 import model.IField;
 import model.IPlayer;
 import model.card.AbstractCard;
@@ -22,7 +23,7 @@ public class MercatusBehaviour extends Behaviour {
         int numOfForum = 0;
         
         for(int i = 0; i < discs.getNumDiscs(); i++) {
-            c = discs.getCard(i);
+            c = discs.getDisc(i).getCard();
             if(c != null && c instanceof Forum) {
                 numOfForum++;
             }

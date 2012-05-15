@@ -74,10 +74,6 @@ TribunusPlebisActivator, VelitesActivator {
         handler.addCardInput(player.getId(), name);
         handler.addDiscInput(player.getId(), diceDisc - 1);
         
-        //TODO: this looks weird
-        AbstractCard card = handler.getCardInput();
-        IDisc disc = handler.getDiscInput();
-        card.lay(disc);
     }
 
     public void chooseConsulChangeAmount(int amount) {
@@ -116,7 +112,7 @@ TribunusPlebisActivator, VelitesActivator {
         
         handler.addDiscInput(player.getId(), diceDisc - 1);
         
-        ScaenicusBehaviour behaviour = (ScaenicusBehaviour) ((ScaenicusBehaviour)activatedCard.getBehaviour()).getMimicBehaviour();
+        ScaenicusBehaviour behaviour = ((ScaenicusBehaviour)activatedCard.getBehaviour()).getMimicBehaviour();
         behaviour.mimic();
         
         return this;
@@ -129,5 +125,9 @@ TribunusPlebisActivator, VelitesActivator {
 
     public void layCard(Card name, int whichDiceDisc) {
         placeCard(name, whichDiceDisc);
+    }
+    
+    public AbstractCard getActivatedCard() {
+        return activatedCard;
     }
 }

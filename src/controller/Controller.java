@@ -7,10 +7,10 @@ import javax.swing.JOptionPane;
 import model.Game;
 import model.ICardStorage;
 import model.IPlayer;
-import model.LayCard;
 import model.Notifier;
-import model.SwapCard;
 import model.card.AbstractCard;
+import model.gameStates.LayCard;
+import model.gameStates.SwapCard;
 
 public class Controller {
 

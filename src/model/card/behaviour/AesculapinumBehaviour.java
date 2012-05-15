@@ -6,12 +6,12 @@ import model.card.AbstractCard;
 import model.card.CardType;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Administrator
- * Date: 13/05/12
- * Time: 10:47 PM
- * To change this template use File | Settings | File Templates.
+ * 
+ * @author Chris Fong
+ * @author Jacky CHEN
+ *
  */
+
 public class AesculapinumBehaviour extends Behaviour {
 
     public AesculapinumBehaviour(AbstractCard host) {
@@ -33,6 +33,22 @@ public class AesculapinumBehaviour extends Behaviour {
         }
     }
 
+    public boolean isValidInt(int index) {
+        
+        boolean isValid = false;
+        
+        ICardStorage discard = getHost().getCardResources().getDiscardStorage();
+        AbstractCard card = discard.getCard(index);
+        
+        if(discard.size() > index) {
+            if(isValidCard(card)) {
+                isValid = true;
+            }
+        }
+        
+        return isValid;
+    }
+    
     private boolean isValidCard(AbstractCard c) {
 
         boolean isValid = false;

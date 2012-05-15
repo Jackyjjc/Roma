@@ -24,7 +24,7 @@ public abstract class Behaviour {
 
         AbstractCard host = getHost();
         IResourceStorage bank = getHost().getCardResources().getBank();
-
+        
         if(host.getOwner().getMoney() >= host.getCost()) {
             disc.layCard(host);
             host.getOwner().transferMoney(bank, host.getCost());

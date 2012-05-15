@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.IDisc;
 import model.InputHandler;
 import model.ICardStorage;
 import model.IField;
@@ -25,7 +26,7 @@ public class ConsiliariusBehaviour extends Behaviour {
     public void initialise() {
 
         IField discs = getHost().getOwner().getField();
-        this.charCards = discs.removeCardsOf(CardType.CHARACTER);
+        this.charCards = discs.getCardsOf(CardType.CHARACTER);
 
         for (AbstractCard c : charCards) {
             c.setCost(0);
@@ -37,15 +38,30 @@ public class ConsiliariusBehaviour extends Behaviour {
 
     public void complete() {
 
+        layCards();
+        
         for (AbstractCard c : charCards) {
             c.setCost(c.getDefaultCost());
         }
 
         InputHandler handler = getHost().getGameIO().getInputHandler();
-        System.out.println(getHost().getOwner()==null);
         handler.setList(getHost().getOwner().getHand());
     }
 
+    private void layCards() {
+        
+        InputHandler handler = getHost().getGameIO().getInputHandler();
+        
+        AbstractCard card = handler.getCardInput();
+        while(card != null) {
+            
+            IDisc disc = handler.getDiscInput();        
+            card.lay(disc);
+            
+            card = handler.getCardInput();
+        }
+    }
+    
     public boolean isValidCard (AbstractCard c) {
 
         boolean isValid = false;

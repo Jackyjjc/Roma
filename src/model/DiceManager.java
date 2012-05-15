@@ -25,16 +25,13 @@ public class DiceManager {
 	}
 	
 	public void rollActionDice() {
-	    
 	    for(Die die : actionDice) {
 	        die.roll();
 	    }
 	}
 	
 	public void rollBattleDice() {
-	    
 	    battleDie.roll();
-	    
 	}
 
 	public boolean isAllSame() {
@@ -51,10 +48,8 @@ public class DiceManager {
 	}
 	
     public void setActionDice(int[] dice) {
-
         for(int i = 0; i < dice.length; i++) {
             actionDice[i].setValue(dice[i]);
-            actionDice[i].reset();
         }
     }
 	
@@ -93,10 +88,6 @@ public class DiceManager {
 	    }
 	    
 	    return values;
-	}
-	
-	public Die[] getActionDice() {
-	    return actionDice;
 	}
 	
 	public Die getBattleDie() {

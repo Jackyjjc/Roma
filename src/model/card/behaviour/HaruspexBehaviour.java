@@ -8,7 +8,6 @@ public class HaruspexBehaviour extends Behaviour {
 
     public HaruspexBehaviour(AbstractCard host) {
         super(host);
-        // TODO Auto-generated constructor stub
     }
 
    public void complete() {

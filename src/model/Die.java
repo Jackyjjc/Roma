@@ -1,5 +1,12 @@
 package model;
 
+/**
+ * 
+ * @author Chris Fong
+ * @author Junjie CHEN
+ *
+ */
+
 public class Die {
 
     private final static int MAX_VALUE = 6;
@@ -19,19 +26,16 @@ public class Die {
         return roll;
     }
     
-    public int getValue() {
-        return value;
-    }
-    
     public void setValue(int value) {
         
-        assert(isValidValue(value));
-        
-        this.value = value;
+        if(value >= 0 && value <= MAX_VALUE) {
+            this.value = value;
+            reset();
+        }
     }
     
-    public void reset() {
-        used = false;
+    public int getValue() {
+        return value;
     }
     
     public void use() {
@@ -42,21 +46,7 @@ public class Die {
         return used;
     }
     
-    /**
-     * 
-     * This function must be called before setting the dice value
-     * 
-     * @param value
-     * @return if the die value is valid or not
-     */
-    public static boolean isValidValue(int value) {
-        
-        boolean isValid = false;
-        
-        if(value > 0 && value <= MAX_VALUE) {
-            isValid = true;
-        }
-        
-        return isValid;
+    private void reset() {
+        used = false;
     }
 }

@@ -1,5 +1,10 @@
-package model;
+package model.gameStates;
 
+import model.Game;
+import model.IDisc;
+import model.ILayCardInputListener;
+import model.IPlayer;
+import model.IUseDieInputListener;
 import model.card.AbstractCard;
 
 public class PlayGame implements IUseDieInputListener, ILayCardInputListener {
@@ -33,25 +38,25 @@ public class PlayGame implements IUseDieInputListener, ILayCardInputListener {
 
     public void useDice(int dieIndex, int diceIndex) {
         
-        ICardStorage deck = g.getDeckStorage();
-        IResourceStorage bank = g.getBank();
-        IPlayer currentPlayer = g.getCurrentPlayer();
-        
-        Die[] dice = g.getDiceManager().getActionDice();
-        Die die = dice[dieIndex];
-        
-        if(diceIndex == 0) {
-            
-            for(int i = 0; i < die.getValue(); i++) {
-                currentPlayer.getHand().appendCard(deck.popCard());
-            }
-            
-        } else if(diceIndex == 7) {
-            
-            bank.transferMoney(currentPlayer, die.getValue());
-            
-        }
-        
-        g.getNotifier().notifyListeners();
+//        ICardStorage deck = g.getDeckStorage();
+//        IResourceStorage bank = g.getBank();
+//        IPlayer currentPlayer = g.getCurrentPlayer();
+//        
+//        Die[] dice = g.getDiceManager().getActionDice();
+//        Die die = dice[dieIndex];
+//        
+//        if(diceIndex == 0) {
+//            
+//            for(int i = 0; i < die.getValue(); i++) {
+//                currentPlayer.getHand().appendCard(deck.popCard());
+//            }
+//            
+//        } else if(diceIndex == 7) {
+//            
+//            bank.transferMoney(currentPlayer, die.getValue());
+//            
+//        }
+//        
+//        g.getNotifier().notifyListeners();
     }
 }

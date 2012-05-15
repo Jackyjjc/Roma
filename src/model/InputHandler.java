@@ -64,7 +64,6 @@ public class InputHandler {
         if(playerId == currentPlayer.getId()) {
         	cardInputQueue.add(c);
         }
-        		
 	}
     
     public AbstractCard getCardInput() {

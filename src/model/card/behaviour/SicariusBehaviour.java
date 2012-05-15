@@ -26,9 +26,9 @@ public class SicariusBehaviour extends Behaviour {
 
         if (isValidTarget(target)) {
             target.disCard();
-            //TODO: same as Nero
-            getHost().disCard();
         }
+        
+        getHost().disCard();
     }
 
     public boolean isValidTarget(AbstractCard c) {

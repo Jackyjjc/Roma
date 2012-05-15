@@ -1,13 +1,22 @@
 package model;
 
+/**
+ * class the implement the functionalities of a bribe disc
+ * 
+ * @author Chris Fong
+ * @author Junjie CHEN
+ *
+ */
+
 public class BribeDisc extends Disc implements IDisc{
 
 	private IResourceStorage bank;
 	private int bribe;
 	
-	public BribeDisc(ITurnMover turnMover, int index, IResourceStorage bank) {
-		super(turnMover, index);
+	public BribeDisc(int index, IPlayer owner, ITurnMover turnMover, IResourceStorage bank) {
+		super(index, owner, turnMover);
 		this.bank = bank;
+		this.bribe = 0;
 	}
 	
 	@Override
@@ -16,6 +25,7 @@ public class BribeDisc extends Disc implements IDisc{
 		if(getOwner().getMoney() >= bribe && !isBlocked()) {
 			getOwner().transferMoney(bank, bribe);
 			super.activateCard();
+			bribe = 0;
 		}
 		
 	}

@@ -12,28 +12,28 @@ import model.card.AbstractCard;
  */
 
 public interface IDisc {
-
-    public boolean isBlocked();
-    
-    public void block();
     
     public int getIndex();
     
-    public boolean isDiscEmpty();
+    public void block();
     
-    public boolean layCard(AbstractCard c);
+    public boolean isBlocked();
     
     public void activateCard();
     
+    public boolean layCard(AbstractCard c);
+    
+    public boolean isEmpty();
+    
     public AbstractCard getCard();
     
-    public AbstractCard removeCard();
+    public void removeCard();
     
-    public void addDiscListener(IDiscListener listener);
+    public void addLayCardListener(IDiscListener listener);
     
-    public void removeDiscListener(IDiscListener listener);
+    public void removeLayCardListener(IDiscListener listener);
     
-    public void setOwner(IPlayer player);
+    public void addTimeTraveller (int travelTime);
     
     public IPlayer getOwner();
     

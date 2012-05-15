@@ -1,15 +1,24 @@
 package model;
 
+/**
+ * 
+ * Generic Storage for resources like vp and money
+ * 
+ * @author Chris Fong
+ * @author Junjie CHEN
+ *
+ */
+
 class ResourceStorage implements IResourceStorage {
 
-    private IGameFinishManager g;
+    private ITurnMover turnMover;
     private int money;
     private int vp;
     
-    ResourceStorage(int money, int vp, IGameFinishManager g) {
+    ResourceStorage(int money, int vp, ITurnMover turnMover) {
         this.money = money;
         this.vp = vp;
-        this.g = g;
+        this.turnMover = turnMover;
     }
     
     public void transferMoney(IResourceStorage to, int amount) {
@@ -33,7 +42,7 @@ class ResourceStorage implements IResourceStorage {
         to.setVP(to.getVP() + amount);
         
         if(getVP() == 0) {
-            g.finish();
+            turnMover.gameOver();
         }
     }
 

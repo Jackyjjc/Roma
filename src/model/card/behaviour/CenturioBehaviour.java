@@ -1,6 +1,7 @@
 package model.card.behaviour;
 
 import model.Die;
+import model.IDisc;
 import model.IPlayer;
 import model.InputHandler;
 import model.card.AbstractCard;
@@ -42,10 +43,11 @@ public class CenturioBehaviour extends Behaviour {
 
     }
 
-    public boolean isValidTarget(AbstractCard c) {
+    public boolean isValidTarget(AbstractCard target) {
         boolean isValid = false;
 
-        if(c.getOwner() != null && c.getOwner() != getHost().getOwner()) {
+        if(target != null && target.getOwner() != null 
+             && target.getOwner() != getHost().getOwner()) {
             isValid = true;
         }
 
@@ -62,7 +64,8 @@ public class CenturioBehaviour extends Behaviour {
 
         int index = getHost().getDisc().getIndex();
 
-        AbstractCard target = opponent.getField().getCard(index);
+        IDisc disc = opponent.getField().getDisc(index);
+        AbstractCard target = disc.getCard();
 
         return target;
 

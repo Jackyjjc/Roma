@@ -2,29 +2,43 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
-import model.card.AbstractCard;
 import model.card.CardType;
 import model.cardcollection.CardCollectionFactory;
+
+/**
+ * 
+ * Store the list of discs and helper functions
+ * 
+ * @author Chris Fong
+ * @author Junjie CHEN
+ *
+ */
 
 public class Field implements IField {
     
     private static final int NUM_DISCS = 7;
-    private IDisc[] discs;
+    private static final int BRIBE_INDEX = 6;
     
-    public Field(IPlayer player, ITurnMover turnMover, IResourceStorage bank) {
-        initDiscs(turnMover, player, bank);
+    private IPlayer owner;
+    private List<IDisc> discs;
+    
+    public static IField createField(ITurnMover turnMover, 
+                                     IPlayer player, IResourceStorage bank) {
+        
+        return new Field(player, turnMover, bank);
     }
     
-    public ICardStorage removeCardsOf(CardType type) {
+    public ICardStorage getCardsOf(CardType type) {
         
-        int length = NUM_DISCS;
         ICardStorage result = CardCollectionFactory.create(false, null);
-        result.setOwner(discs[0].getOwner());
+        result.setOwner(owner);
         
-        for(int i = 0; i < length; i++) {
-            if(getCard(i) != null && getCard(i).getType() == type) {
-                result.appendCard(discs[i].getCard());
+        for(IDisc disc : discs) {
+            if(!disc.isEmpty() && disc.getCard().getType() == type) {
+                result.appendCard(disc.getCard());
+                disc.removeCard();
             }
         }
         
@@ -32,19 +46,22 @@ public class Field implements IField {
     }
     
     public IDisc getDisc(int index) {
-        return discs[index];
+        
+        IDisc disc = null;
+        
+        if(index < discs.size()) {
+            disc = discs.get(index);
+        }
+        
+        return disc;
     }
-    
-    public AbstractCard getCard(int index) {
-        return discs[index].getCard();
-    }
-    
+
     public int countUnoccupiedDiscs() {
         
         int count = 0;
         
         for(IDisc disc : discs) {
-            if(disc.isDiscEmpty()) {
+            if(disc.isEmpty()) {
                 count++;
             }
         }
@@ -52,47 +69,32 @@ public class Field implements IField {
         return count;
     }
     
-
-    public Iterator<IDisc> iterator() {
-        
-        ArrayList<IDisc> list = new ArrayList<IDisc>();
-        
-        for(IDisc disc : discs) {
-            list.add(disc);
-        }
-        
-        return list.iterator();
-    }
-
     public int getNumDiscs() {
         return NUM_DISCS;
+    }  
+    
+    public Iterator<IDisc> iterator() {    
+        return discs.iterator();
     }
     
-    private void initDiscs(ITurnMover turnMover, IPlayer player, IResourceStorage bank) {
+    private Field(IPlayer player, ITurnMover turnMover, IResourceStorage bank) {
         
-    	int bribeDiscIndex = NUM_DISCS - 1;
-        discs = new Disc[NUM_DISCS];
+        this.owner = player;
+        discs = new ArrayList<IDisc>(NUM_DISCS);
         
-        for(int i = 0; i < discs.length - 1; i++) {
-            discs[i] = new Disc(turnMover,i);
-            discs[i].setOwner(player);
+        for(int i = 0; i < NUM_DISCS - 1; i++) {
+            discs.add(new Disc(i, player, turnMover));
         }
         
+        discs.add(new BribeDisc(BRIBE_INDEX, player, turnMover, bank));
         
-        discs[bribeDiscIndex] = new BribeDisc(turnMover, bribeDiscIndex, bank);
-        discs[bribeDiscIndex].setOwner(player);
-        
-        //set up relationships
-        for(int i = 0; i < discs.length - 1; i++) {
-            discs[i].setNext(discs[i + 1]);
+        //set up the double ended linked list
+        for(int i = 0; i < NUM_DISCS - 1; i++) {
+            discs.get(i).setNext(discs.get(i + 1));
         }
         
-        for(int i = discs.length - 1; i > 0; i--) {
-            discs[i].setPrev(discs[i - 1]);
+        for(int i = NUM_DISCS - 1; i > 0; i--) {
+            discs.get(i).setPrev(discs.get(i - 1));
         }
-        
-        
-
     }
-    
 }

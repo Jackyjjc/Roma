@@ -10,7 +10,6 @@ public class GladiatorBehaviour extends Behaviour {
 
     public GladiatorBehaviour(AbstractCard host) {
         super(host);
-        // TODO Auto-generated constructor stub
     }
 
     public void complete() {
@@ -29,11 +28,12 @@ public class GladiatorBehaviour extends Behaviour {
         }
     }
     
-    public boolean isValidCard(AbstractCard c) {
+    public boolean isValidCard(AbstractCard target) {
         boolean isValid = false;
         
-        if(c.getOwner() != null && c.getOwner() != this.getHost().getOwner()
-           && c.getType() == CardType.CHARACTER) {
+        if(target != null && target.getOwner() != null 
+           && target.getOwner() != this.getHost().getOwner()
+           && target.getType() == CardType.CHARACTER) {
             isValid = true;
         }
         

@@ -50,9 +50,9 @@ public class ScaenicusBehaviour extends Behaviour {
 		
 	}
 	
-	public Behaviour getMimicBehaviour() {
+	public ScaenicusBehaviour getMimicBehaviour() {
 		
-		Behaviour behaviour = null;
+		ScaenicusBehaviour behaviour = null;
 		
 		if(mimicBehaviour != null && mimicBehaviour instanceof ScaenicusBehaviour) {
 			behaviour = ((ScaenicusBehaviour)mimicBehaviour).getMimicBehaviour();

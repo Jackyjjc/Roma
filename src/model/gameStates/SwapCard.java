@@ -1,8 +1,11 @@
-package model;
+package model.gameStates;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import model.Game;
+import model.IPlayer;
+import model.ISwapCardInputListener;
 import model.card.AbstractCard;
 import framework.cards.Card;
 
@@ -35,7 +38,7 @@ public class SwapCard implements ISwapCardInputListener {
             currentPlayer.getHand().removeCard(card);
         }
 
-        g.advanceTurn();
+        g.getTurnMover().advanceTurn();
         
         if(cardsToSwap.size() == 4) {
             swapCard();

@@ -3,7 +3,9 @@ package model.card.behaviour;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.IDisc;
 import model.IPlayer;
+import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.CardType;
 
@@ -18,20 +20,36 @@ public class SenatorBehaviour extends Behaviour {
 
 	public void complete() {
 
-			for (AbstractCard c : charCards) {
-	            c.setCost(c.getDefaultCost());
-	        }
-	        
-	    }
+	    layCards();
+	    
+        for (AbstractCard c : charCards) {
+            c.setCost(c.getDefaultCost());
+        }
 
-	    public void initialise() {
+    }
 
-	        IPlayer owner = getHost().getOwner();
-	        charCards = owner.getHand().getCardsOf(CardType.CHARACTER);
+    public void initialise() {
 
-	        for (AbstractCard c : charCards) {
-	            c.setCost(0);
-	        }
+        IPlayer owner = getHost().getOwner();
+        charCards = owner.getHand().getCardsOf(CardType.CHARACTER);
 
-	    }
+        for (AbstractCard c : charCards) {
+            c.setCost(0);
+        }
+
+    }
+    
+    private void layCards() {
+        
+        InputHandler handler = getHost().getGameIO().getInputHandler();
+        
+        AbstractCard card = handler.getCardInput();
+        while(card != null) {
+            
+            IDisc disc = handler.getDiscInput();        
+            card.lay(disc);
+            
+            card = handler.getCardInput();
+        }
+    }
 }

@@ -75,7 +75,7 @@ public class EssedumBehaviour extends Behaviour implements ITurnListener {
         removeEffects();
     }
 
-    public void notifyEndTurn() {
+    public void endTurn() {
         removeEffects();
     }
 }

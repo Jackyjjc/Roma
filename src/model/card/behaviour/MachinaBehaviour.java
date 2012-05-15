@@ -1,7 +1,9 @@
 package model.card.behaviour;
 
 import model.ICardStorage;
+import model.IDisc;
 import model.IField;
+import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.CardType;
 
@@ -11,14 +13,13 @@ public class MachinaBehaviour extends Behaviour {
     
     public MachinaBehaviour(AbstractCard host) {
         super(host);
-        // TODO Auto-generated constructor stub
     }
 
     public void initialise() {
 
         IField field = getHost().getOwner().getField();
 
-        buildingCards = field.removeCardsOf(CardType.BUILDING);
+        buildingCards = field.getCardsOf(CardType.BUILDING);
 
         for (AbstractCard c : buildingCards) {
             c.setCost(0);
@@ -28,7 +29,7 @@ public class MachinaBehaviour extends Behaviour {
     }
     
     public void complete() {
-
+        
         for (AbstractCard c : buildingCards) {
             c.setCost(c.getDefaultCost());
         }

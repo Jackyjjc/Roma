@@ -26,10 +26,9 @@ public class NeroBehaviour extends Behaviour {
 
         if (isValidTarget(target)) {
             target.disCard();
-            //TODO:if the acceptance rep changed it then change this line
-            this.disCard();
         }
 
+        this.disCard();
     }
 
     public boolean isValidTarget(AbstractCard c) {

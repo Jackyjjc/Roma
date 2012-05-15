@@ -52,7 +52,7 @@ public class CardFactory {
                 break;
             case ESSEDUM:
                 card = new Essedum(cardResources, gameIO);
-                card.setBehaviour(new EssedumBehaviour(card,(ITurnMover)game));
+                card.setBehaviour(new EssedumBehaviour(card,game.getTurnMover()));
                 break;
             case FORUM:
                 card = new Forum(cardResources, gameIO);

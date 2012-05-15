@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.IDisc;
 import model.IPlayer;
 import model.card.AbstractCard;
 import model.card.Action;
@@ -24,10 +25,11 @@ public class LegionariusBehaviour extends Behaviour {
 
     }
 
-    public boolean isValidCard(AbstractCard c) {
+    public boolean isValidCard(AbstractCard target) {
         boolean isValid = false;
         
-        if(c.getOwner() != null && c.getOwner() != this.getHost().getOwner()) {
+        if(target != null && target.getOwner() != null 
+           && target.getOwner() != this.getHost().getOwner()) {
             isValid = true;
         }
         
@@ -41,7 +43,8 @@ public class LegionariusBehaviour extends Behaviour {
 
         int index = getHost().getDisc().getIndex();
 
-        AbstractCard target = opponent.getField().getCard(index);
+        IDisc disc = opponent.getField().getDisc(index);
+        AbstractCard target = disc.getCard();
 
         return target;
 
