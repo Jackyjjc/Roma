@@ -38,6 +38,8 @@ public class ConsiliariusBehaviour extends Behaviour {
 
     public void complete() {
 
+        ICardStorage hand = getHost().getOwner().getHand();
+        
         layCards();
         
         for (AbstractCard c : charCards) {
@@ -45,7 +47,7 @@ public class ConsiliariusBehaviour extends Behaviour {
         }
 
         InputHandler handler = getHost().getGameIO().getInputHandler();
-        handler.setList(getHost().getOwner().getHand());
+        handler.setList(hand);
     }
 
     private void layCards() {

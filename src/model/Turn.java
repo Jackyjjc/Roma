@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 
 import model.action.Action;
-
 import framework.Rules;
 import framework.cards.Card;
 import framework.interfaces.GameState;
@@ -53,26 +52,6 @@ public class Turn {
 		this.deck = g.getDeck();
 		this.discards = g.getDiscard();
 
-	public Turn(GameState g) {
-
-		this.whoseTurn = g.getWhoseTurn();
-
-		for (int playerNum = 0; playerNum < Rules.NUM_PLAYERS; playerNum++) {
-
-			this.playerVPs[playerNum] = g.getPlayerVictoryPoints(playerNum);
-			this.playerSestertiis[playerNum] = g.getPlayerSestertii(playerNum);
-			this.playerHands[playerNum] = g.getPlayerHand(playerNum);
-			this.playerDiscs[playerNum] = g.getPlayerCardsOnDiscs(playerNum);
-
-		}
-
-		this.deck = g.getDeck();
-		this.discards = g.getDiscard();
-
-		this.poolVictoryPoints = g.getPoolVictoryPoints();
-
-	}
-
 		this.poolVictoryPoints = g.getPoolVictoryPoints();
 
 	}
@@ -119,5 +98,8 @@ public class Turn {
 
 	}
 
-
+	public void addAction(Action action) {
+	    moves.add(action);
+	}
+	
 }

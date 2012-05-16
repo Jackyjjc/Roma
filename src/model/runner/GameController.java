@@ -7,6 +7,12 @@ import model.ICardStorage;
 import model.IDisc;
 import model.IPlayer;
 import model.IResourceStorage;
+import model.action.ActivateBribeDiscAction;
+import model.action.ActivateCardAction;
+import model.action.DrawCardsAction;
+import model.action.EndTurnAction;
+import model.action.GetMoneyAction;
+import model.action.PlaceCardAction;
 import model.card.AbstractCard;
 import framework.cards.Card;
 import framework.interfaces.MoveMaker;
@@ -46,8 +52,8 @@ public class GameController implements MoveMaker {
             activator = activateManager; 
         	activateManager.activate(disc);
             g.getDiceManager().getActionDie(discIndex).use();
+            g.getTurnMover().getCurrentTurn().addAction(new ActivateCardAction(g,this,discIndex));
         }
-        
         
         return activator;
         
@@ -75,6 +81,8 @@ public class GameController implements MoveMaker {
                 discard.pushCard(card);
             }            
         }
+        
+        g.getTurnMover().getCurrentTurn().addAction(new DrawCardsAction(g, this, diceToUse, chosen));
     }
 
     public void activateMoneyDisc(int diceToUse)
@@ -87,6 +95,7 @@ public class GameController implements MoveMaker {
         
         bank.transferMoney(player, diceToUse);
         
+        g.getTurnMover().getCurrentTurn().addAction(new GetMoneyAction(g, this, diceToUse));
     }
 
     public CardActivator activateBribeDisc(int diceToUse)
@@ -104,6 +113,8 @@ public class GameController implements MoveMaker {
             activator = activateManager; 
             activateManager.activate(bribeDisc);
             g.getDiceManager().getActionDie(diceToUse).use();
+            
+            g.getTurnMover().getCurrentTurn().addAction(new ActivateBribeDiscAction(g, this, diceToUse));
         }
         
         
@@ -113,6 +124,7 @@ public class GameController implements MoveMaker {
 
     public void endTurn() throws UnsupportedOperationException {
         g.getTurnMover().advanceTurn();
+        g.getTurnMover().getCurrentTurn().addAction(new EndTurnAction(g, this));
     }
 
     public void placeCard(Card toPlace, int discToPlaceOn)
@@ -127,6 +139,8 @@ public class GameController implements MoveMaker {
         IDisc disc = player.getField().getDisc(discToPlaceOn - 1);
         
         card.lay(disc);
+        
+        g.getTurnMover().getCurrentTurn().addAction(new PlaceCardAction(g, this, toPlace, discToPlaceOn));
     }
 
 }

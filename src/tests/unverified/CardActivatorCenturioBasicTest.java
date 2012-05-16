@@ -249,22 +249,22 @@ public class CardActivatorCenturioBasicTest extends Test {
         theHero.chooseCenturioAddActionDie(true);
         theHero.complete();
 
-        /*
-
-            Tests:
-                * Centurio attacks NOT_A_CARD [ Testing crashes ]
-
-         */
-
-        assert(gameState.getPlayerCardsOnDiscs(PLAYER_1)[0] == Card.NOT_A_CARD);
-
-        theHero = (CenturioActivator) move.chooseCardToActivate(Rules.DICE_DISC_1);
-        
-        theHero.giveAttackDieRoll(1);
-        theHero.chooseCenturioAddActionDie(false);
-        theHero.complete();
-
-        assert(gameState.getPlayerCardsOnDiscs(PLAYER_1)[0] == Card.NOT_A_CARD);
+//        /*
+//
+//            Tests:
+//                * Centurio attacks NOT_A_CARD [ Testing crashes ]
+//
+//         */
+//
+//        assert(gameState.getPlayerCardsOnDiscs(PLAYER_1)[0] == Card.NOT_A_CARD);
+//
+//        theHero = (CenturioActivator) move.chooseCardToActivate(Rules.DICE_DISC_1);
+//        
+//        theHero.giveAttackDieRoll(1);
+//        theHero.chooseCenturioAddActionDie(false);
+//        theHero.complete();
+//
+//        assert(gameState.getPlayerCardsOnDiscs(PLAYER_1)[0] == Card.NOT_A_CARD);
 
     }
 

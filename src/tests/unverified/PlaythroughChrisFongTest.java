@@ -13,9 +13,6 @@ import framework.interfaces.activators.*;
 
 /**
  * Author: Chris FONG
- * 
- * All dice values randomly generated from http://www.random.org/dice/
- * 
  */
 public class PlaythroughChrisFongTest extends Test {
 
@@ -188,7 +185,6 @@ public class PlaythroughChrisFongTest extends Test {
         legat.complete();
         
         assertVPs();
-        
         assert(gameState.getActionDice().length == 1);
         
         /*
@@ -668,7 +664,7 @@ public class PlaythroughChrisFongTest extends Test {
         velites.chooseDiceDisc(5);
         velites.giveAttackDieRoll(6);
         velites.complete();
-        discard.add(Card.VELITES);
+        discard.add(Card.CONSUL);
         playerFields[PLAYER_2][4] = Card.NOT_A_CARD;
         assertDiscard();
         assertHands();
@@ -762,13 +758,9 @@ public class PlaythroughChrisFongTest extends Test {
         assertFields();
         assertHands();
         assertDiscard();
-        ConsiliariusActivator consiliarius = (ConsiliariusActivator) move.activateBribeDisc(2);
-        playerSestertiis[PLAYER_2] -= 2;
-        assertSestertiis();
-        
-        
+        ConsiliariusActivator consiliarius = (ConsiliariusActivator) move.activateBribeDisc(2);        
+  
         playerFields[PLAYER_2][0] = Card.CENTURIO;
-        discard.add(Card.TURRIS);
         consiliarius.placeCard(Card.CENTURIO, Rules.DICE_DISC_1);
         
         playerFields[PLAYER_2][5] = Card.NOT_A_CARD;
@@ -782,9 +774,13 @@ public class PlaythroughChrisFongTest extends Test {
         consiliarius.placeCard(Card.TRIBUNUSPLEBIS, Rules.BRIBE_DISC);
         
         consiliarius.complete();
-        
+        playerSestertiis[PLAYER_2] -= 2;
+        assertSestertiis();
+        discard.add(Card.TURRIS);
+
         assertFields();
         assertDiscard();
+        assertVPs();
         
         move.endTurn();
         
@@ -1113,10 +1109,9 @@ public class PlaythroughChrisFongTest extends Test {
     	int poolVPs = 36;
     	
         for (int i = 0; i < Rules.NUM_PLAYERS; i++) {
-        	poolVPs -= playerVPs[i];
+           	poolVPs -= playerVPs[i];
             assert(gameState.getPlayerVictoryPoints(i) == playerVPs[i]);
         }
-        
         assert(gameState.getPoolVictoryPoints() == poolVPs);
 
     }

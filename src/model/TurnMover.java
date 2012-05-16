@@ -9,9 +9,15 @@ public class TurnMover implements ITurnMover {
     private Game g;
     private List<Turn> turns;
     
+    private Turn currentTurn;
+    
     public TurnMover(Game g) {
-        turnListeners = new ArrayList<ITurnListener>();
+
         this.g = g;
+        turnListeners = new ArrayList<ITurnListener>();
+        turns = new ArrayList<Turn>();
+        currentTurn = new Turn(g);
+        turns.add(currentTurn);
     }
     
     public void addTurnListener(ITurnListener listener) {
@@ -29,6 +35,9 @@ public class TurnMover implements ITurnMover {
         assert(!g.isGameCompleted());
         
         g.advanceTurn();
+        currentTurn = new Turn(g);
+        turns.add(currentTurn);
+        
         for(ITurnListener l : turnListeners) {
             l.endTurn();
         }
@@ -88,9 +97,10 @@ public class TurnMover implements ITurnMover {
         for (Turn turn : turnsToReplay) {
             turn.run(g);
         }
-        
     }
 
-
+    public Turn getCurrentTurn() {
+        return currentTurn;
+    }
     
 }

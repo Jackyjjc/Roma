@@ -29,13 +29,32 @@ public class MachinaBehaviour extends Behaviour {
     }
     
     public void complete() {
+     
+        ICardStorage hand = getHost().getOwner().getHand();
+     
+        layCards();
         
         for (AbstractCard c : buildingCards) {
             c.setCost(c.getDefaultCost());
         }
         
-        getHost().getGameIO().getInputHandler().setList(getHost().getOwner().getHand());
+        getHost().getGameIO().getInputHandler().setList(hand);
     }
+    
+    private void layCards() {
+        
+        InputHandler handler = getHost().getGameIO().getInputHandler();
+        
+        AbstractCard card = handler.getCardInput();
+        while(card != null) {
+            
+            IDisc disc = handler.getDiscInput();        
+            card.lay(disc);
+            
+            card = handler.getCardInput();
+        }
+    }
+
     
     public boolean isValidCard(AbstractCard c) {
         
