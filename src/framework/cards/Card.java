@@ -36,7 +36,7 @@ public enum Card {
    VELITES ("Velites"),
    GRIMREAPER ("Grimreaper"),
    KAT ("Kat"),
-   TELEPHONEBOX ("Telephonebox"),
+   TELEPHONEBOX ("TelephoneBox"),
    NOT_A_CARD ("Not A Card");
 
    // Member to hold the name as a string.

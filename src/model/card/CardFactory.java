@@ -1,11 +1,10 @@
 package model.card;
 
+import framework.cards.Card;
 import model.Game;
 import model.ICardResources;
 import model.IGameIO;
-import model.ITurnMover;
 import model.card.behaviour.*;
-import framework.cards.Card;
 
 public class CardFactory {
 
@@ -115,6 +114,10 @@ public class CardFactory {
             case TEMPLUM:
                 card = new Templum(cardResources, gameIO);
                 card.setBehaviour(new TemplumBehaviour(card));
+                break;
+            case TELEPHONEBOX:
+                card = new TelephoneBox(cardResources, gameIO);
+                card.setBehaviour(new TelephoneBoxBehaviour(card, game.getTurnMover()));
                 break;
             case TRIBUNUSPLEBIS:
                 card = new TribunusPlebis(cardResources, gameIO);

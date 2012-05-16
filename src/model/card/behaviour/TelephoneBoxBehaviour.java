@@ -1,12 +1,10 @@
 package model.card.behaviour;
 
-import model.IDisc;
-import model.ITurnMover;
-import model.InputHandler;
-import model.Turn;
+import model.*;
 import model.card.AbstractCard;
+import model.card.IDieChecker;
 
-public class TelephoneBoxBehaviour extends Behaviour  {
+public class TelephoneBoxBehaviour extends Behaviour implements IDieChecker {
 
     private ITurnMover turnMover;
     
@@ -20,7 +18,10 @@ public class TelephoneBoxBehaviour extends Behaviour  {
         InputHandler handler = getHost().getGameIO().getInputHandler();
         
         boolean isForward = handler.getBooleanInput();
-        int travelTime = handler.getDieInput().getValue();
+        Die die = handler.getDieInput();
+        die.use();
+
+        int travelTime = die.getValue();
         IDisc disc = handler.getDiscInput();
         
         if(isForward) {
@@ -36,4 +37,7 @@ public class TelephoneBoxBehaviour extends Behaviour  {
         }
     }
 
+    public boolean isValidDie(Die die) {
+        return !die.isUsed();
+    }
 }

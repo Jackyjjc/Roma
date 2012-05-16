@@ -58,7 +58,7 @@ public class TurnMover implements ITurnMover {
         Turn pastTurn = null;
    
         if ((turns.size() - numTurnsAgo) > 0) {
-            turns.get((turns.size() - 1) - numTurnsAgo);
+            pastTurn = turns.get((turns.size() - 1) - numTurnsAgo);
         } else {
             pastTurn = turns.get(FIRST_TURN);
         }
@@ -66,33 +66,16 @@ public class TurnMover implements ITurnMover {
         return pastTurn;
         
     }
-    
-//  public static void main() {
-//
-//      Game.run();
-//      for (each turn) {
-//          Stack.add(Turn);
-//          Turn t = Turn.get(currentTurn-x);
-//          t.insert(card,disc);
-//          t.restore(g);
-//          while (t != currentTurn) {
-//              t.runTurn(g);
-//              t = new Turn(g);
-//              t = t.getNext();
-//          }
-//      }
-//
-//  }
-    
+
     public void replay (int numTurnsAgo) {
         
         List<Turn> turnsToReplay =  new ArrayList<Turn>();
         
-        int currentTurn = turns.size();
+        int currentTurn = turns.size() - 1;
         numTurnsAgo = turns.size() - 1 - numTurnsAgo;
-                
-        for (int i = numTurnsAgo ; i < currentTurn; i++) {
-            turnsToReplay.add(turns.remove(i));    
+
+        for (int i = numTurnsAgo ; i <= currentTurn; i++) {
+            turnsToReplay.add(turns.remove(numTurnsAgo));
         }
         
         turnsToReplay.get(0).restore(g);
@@ -100,6 +83,9 @@ public class TurnMover implements ITurnMover {
         for (Turn turn : turnsToReplay) {
             turn.run(g);
         }
+
+
+
     }
 
     public Turn getCurrentTurn() {

@@ -1,11 +1,11 @@
 package model;
 
+import model.card.AbstractCard;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import model.card.AbstractCard;
 
 /**
  * 
@@ -88,6 +88,7 @@ public class Disc implements IDisc, ITurnListener {
     
     public void addTimeTraveller (int travelTime) {
         timeTravellers.put(getCard(), travelTime);
+        this.card = null;
     }
     
     public boolean isEmpty() {

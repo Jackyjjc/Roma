@@ -1,13 +1,12 @@
 package model;
 
+import framework.Rules;
+import framework.cards.Card;
+import model.action.Action;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import model.action.Action;
-import framework.Rules;
-import framework.cards.Card;
-import framework.interfaces.GameState;
 
 public class Turn {
 
@@ -17,6 +16,7 @@ public class Turn {
 	private final int PLAYER_2 = 1;
 
 	private int whoseTurn;
+    private int turnNum;
 
 	//Two players' VPs
 	private int[] playerVPs;
@@ -37,9 +37,10 @@ public class Turn {
 
 	private int poolVictoryPoints;
 
-	public Turn(GameState g) {
+	public Turn(Game g) {
 
 		this.whoseTurn = g.getWhoseTurn();
+        this.turnNum = g.getTurn();
 		
 		this.playerVPs = new int[Rules.NUM_PLAYERS];
 		this.playerSestertiis = new int[Rules.NUM_PLAYERS];
@@ -58,6 +59,7 @@ public class Turn {
 		this.deck = g.getDeck();
 		this.discards = g.getDiscard();
 
+        this.actionDie = g.getActionDice();
 		this.poolVictoryPoints = g.getPoolVictoryPoints();
 		this.moves = new ArrayList<Action>();
 
@@ -73,9 +75,10 @@ public class Turn {
 
 	}
 
-	public void restore(GameState g) {
+	public void restore(Game g) {
 
 		g.setWhoseTurn(this.whoseTurn);
+        g.setTurnNum(this.turnNum);
 
 		for (int playerNum = 0; playerNum < Rules.NUM_PLAYERS; playerNum++) {
 
@@ -86,12 +89,13 @@ public class Turn {
 
 		}
 
+        g.setActionDice(actionDie);
 		g.setDeck(this.deck);
 		g.setDiscard(this.discards);
 
 	}
 
-	public void run (GameState g) {
+	public void run (Game g) {
 
 	    for(Action action : moves) {
 	        
@@ -108,5 +112,9 @@ public class Turn {
 	public void addAction(Action action) {
 	    moves.add(action);
 	}
+
+    public void updateActionDice(Game g) {
+        this.actionDie = g.getActionDice();
+    }
 	
 }

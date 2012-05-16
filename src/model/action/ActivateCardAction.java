@@ -36,7 +36,7 @@ public class ActivateCardAction extends MoveMakingAction {
         int currentPlayer = getGameState().getWhoseTurn();
         Card[] field = getGameState().getPlayerCardsOnDiscs(currentPlayer);
         
-        Card activatedCard = field[index];
+        Card activatedCard = field[index - 1];
         
         return activatedCard;
     }

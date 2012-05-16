@@ -1,14 +1,14 @@
 package model;
 
-import java.util.Collection;
-import java.util.List;
-
+import framework.cards.Card;
+import framework.interfaces.GameState;
 import model.card.AbstractCard;
 import model.card.CardFactory;
 import model.cardcollection.CardCollectionFactory;
 import model.runner.CardActivateManager;
-import framework.cards.Card;
-import framework.interfaces.GameState;
+
+import java.util.Collection;
+import java.util.List;
 
 public class Game implements GameState, IGameDisplayState, ICardResources, 
                              IGameIO, IPlayerManager{
@@ -62,6 +62,10 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
 	public int getTurn() {
 	    return turnNum;
 	}
+
+    public void setTurnNum(int turn) {
+        this.turnNum = turn;
+    }
 	
 	public IPlayer getCurrentPlayer() {
 		return currentPlayer;
@@ -249,6 +253,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
 
     public void setActionDice(int[] dice) {
         diceManager.setActionDice(dice);
+        turnMover.getCurrentTurn().updateActionDice(this);
     }
 
     public int getPoolVictoryPoints() {
