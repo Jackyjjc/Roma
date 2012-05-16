@@ -6,6 +6,8 @@ import model.IPlayer;
 import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.Action;
+import model.card.ICardChecker;
+import model.card.IDieChecker;
 
 
 /**
@@ -15,7 +17,7 @@ import model.card.Action;
  * Time: 10:52 PM
  * To change this template use File | Settings | File Templates.
  */
-public class CenturioBehaviour extends Behaviour {
+public class CenturioBehaviour extends Behaviour implements ICardChecker, IDieChecker {
 
     public CenturioBehaviour(AbstractCard host) {
         super(host);
@@ -27,7 +29,7 @@ public class CenturioBehaviour extends Behaviour {
         InputHandler handler = getHost().getGameIO().getInputHandler();
         int dieValue;
 
-        if(isValidTarget(card)) {
+        if(card != null && isValidCard(card)) {
             dieValue = handler.getBattleDieInput();
 
             boolean isAddDie = handler.getBooleanInput();
@@ -43,10 +45,10 @@ public class CenturioBehaviour extends Behaviour {
 
     }
 
-    public boolean isValidTarget(AbstractCard target) {
+    public boolean isValidCard(AbstractCard target) {
         boolean isValid = false;
 
-        if(target != null && target.getOwner() != null 
+        if(target.getOwner() != null 
              && target.getOwner() != getHost().getOwner()) {
             isValid = true;
         }
@@ -54,7 +56,7 @@ public class CenturioBehaviour extends Behaviour {
         return isValid;
     }
 
-    private boolean isValidDie(Die die) {
+    public boolean isValidDie(Die die) {
         return !die.isUsed();
     }
 

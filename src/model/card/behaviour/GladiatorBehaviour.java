@@ -5,8 +5,9 @@ import model.IDisc;
 import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.CardType;
+import model.card.ICardChecker;
 
-public class GladiatorBehaviour extends Behaviour {
+public class GladiatorBehaviour extends Behaviour implements ICardChecker {
 
     public GladiatorBehaviour(AbstractCard host) {
         super(host);
@@ -19,7 +20,7 @@ public class GladiatorBehaviour extends Behaviour {
         AbstractCard target = disc.getCard();
         ICardStorage opponentHand;
         
-        if(isValidCard(target)) {
+        if(target != null && isValidCard(target)) {
             
             target.getDisc().removeCard();
             

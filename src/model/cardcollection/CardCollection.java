@@ -91,10 +91,12 @@ public class CardCollection implements ICardStorage, Iterable<AbstractCard> {
     public AbstractCard getCard(Card name) {
         
         AbstractCard card = null;
+        boolean found = false;
         
-        for(AbstractCard temp : cards) {
-            if(temp.getName() == name) {
-                card = temp;
+        for(int i = 0; i < cards.size() && !found; i++) {
+            if(cards.get(i).getName() == name) {
+                card = cards.get(i);
+                found = true;
             }
         }
         

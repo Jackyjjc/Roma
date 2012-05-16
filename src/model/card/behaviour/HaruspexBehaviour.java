@@ -3,27 +3,36 @@ package model.card.behaviour;
 import model.ICardStorage;
 import model.InputHandler;
 import model.card.AbstractCard;
+import model.card.ICardChecker;
 
-public class HaruspexBehaviour extends Behaviour {
+public class HaruspexBehaviour extends Behaviour implements ICardChecker {
 
     public HaruspexBehaviour(AbstractCard host) {
         super(host);
     }
 
-   public void complete() {
-        
+    @Override
+    public void initialise() {
+        InputHandler handler = getHost().getGameIO().getInputHandler();
+        ICardStorage deck = getHost().getCardResources().getDeckStorage();
+        handler.setList(deck);
+    }
+    
+    public void complete() {
+
         InputHandler handler = getHost().getGameIO().getInputHandler();
         ICardStorage hand = getHost().getOwner().getHand();
         ICardStorage deck = getHost().getCardResources().getDeckStorage();
-        
-        int index = handler.getIntInput();
-        AbstractCard card = deck.getCard(index);
-        
+
+        AbstractCard card = handler.getCardInput();
+
         if (isValidCard(card)) {
             deck.removeCard(card);
             deck.shuffle();
-            hand.pushCard(card);       
+            hand.pushCard(card);
         }
+
+        handler.setList(hand);
     }
 
     public boolean isValidCard(AbstractCard card) {

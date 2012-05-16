@@ -4,8 +4,9 @@ import model.IDisc;
 import model.IPlayer;
 import model.card.AbstractCard;
 import model.card.Action;
+import model.card.ICardChecker;
 
-public class LegionariusBehaviour extends Behaviour {
+public class LegionariusBehaviour extends Behaviour implements ICardChecker {
 
     public LegionariusBehaviour(AbstractCard host) {
         super(host);
@@ -16,7 +17,7 @@ public class LegionariusBehaviour extends Behaviour {
 
         AbstractCard target = getOppositeCard();
 
-        if(isValidCard(target)) {
+        if(target != null && isValidCard(target)) {
 
             int value = getHost().getGameIO().getInputHandler().getBattleDieInput();
             Action.attack(target, value);
@@ -28,7 +29,7 @@ public class LegionariusBehaviour extends Behaviour {
     public boolean isValidCard(AbstractCard target) {
         boolean isValid = false;
         
-        if(target != null && target.getOwner() != null 
+        if(target.getOwner() != null 
            && target.getOwner() != this.getHost().getOwner()) {
             isValid = true;
         }

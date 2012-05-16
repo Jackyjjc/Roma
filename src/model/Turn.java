@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -39,9 +40,14 @@ public class Turn {
 	public Turn(GameState g) {
 
 		this.whoseTurn = g.getWhoseTurn();
+		
+		this.playerVPs = new int[Rules.NUM_PLAYERS];
+		this.playerSestertiis = new int[Rules.NUM_PLAYERS];
+		this.playerHands = new Collection[Rules.NUM_PLAYERS];
+		this.playerDiscs = new Card[Rules.NUM_PLAYERS][Rules.NUM_DICE_DISCS];
 
 		for (int playerNum = 0; playerNum < Rules.NUM_PLAYERS; playerNum++) {
-
+		    
 			this.playerVPs[playerNum] = g.getPlayerVictoryPoints(playerNum);
 			this.playerSestertiis[playerNum] = g.getPlayerSestertii(playerNum);
 			this.playerHands[playerNum] = g.getPlayerHand(playerNum);
@@ -53,6 +59,7 @@ public class Turn {
 		this.discards = g.getDiscard();
 
 		this.poolVictoryPoints = g.getPoolVictoryPoints();
+		this.moves = new ArrayList<Action>();
 
 	}
 

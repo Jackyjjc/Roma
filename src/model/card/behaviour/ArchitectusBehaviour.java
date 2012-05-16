@@ -3,6 +3,8 @@ import java.util.List;
 
 import model.card.AbstractCard;
 import model.card.CardType;
+import model.card.ICardChecker;
+import model.card.IDieChecker;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,7 +13,7 @@ import model.card.CardType;
  * Time: 10:44 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ArchitectusBehaviour extends Behaviour {
+public class ArchitectusBehaviour extends Behaviour implements ICardChecker {
 
     private List<AbstractCard> buildingCards;
 
@@ -38,6 +40,17 @@ public class ArchitectusBehaviour extends Behaviour {
 
     }
 
+    public boolean isValidCard(AbstractCard card) {
+        
+        boolean isValid = false;
+        
+        if(card.getType() == CardType.BUILDING 
+           && card.getOwner() != getHost().getOwner()) {
+            isValid = true;
+        }
+        
+        return isValid;
+    }
 }
 
 

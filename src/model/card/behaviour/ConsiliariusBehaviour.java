@@ -6,6 +6,7 @@ import model.ICardStorage;
 import model.IField;
 import model.card.AbstractCard;
 import model.card.CardType;
+import model.card.ICardChecker;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,13 +15,12 @@ import model.card.CardType;
  * Time: 10:54 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ConsiliariusBehaviour extends Behaviour {
+public class ConsiliariusBehaviour extends Behaviour implements ICardChecker {
 
     private ICardStorage charCards;
 
     public ConsiliariusBehaviour(AbstractCard host) {
         super(host);
-
     }
 
     public void initialise() {

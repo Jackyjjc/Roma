@@ -6,8 +6,9 @@ import model.IField;
 import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.CardType;
+import model.card.ICardChecker;
 
-public class MachinaBehaviour extends Behaviour {
+public class MachinaBehaviour extends Behaviour implements ICardChecker {
 
     private ICardStorage buildingCards;
     

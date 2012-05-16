@@ -4,6 +4,7 @@ import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.Action;
 import model.card.CardType;
+import model.card.ICardChecker;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,7 +13,7 @@ import model.card.CardType;
  * Time: 11:02 PM
  * To change this template use File | Settings | File Templates.
  */
-public class OnagerBehaviour extends Behaviour {
+public class OnagerBehaviour extends Behaviour implements ICardChecker {
 
 
     public OnagerBehaviour(AbstractCard host) {
@@ -25,13 +26,13 @@ public class OnagerBehaviour extends Behaviour {
 
         AbstractCard target = handler.getDiscInput().getCard();
 
-        if(isValidTarget(target)) {
+        if(target != null && isValidCard(target)) {
             int value = handler.getBattleDieInput();
             Action.attack(target, value);
         }
     }
 
-    private boolean isValidTarget(AbstractCard target) {
+    public boolean isValidCard(AbstractCard target) {
         
         boolean isValid = false;
         if(target != null && target.getOwner() != null 

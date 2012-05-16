@@ -1,6 +1,5 @@
 package model.card.behaviour;
 
-import model.IDisc;
 import model.IField;
 import model.IPlayer;
 import model.card.AbstractCard;
@@ -11,7 +10,6 @@ public class MercatusBehaviour extends Behaviour {
 
     public MercatusBehaviour(AbstractCard host) {
         super(host);
-        // TODO Auto-generated constructor stub
     }
 
    public void complete() {

@@ -3,13 +3,14 @@ package model.card.behaviour;
 import model.Die;
 import model.InputHandler;
 import model.card.AbstractCard;
+import model.card.IDieChecker;
 
 /**
  * @author Chris Fong
  * @author Jacky CHEN
  */
 
-public class ConsulBehaviour extends Behaviour {
+public class ConsulBehaviour extends Behaviour implements IDieChecker {
 
     private static final int MIN_DIE_VALUE = 1;
     private static final int MAX_DIE_VALUE = 6;
@@ -40,6 +41,10 @@ public class ConsulBehaviour extends Behaviour {
         }
 
         return isValid;
+    }
+
+    public boolean isValidDie(Die die) {
+        return !die.isUsed();
     }
 
 }

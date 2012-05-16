@@ -45,18 +45,18 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
 	    this.notifier = new Notifier(this);
 	    this.diceManager = new DiceManager(NUM_ACTION_DICE);
 	   
-		this.bank = new ResourceStorage(TOTAL_MONEY, TOTAL_VP, turnMover);
+        this.bank = new ResourceStorage(TOTAL_MONEY, TOTAL_VP, turnMover);
 		
         this.cardFactory = new CardFactory(this);
-        this.activateManager = new CardActivateManager(this, this);
+        this.activateManager = new CardActivateManager(this, this, this, turnMover);
         
 		this.deck = CardCollectionFactory.create(DECK, cardFactory);
 		this.discard = CardCollectionFactory.create(!DECK, cardFactory);
-
 		
 		createPlayers(numPlayers);
 		
 		isFinished = false;
+		turnMover.startGame();
 	}
 	
 	public int getTurn() {

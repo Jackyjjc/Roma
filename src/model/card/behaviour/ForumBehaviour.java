@@ -6,9 +6,10 @@ import model.IPlayer;
 import model.IResourceStorage;
 import model.InputHandler;
 import model.card.AbstractCard;
+import model.card.IDieChecker;
 import model.card.IForumListener;
 
-public class ForumBehaviour extends Behaviour {
+public class ForumBehaviour extends Behaviour implements IDieChecker {
 
     public ForumBehaviour(AbstractCard host) {
         super(host);

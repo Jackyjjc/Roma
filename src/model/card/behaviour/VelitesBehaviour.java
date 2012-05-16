@@ -5,6 +5,7 @@ import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.Action;
 import model.card.CardType;
+import model.card.ICardChecker;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +14,7 @@ import model.card.CardType;
  * Time: 10:28 PM
  * To change this template use File | Settings | File Templates.
  */
-public class VelitesBehaviour extends Behaviour{
+public class VelitesBehaviour extends Behaviour implements ICardChecker{
 
     public VelitesBehaviour (AbstractCard host) {
         super(host);
@@ -33,7 +34,7 @@ public class VelitesBehaviour extends Behaviour{
 
             AbstractCard targetCard = targetDisc.getCard();
 
-            if(isValidTarget(targetCard)) {
+            if(targetCard != null && isValidCard(targetCard)) {
                 int value = handler.getBattleDieInput();
                 Action.attack(targetCard, value);
             }
@@ -42,7 +43,7 @@ public class VelitesBehaviour extends Behaviour{
 
     }
 
-    public boolean isValidTarget(AbstractCard c) {
+    public boolean isValidCard(AbstractCard c) {
         boolean isValid = false;
 
         if(c.getOwner() != null && c.getOwner() != getHost().getOwner()

@@ -4,6 +4,8 @@ import model.ICardStorage;
 import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.CardType;
+import model.card.ICardChecker;
+import model.card.IIntegerChecker;
 
 /**
  * 
@@ -12,25 +14,32 @@ import model.card.CardType;
  *
  */
 
-public class AesculapinumBehaviour extends Behaviour {
+public class AesculapinumBehaviour extends Behaviour implements ICardChecker, IIntegerChecker {
 
     public AesculapinumBehaviour(AbstractCard host) {
         super(host);
     }
 
+    @Override
+    public void initialise() {
+        InputHandler handler = getHost().getGameIO().getInputHandler();
+        ICardStorage discard = getHost().getCardResources().getDiscardStorage();
+        handler.setList(discard);
+    }
+    
     public void complete() {
 
         InputHandler handler = getHost().getGameIO().getInputHandler();
         ICardStorage hand = getHost().getOwner().getHand();
         ICardStorage discard = getHost().getCardResources().getDiscardStorage();
-
-        int index = handler.getIntInput();
-        AbstractCard card = discard.getCard(index);
+        AbstractCard card = handler.getCardInput();
 
         if (isValidCard(card)) {
             discard.removeCard(card);
             hand.pushCard(card);
         }
+        
+        handler.setList(hand);
     }
 
     public boolean isValidInt(int index) {
@@ -49,7 +58,7 @@ public class AesculapinumBehaviour extends Behaviour {
         return isValid;
     }
     
-    private boolean isValidCard(AbstractCard c) {
+    public boolean isValidCard(AbstractCard c) {
 
         boolean isValid = false;
 

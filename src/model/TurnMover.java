@@ -16,8 +16,6 @@ public class TurnMover implements ITurnMover {
         this.g = g;
         turnListeners = new ArrayList<ITurnListener>();
         turns = new ArrayList<Turn>();
-        currentTurn = new Turn(g);
-        turns.add(currentTurn);
     }
     
     public void addTurnListener(ITurnListener listener) {
@@ -28,6 +26,11 @@ public class TurnMover implements ITurnMover {
     
     public void removeTurnListener(ITurnListener listener) {
         turnListeners.remove(listener);
+    }
+    
+    public void startGame() {
+        currentTurn = new Turn(g);
+        turns.add(currentTurn);
     }
     
     public void advanceTurn() {

@@ -25,7 +25,7 @@ public class AddDieInputAction extends InputAction {
         
         boolean isValid = false;
         
-        IDieChecker checker = (IDieChecker) getCardActivateManager().getActivatedCard();
+        IDieChecker checker = (IDieChecker) getCardActivateManager().getActivatedCard().getBehaviour();
         
         getInputHandler().addDieInput(dieValue);
         Die die = getInputHandler().getDieInput();

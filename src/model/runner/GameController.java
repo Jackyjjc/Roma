@@ -123,8 +123,8 @@ public class GameController implements MoveMaker {
     }
 
     public void endTurn() throws UnsupportedOperationException {
-        g.getTurnMover().advanceTurn();
         g.getTurnMover().getCurrentTurn().addAction(new EndTurnAction(g, this));
+        g.getTurnMover().advanceTurn();
     }
 
     public void placeCard(Card toPlace, int discToPlaceOn)

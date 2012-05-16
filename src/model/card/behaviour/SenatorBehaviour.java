@@ -8,8 +8,9 @@ import model.IPlayer;
 import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.CardType;
+import model.card.ICardChecker;
 
-public class SenatorBehaviour extends Behaviour {
+public class SenatorBehaviour extends Behaviour implements ICardChecker {
 	
 	private List<AbstractCard> charCards;
 	
@@ -51,5 +52,18 @@ public class SenatorBehaviour extends Behaviour {
             
             card = handler.getCardInput();
         }
+    }
+
+    public boolean isValidCard(AbstractCard card) {
+        
+        boolean isValid = false;
+        
+        if(card != null && card.getOwner() == getHost().getOwner() 
+                && card.getType() == CardType.CHARACTER) {
+            
+            isValid = true;
+        }
+        
+        return isValid;
     }
 }
