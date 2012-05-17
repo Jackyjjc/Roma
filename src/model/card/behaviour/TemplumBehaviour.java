@@ -43,7 +43,10 @@ public class TemplumBehaviour extends Behaviour implements IForumListener {
         IResourceStorage bank = getHost().getCardResources().getBank();
         IPlayer player = getHost().getOwner();
 
-        bank.transferVP(player, handler.getDieInput().getValue());
-
+        Die dieInput = handler.getDieInput();
+        
+        if(dieInput != null) {
+            bank.transferVP(player, dieInput.getValue());
+        }
     }
 }

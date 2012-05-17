@@ -31,11 +31,11 @@ public class ForumBehaviour extends Behaviour implements IDieChecker {
             toUse.use();
         }
 
-        if(disc.getPrev() != null && disc.getPrev().getCard() instanceof IForumListener) {
+        if(disc.getPrev() != null && !disc.getPrev().isEmpty() && disc.getPrev().getCard() instanceof IForumListener) {
         	((IForumListener)disc.getPrev().getCard()).alert();
         }
 
-        if (disc.getNext() != null & disc.getNext().getCard() instanceof IForumListener) {
+        if (disc.getNext() != null && !disc.getNext().isEmpty() && disc.getNext().getCard() instanceof IForumListener) {
             ((IForumListener)disc.getNext().getCard()).alert();
         }
 
