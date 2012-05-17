@@ -1,12 +1,12 @@
 package model;
 
+import framework.Rules;
+import framework.cards.Card;
+import model.action.Action;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
-import model.action.Action;
-import framework.Rules;
-import framework.cards.Card;
 
 public class Turn {
 
@@ -35,37 +35,34 @@ public class Turn {
 	private List<Card> deck;
 	private List<Card> discards;
 
-	private int poolVictoryPoints;
+	public Turn (Game g) {
 
-	public Turn(Game g) {
-
-		this.whoseTurn = g.getWhoseTurn();
-        this.turnNum = g.getTurn();
-		
 		this.playerVPs = new int[Rules.NUM_PLAYERS];
 		this.playerSestertiis = new int[Rules.NUM_PLAYERS];
 		this.playerHands = new Collection[Rules.NUM_PLAYERS];
 		this.playerDiscs = new Card[Rules.NUM_PLAYERS][Rules.NUM_DICE_DISCS];
 
-		for (int playerNum = 0; playerNum < Rules.NUM_PLAYERS; playerNum++) {
-		    
-			this.playerVPs[playerNum] = g.getPlayerVictoryPoints(playerNum);
-			this.playerSestertiis[playerNum] = g.getPlayerSestertii(playerNum);
-			this.playerHands[playerNum] = g.getPlayerHand(playerNum);
-			this.playerDiscs[playerNum] = g.getPlayerCardsOnDiscs(playerNum);
+        this.moves = new ArrayList<Action>();
 
-		}
-
-		this.deck = g.getDeck();
-		this.discards = g.getDiscard();
-
-        this.actionDie = g.getActionDice();
-		this.poolVictoryPoints = g.getPoolVictoryPoints();
-		this.moves = new ArrayList<Action>();
+        generateTurn(g);
 
 	}
 
-	public boolean insert (Card c, int player, int index) {
+    public void generateTurn(Game g) {
+
+        updateTurn(g);
+        updateActionDice(g);
+        updateDeck(g);
+        updateDiscard(g);
+        updateField(g);
+        updateHand(g);
+        updateMoney(g);
+        updateVP(g);
+        
+    }
+
+
+    public boolean insert (Card c, int player, int index) {
 
 	    boolean isValidTravel = false;
 	    
@@ -84,7 +81,7 @@ public class Turn {
 
 	public void restore(Game g) {
 
-		g.setWhoseTurn(this.whoseTurn);
+        g.setWhoseTurn(this.whoseTurn);
         g.setTurnNum(this.turnNum);
 
 		for (int playerNum = 0; playerNum < Rules.NUM_PLAYERS; playerNum++) {
@@ -110,7 +107,6 @@ public class Turn {
 	        if(action.isValid()) {
 	            action.run();
 	        } else {
-	            System.out.println("action is " + action.toString());
 	            System.out.println("Miaowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
 	            assert(false);
 	        }
@@ -122,6 +118,43 @@ public class Turn {
 	    moves.add(action);
 	}
 
+	public void updateField(Game g) {
+        for (int playerNum = 0; playerNum < Rules.NUM_PLAYERS; playerNum++) {
+            this.playerDiscs[playerNum] = g.getPlayerCardsOnDiscs(playerNum);
+        }
+	}
+	
+	public void updateDeck(Game g) {
+        this.deck = g.getDeck();
+	}
+	
+    public void updateTurn(Game g) {
+        this.turnNum = g.getTurn();
+        this.whoseTurn = g.getWhoseTurn();
+    }
+	
+	public void updateDiscard(Game g) {
+        this.discards = g.getDiscard();
+	}
+	
+    public void updateMoney(Game g) {
+        for (int playerNum = 0; playerNum < Rules.NUM_PLAYERS; playerNum++) {
+            this.playerSestertiis[playerNum] = g.getPlayerSestertii(playerNum);
+        }
+    }
+	
+	public void updateVP(Game g) {
+        for (int playerNum = 0; playerNum < Rules.NUM_PLAYERS; playerNum++) {
+            this.playerVPs[playerNum] = g.getPlayerVictoryPoints(playerNum);
+        }
+	}
+	
+	public void updateHand(Game g) {
+        for (int playerNum = 0; playerNum < Rules.NUM_PLAYERS; playerNum++) {
+            this.playerHands[playerNum] = g.getPlayerHand(playerNum);
+        }
+	}
+	
     public void updateActionDice(Game g) {
         this.actionDie = g.getActionDice();
     }

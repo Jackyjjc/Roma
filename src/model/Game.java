@@ -148,7 +148,8 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
     }
 
     public void setWhoseTurn(int player) {
-        currentPlayer = getPlayer(player); 
+        currentPlayer = getPlayer(player);
+        turnMover.getCurrentTurn().updateTurn(this);
     }
 
     public List<Card> getDeck() {
@@ -157,6 +158,7 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
     
     public void setDeck(List<Card> deck) {
         this.deck.setCards(deck);
+        turnMover.getCurrentTurn().updateDeck(this);
     }
 
     public List<Card> getDiscard() {
@@ -165,66 +167,57 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
 
     public void setDiscard(List<Card> discard) {
         this.discard.setCards(discard);
+        turnMover.getCurrentTurn().updateDiscard(this);
     }
 
     public int getPlayerSestertii(int playerNum) {
-        
         return getPlayer(playerNum).getMoney();
     }
 
     public void setPlayerSestertii(int playerNum, int amount) {
-        
         getPlayer(playerNum).setMoney(amount);
-        
+        turnMover.getCurrentTurn().updateMoney(this);
     }
 
     public int getPlayerVictoryPoints(int playerNum) {
-
         return getPlayer(playerNum).getVP();
-        
     }
 
     public void setPlayerVictoryPoints(int playerNum, int points) {
-
         IPlayer player = getPlayer(playerNum);
-        
         if(player.getVP() >= points) {
             player.transferVP(bank, player.getVP() - points);
         } else {
             bank.transferVP(player, points - player.getVP());
         }
         
+        turnMover.getCurrentTurn().updateVP(this);
     }
 
     public Collection<Card> getPlayerHand(int playerNum) {
-        
         return getPlayer(playerNum).getHand().getCardsWithNames();
-        
     }
 
     public void setPlayerHand(int playerNum, Collection<Card> hand) {
-        
+
         IPlayer p = getPlayer(playerNum);
         p.getHand().setCards(hand);
-        
+        turnMover.getCurrentTurn().updateHand(this);
+
     }
 
     public Card[] getPlayerCardsOnDiscs(int playerNum) {
-        
+
         IPlayer p = getPlayer(playerNum);
-        
         int numDiscs = p.getField().getNumDiscs();
-        
         Card[] temp = new Card[numDiscs];
-        
+
         for (int i = 0; i < numDiscs; i++) {
-        
             if(p.getField().getDisc(i).getCard() != null) {
                 temp[i] = p.getField().getDisc(i).getCard().getName();
             } else {
                 temp[i] = Card.NOT_A_CARD;
             }
-            
         }
         
         return temp;
@@ -247,6 +240,9 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
                 p.getField().getDisc(i).removeCard();
             }
         }
+
+        turnMover.getCurrentTurn().updateField(this);
+
     }
 
     public int[] getActionDice() {
