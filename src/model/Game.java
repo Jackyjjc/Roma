@@ -240,7 +240,9 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
         for (int i = 0; i < numDiscs; i++) {
             if(discCards[i] != Card.NOT_A_CARD) {
                 card = cardFactory.create(discCards[i]);
-                p.getField().getDisc(i).layCard(card);
+                card.setCost(0);
+                card.lay(p.getField().getDisc(i));
+                card.setCost(card.getDefaultCost());
             } else {
                 p.getField().getDisc(i).removeCard();
             }

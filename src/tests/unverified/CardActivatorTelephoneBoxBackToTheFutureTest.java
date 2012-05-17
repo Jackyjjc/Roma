@@ -61,12 +61,16 @@ public class CardActivatorTelephoneBoxBackToTheFutureTest extends Test {
         assert(gameState.getPlayerVictoryPoints(PLAYER_2) == 16);
         gameState.setActionDice(new int[] {1,1,1});
 
-        move.endTurn();  //Turn #2
+        move.endTurn();  
+        
+        //Turn #2
 
         assert(gameState.getPlayerVictoryPoints(PLAYER_2) == 16);
         gameState.setActionDice(new int[] {1,1,1});
 
-        move.endTurn();  //Turn #3
+        move.endTurn();  
+        
+        //Turn #3
 
         assert(gameState.getPlayerVictoryPoints(PLAYER_1) == 15);
         gameState.setActionDice(new int[] {1,1,1});
@@ -87,7 +91,9 @@ public class CardActivatorTelephoneBoxBackToTheFutureTest extends Test {
         assert(gameState.getPlayerCardsOnDiscs(PLAYER_1)[1] == Card.ESSEDUM);
         assert(gameState.getPlayerVictoryPoints(PLAYER_1) == 16);
 
-        move.endTurn();  //Turn #4
+        move.endTurn();  
+        
+        //Turn #4
 
         gameState.setActionDice(new int[] {3,3,3});
 

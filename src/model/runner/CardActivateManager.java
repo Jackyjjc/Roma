@@ -33,49 +33,49 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
     public void chooseCardFromPile(int indexOfCard) {
         
         Card card = findCardFromPile(indexOfCard);
-        handler.addCardInput(manager.getCurrentPlayer().getId(), card);
         turnMover.getCurrentTurn().addAction(new ChooseCardFromPileAction(g, this, handler, card, indexOfCard));
+        handler.addCardInput(manager.getCurrentPlayer().getId(), card);
     }
     
     public void complete() {
-        activatedCard.complete();
         turnMover.getCurrentTurn().addAction(new CompleteAction(g, this, handler));
+        activatedCard.complete();
     }
 
     public void giveAttackDieRoll(int roll) {
-        handler.addBattleDieInput(roll);
         turnMover.getCurrentTurn().addAction(new AddBattleDieInput(g, this, handler, roll));
+        handler.addBattleDieInput(roll);
     }
 
     public void chooseActionDice(int actionDiceValue) {
-        handler.addDieInput(actionDiceValue);
         turnMover.getCurrentTurn().addAction(new AddDieInputAction(g, this, handler, actionDiceValue));
+        handler.addDieInput(actionDiceValue);
     }
 
     public void chooseCenturioAddActionDie(boolean attackAgain) {
-        handler.addBooleanInput(attackAgain);
         turnMover.getCurrentTurn().addAction(new AddBooleanInputAction(g, this, handler, attackAgain));
+        handler.addBooleanInput(attackAgain);
     }
 
     public void placeCard(Card name, int diceDisc) {
 
         IPlayer player = manager.getCurrentPlayer();
 
-        handler.addCardInput(player.getId(), name);
         turnMover.getCurrentTurn().addAction(new AddCardInputAction(g, this, handler, player.getId(), name));
-        handler.addDiscInput(player.getId(), diceDisc - 1);
+        handler.addCardInput(player.getId(), name);
         turnMover.getCurrentTurn().addAction(new AddDiscInputAction(g, this, handler, player.getId(), diceDisc));
+        handler.addDiscInput(player.getId(), diceDisc - 1);
         
     }
 
     public void chooseConsulChangeAmount(int amount) {
-        handler.addIntInput(amount);
         turnMover.getCurrentTurn().addAction(new AddIntInputAction(g, this, handler, amount));
+        handler.addIntInput(amount);
     }
 
     public void chooseWhichDiceChanges(int originalRoll) {
-        handler.addDieInput(originalRoll);
         turnMover.getCurrentTurn().addAction(new AddDieInputAction(g, this, handler, originalRoll));
+        handler.addDieInput(originalRoll);
     }
 
     public void chooseDiceDisc(int diceDisc) {
@@ -87,18 +87,18 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
         } else {
             player = manager.getCurrentPlayer().getOpponent();
         }
-        handler.addDiscInput(player.getId(), diceDisc - 1);
         turnMover.getCurrentTurn().addAction(new AddDiscInputAction(g, this, handler, player.getId(), diceDisc));
+        handler.addDiscInput(player.getId(), diceDisc - 1);
     }
 
     public void chooseActivateTemplum(boolean activate) {
-        handler.addBooleanInput(activate);
         turnMover.getCurrentTurn().addAction(new AddBooleanInputAction(g, this, handler, activate));
+        handler.addBooleanInput(activate);
     }
 
     public void chooseActivateTemplum(int diceValue) {
-        handler.addDieInput(diceValue);
         turnMover.getCurrentTurn().addAction(new AddDieInputAction(g, this, handler, diceValue));
+        handler.addDieInput(diceValue);
     }
 
     public void chooseMercatorBuyNum(int VPToBuy) {
@@ -110,6 +110,8 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
     }
 
     public CardActivator getScaenicusMimicTarget(int diceDisc) {
+        
+        turnMover.getCurrentTurn().addAction(new MimicAction(g, this, handler, diceDisc));
         
         IPlayer player = manager.getCurrentPlayer();
         
@@ -151,12 +153,12 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
     }
 
     public void shouldMoveForwardInTime(boolean isForward) {
-        handler.addBooleanInput(isForward);
         turnMover.getCurrentTurn().addAction(new AddBooleanInputAction(g,this,handler,isForward));
+        handler.addBooleanInput(isForward);
     }
 
     public void setSecondDiceUsed(int diceValue) {
-        handler.addDieInput(diceValue);
         turnMover.getCurrentTurn().addAction(new AddDieInputAction(g,this,handler,diceValue));
+        handler.addDieInput(diceValue);
     }
 }

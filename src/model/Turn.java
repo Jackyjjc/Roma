@@ -1,12 +1,12 @@
 package model;
 
-import framework.Rules;
-import framework.cards.Card;
-import model.action.Action;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import model.action.Action;
+import framework.Rules;
+import framework.cards.Card;
 
 public class Turn {
 
@@ -65,14 +65,21 @@ public class Turn {
 
 	}
 
-	public void insert (Card c, int player, int index) {
+	public boolean insert (Card c, int player, int index) {
 
-		if (this.playerDiscs[player][index] != Card.NOT_A_CARD) {
-			discards.add(this.playerDiscs[player][index]);
-		}
+	    boolean isValidTravel = false;
+	    
+	    if(this.playerDiscs[player][index] != c) {
+	        
+	        if (this.playerDiscs[player][index] != Card.NOT_A_CARD) {
+	            discards.add(this.playerDiscs[player][index]);
+	        }
 
-		this.playerDiscs[player][index] = c;
-
+	        this.playerDiscs[player][index] = c;
+	        isValidTravel = true;
+	    }
+	    
+        return isValidTravel;
 	}
 
 	public void restore(Game g) {
@@ -89,7 +96,6 @@ public class Turn {
 
 		}
 
-        g.setActionDice(actionDie);
 		g.setDeck(this.deck);
 		g.setDiscard(this.discards);
 
@@ -97,6 +103,8 @@ public class Turn {
 
 	public void run (Game g) {
 
+	    g.setActionDice(actionDie);
+	    
 	    for(Action action : moves) {
 	        
 	        if(action.isValid()) {

@@ -6,11 +6,11 @@ import model.card.ICardChecker;
 import model.runner.CardActivateManager;
 import framework.interfaces.GameState;
 
-public class Mimic extends InputAction {
+public class MimicAction extends InputAction {
 
     private int diceDisc;
     
-    public Mimic(GameState g, CardActivateManager manager, InputHandler handler, int diceDisc) {
+    public MimicAction(GameState g, CardActivateManager manager, InputHandler handler, int diceDisc) {
         super(g, manager, handler);
     }
 

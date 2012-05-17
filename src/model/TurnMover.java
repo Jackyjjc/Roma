@@ -79,13 +79,13 @@ public class TurnMover implements ITurnMover {
         }
         
         turnsToReplay.get(0).restore(g);
+        Turn restoredTurn = new Turn(g);
+        turns.add(restoredTurn);
+        this.currentTurn = restoredTurn;
         
         for (Turn turn : turnsToReplay) {
             turn.run(g);
         }
-
-
-
     }
 
     public Turn getCurrentTurn() {

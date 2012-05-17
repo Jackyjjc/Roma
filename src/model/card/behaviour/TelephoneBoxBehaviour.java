@@ -29,11 +29,13 @@ public class TelephoneBoxBehaviour extends Behaviour implements IDieChecker {
         } else {
             Turn pastTurn = turnMover.getTurn(travelTime);
             AbstractCard timeTraveller = disc.getCard();
-            pastTurn.insert(timeTraveller.getName(), timeTraveller.getOwner().getId(), disc.getIndex());
-        
-            //Fingers crossed
-            turnMover.replay(travelTime);
             
+            boolean isValid = pastTurn.insert(timeTraveller.getName(), timeTraveller.getOwner().getId(), disc.getIndex());
+        
+            if(isValid) {
+                //Fingers crossed
+                turnMover.replay(travelTime);
+            }
         }
     }
 
