@@ -53,6 +53,9 @@ public class CardDisplayManager {
         maps.put(Card.TRIBUNUSPLEBIS, rm.tribunisplebis);
         maps.put(Card.TURRIS, rm.turris);
         maps.put(Card.VELITES, rm.velites);
+        maps.put(Card.KAT, rm.kat);
+        maps.put(Card.GRIMREAPER, rm.grimreaper);
+        maps.put(Card.TELEPHONEBOX, rm.telephonebox);
     }
     
     public BufferedImage getFaceDownCard() {

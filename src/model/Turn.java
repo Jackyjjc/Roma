@@ -110,6 +110,7 @@ public class Turn {
 	        if(action.isValid()) {
 	            action.run();
 	        } else {
+	            System.out.println("action is " + action.toString());
 	            System.out.println("Miaowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
 	            assert(false);
 	        }

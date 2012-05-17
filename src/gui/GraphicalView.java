@@ -20,7 +20,7 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
     
     private static final String NAME = "Roma 2.2";
     
-    private static final int WIDTH = 1366;
+    private static final int WIDTH = 1500;
     private static final int HEIGHT = 768;
     
     private double scalingFactor;

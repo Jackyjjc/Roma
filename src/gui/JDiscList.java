@@ -12,7 +12,7 @@ import controller.DiscClickListener;
 
 public class JDiscList extends JPanel implements IListener {
     
-    private static final int NUM_DISCS = 8;
+    private static final int NUM_DISCS = 9;
     
     private IDisplayManager idm;
     private DiscDisplayManager ddm;
@@ -35,7 +35,6 @@ public class JDiscList extends JPanel implements IListener {
         
         for (int i = 0; i < NUM_DISCS; i++) {
             disc = new JDisc(ddm,i);
-            //disc.addActionListener(listener);
             disc.setTransferHandler(new CustomizedTransferHandler());
             disc.setDropTarget(new DropTarget(disc, new DieDropTargetListener(disc, idm.getInputHandler())));
             add(disc);

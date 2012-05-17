@@ -14,7 +14,7 @@ import framework.cards.Card;
 
 public class JField extends JPanel implements IListener {
 
-    private static int NUM_CARDS = 6;
+    private static int NUM_CARDS = 7;
     
     private FieldClickListener listener;
     private IDisplayManager idm;

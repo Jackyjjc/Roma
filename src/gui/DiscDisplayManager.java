@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class DiscDisplayManager {
 
-    private static final int NUM_DISCS = 8;
+    private static final int NUM_DISCS = 9;
     private BufferedImage[] mapping;
     private int width;
     private int height;
@@ -26,7 +26,8 @@ public class DiscDisplayManager {
         mapping[4] = rm.disc5;
         mapping[5] = rm.disc6;
         mapping[6] = rm.disc7;
-        mapping[7] = rm.disc8;
+        mapping[7] = rm.bribe;
+        mapping[8] = rm.disc8;
     }
 
     public BufferedImage getDisc(int value) {

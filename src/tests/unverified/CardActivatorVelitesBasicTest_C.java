@@ -18,7 +18,7 @@ import framework.interfaces.activators.VelitesActivator;
  *
  */
  
-public class CardActivatorBVelitesBasicTest extends Test {
+public class CardActivatorVelitesBasicTest_C extends Test {
  
     @Override
     public String getShortDescription() {

@@ -11,6 +11,13 @@ import framework.interfaces.activators.TelephoneBoxActivator;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TelephoneboxTest
+ * 
+ * @author Chris Fong
+ *
+ */
+
 public class CardActivatorTelephoneBoxBackToTheFutureTest extends Test {
 
 	private final int PLAYER_1 = 0;

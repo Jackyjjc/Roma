@@ -42,6 +42,7 @@ public class ResourceManager {
     public BufferedImage disc6;
     public BufferedImage disc7;
     public BufferedImage disc8;
+    public BufferedImage bribe;
     
     public BufferedImage blank;
     public BufferedImage blankh;
@@ -72,6 +73,9 @@ public class ResourceManager {
     public BufferedImage tribunisplebis;
     public BufferedImage turris;
     public BufferedImage velites;
+    public BufferedImage kat;
+    public BufferedImage grimreaper;
+    public BufferedImage telephonebox;
     
     private double scalingFactor;
     
@@ -125,6 +129,7 @@ public class ResourceManager {
             disc6 = read("disc6.jpg");
             disc7 = read("disc7.jpg");
             disc8 = read("disc8.jpg");
+            bribe = read("bribe.png");
             
             //load all the cards
             blank = read("empty.png");
@@ -157,6 +162,9 @@ public class ResourceManager {
             tribunisplebis = read("CardTribunusPlebis.jpg");
             turris = read("CardTurris.jpg");
             velites = read("CardVelites.jpg");
+            kat = read("CardKat.jpg");
+            grimreaper = read("CardGrimReaper.jpg");
+            telephonebox = read("CardTelephonebox.jpg");
             
         } catch (IOException e) {
             System.err.println("Sorry Game has been corrupted.");

@@ -20,7 +20,6 @@ public class CardActivatorVelitesBasicTest extends Test {
 	 * @author Chris FONG
 	 *
 	 */
-
 	
 	private final int PLAYER_1 = 0;
 	private final int PLAYER_2 = 1;
