@@ -4,7 +4,7 @@ import model.ICardResources;
 import model.IGameIO;
 import framework.cards.Card;
 
-class Mercator extends AbstractCard {
+public class Mercator extends AbstractCard {
     
     private static final int COST = 7;
     private static final int DEFENCE = 2;

@@ -46,4 +46,8 @@ public class JBackground extends JPanel implements IListener {
         rightBar.setSwapConfirmListener(l);
     }
 
+    public void enableActionDiceAdapter(boolean enable) {
+        leftBar.enableActionDiceAdapter(enable);
+    }
+
 }

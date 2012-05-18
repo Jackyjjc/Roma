@@ -50,4 +50,8 @@ public class JGameBarLeft extends JPanel implements IListener {
         piles.updateView(state);
     }
 
+    public void enableActionDiceAdapter(boolean enable) {
+        dicePanel.enableAdapters(enable);
+    }
+
 }

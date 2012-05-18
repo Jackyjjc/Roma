@@ -285,5 +285,9 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
     public void removeTurnListener(ITurnListener listener) {
         turnMover.removeTurnListener(listener);
     }
+
+    public int getBattleDiceValue() {
+        return diceManager.getBattleDie().getValue();
+    }
     
 }

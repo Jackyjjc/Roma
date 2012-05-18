@@ -20,4 +20,5 @@ public interface IDisplayManager {
     public GuiInputHandler getInputHandler();
     
     public Notifier getNotifier();
+    
 }

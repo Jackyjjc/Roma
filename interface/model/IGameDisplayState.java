@@ -25,4 +25,6 @@ public interface IGameDisplayState {
     
     public int getWhoseTurn();
     
+    public int getBattleDiceValue();
+    
 }

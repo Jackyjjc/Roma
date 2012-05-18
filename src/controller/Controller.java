@@ -16,10 +16,8 @@ public class Controller {
     private GraphicalView view;
     private GuiInputHandler handler;
     
-    public Controller(Game g, GraphicalView view, GuiInputHandler handler) {
-        this.g = g;
-        this.view = view;
-        this.handler = handler;
+    public Controller() {
+        handler = new GuiInputHandler();
     }
 
     public void run() {
@@ -34,4 +32,15 @@ public class Controller {
         dealCard.run();
     }
     
+    public void setGame(Game g) {
+        this.g = g;
+    }
+    
+    public void setView(GraphicalView view) {
+        this.view = view;
+    }
+    
+    public GuiInputHandler getInputHandler() {
+        return handler;
+    }
 }

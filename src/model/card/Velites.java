@@ -4,7 +4,7 @@ import model.ICardResources;
 import model.IGameIO;
 import framework.cards.Card;
 
-class Velites extends AbstractCard {
+public class Velites extends AbstractCard {
 
     private static final int COST = 5;
     private static final int DEFENCE = 3;

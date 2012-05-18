@@ -4,7 +4,7 @@ import model.ICardResources;
 import model.IGameIO;
 import framework.cards.Card;
 
-class Centurio extends AbstractCard {
+public class Centurio extends AbstractCard {
 
     private static final int COST = 9;
     private static final int DEFENCE = 5;

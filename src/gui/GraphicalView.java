@@ -7,15 +7,18 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import model.Game;
 import model.IGameDisplayState;
 import model.IGameIO;
 import model.Notifier;
+import controller.Controller;
 import controller.GuiInputHandler;
+import framework.Rules;
 import framework.cards.Card;
 
 public class GraphicalView extends JFrame implements IListener, IDisplayManager {
     
-    private static final String NAME = "Roma 2.2";
+    private static final String NAME = "Roma 3.2";
     
     private static final int WIDTH = 1500;
     private static final int HEIGHT = 768;
@@ -124,6 +127,10 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
     public Notifier getNotifier() {
         return notifier;
     }
+    
+    public void enableActionDiceAdapter(boolean enable) {
+        background.enableActionDiceAdapter(enable);
+    }
 
     public void setSwapConfirmListener(ActionListener l) {
         background.setSwapConfirmListener(l);
@@ -189,5 +196,74 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
         }
         
         return isPass;
+    }
+    
+    public void showTargetInputDialog() {
+        JOptionPane.showMessageDialog(this,
+                "Please choose a target");
+    }
+    
+    public boolean showTargetConfirmDialog(Card card) {
+        
+        boolean confirm = false;
+        
+        int n = JOptionPane.showConfirmDialog(
+                this,
+                "You have selected target " + card + ". Are you sure?",
+                "Select Target",
+                JOptionPane.YES_NO_OPTION);
+        
+        if(n == JOptionPane.YES_OPTION) {
+            confirm = true;
+        }
+        
+        return confirm;
+    }
+    
+    public int showMercatorBuyingDialog(int maxAmount) {
+        
+        int result = -1;
+        
+        if(maxAmount > 0) {
+            
+            Integer[] availableAmount = new Integer[maxAmount];
+            for(int i = 0; i < availableAmount.length; i++) {
+                availableAmount[i] = i + 1;
+            }
+        
+        Integer i = (Integer)JOptionPane.showInputDialog(this,
+                "Choose the number of Victory Points you want to buy",
+                "Choose Victory Point amount",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                availableAmount,
+                availableAmount[0]);
+        
+            if (i == null) {
+                result = 0;
+            } else {
+                result = i;
+            }
+        }
+        
+        return result;
+    }
+    
+    public void showDieInputDialog() {
+        JOptionPane.showMessageDialog(this,
+                "Please choose an action die");
+    }
+    
+    public int showDieAmountChangeInput(Integer[] availableAmount) {
+        
+        int result = (Integer)JOptionPane.showInputDialog(this,
+                "Choose the number of Victory Points you want to buy",
+                "Choose Victory Point amount",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                availableAmount,
+                availableAmount[0]);
+        
+        return result;
     }
 }

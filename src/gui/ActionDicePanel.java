@@ -12,6 +12,7 @@ public class ActionDicePanel extends JPanel implements IListener {
     
     private static final int NUM_DICES = 3;
     private JDie[] dice;
+    private MouseDraggingAdapter[] adapters;
     
     public ActionDicePanel(IDisplayManager idm) {
         this.setLayout(new FlowLayout(FlowLayout.CENTER, idm.scale(15), 0));
@@ -22,10 +23,12 @@ public class ActionDicePanel extends JPanel implements IListener {
     private void initUI(IDisplayManager idm) {
         
         dice = new JDie[NUM_DICES];
+        adapters = new MouseDraggingAdapter[NUM_DICES];
         
         for(int i = 0; i < NUM_DICES; i++) {
             dice[i] = new JDie(i,idm.getActionDiceDisplayManager());
-            dice[i].addMouseListener(new MouseDraggingAdapter(idm.getInputHandler()));
+            adapters[i] = new MouseDraggingAdapter(idm.getInputHandler());
+            dice[i].addMouseListener(adapters[i]);
             dice[i].setTransferHandler(new CustomizedTransferHandler());
             add(dice[i]);
         }
@@ -46,4 +49,11 @@ public class ActionDicePanel extends JPanel implements IListener {
         
         revalidate();
     }
+    
+    public void enableAdapters(boolean enable) {
+        for(int i = 0; i < NUM_DICES; i++) {
+            adapters[i].setDraggable(enable);
+        }
+    }
+
 }

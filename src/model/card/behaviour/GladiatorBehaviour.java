@@ -32,8 +32,7 @@ public class GladiatorBehaviour extends Behaviour implements ICardChecker {
     public boolean isValidCard(AbstractCard target) {
         boolean isValid = false;
         
-        if(target != null && target.getOwner() != null 
-           && target.getOwner() != this.getHost().getOwner()
+        if(target != null && target.getOwner() != this.getHost().getOwner()
            && target.getType() == CardType.CHARACTER) {
             isValid = true;
         }

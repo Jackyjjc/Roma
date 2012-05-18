@@ -4,7 +4,7 @@ import model.ICardResources;
 import model.IGameIO;
 import framework.cards.Card;
 
-class Consul extends AbstractCard {
+public class Consul extends AbstractCard {
 	
     private static final int COST = 3;
     private static final int DEFENCE = 3;

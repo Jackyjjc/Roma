@@ -10,20 +10,38 @@ import model.Die;
 import model.Game;
 import model.ICardStorage;
 import model.IDisc;
+import model.IField;
 import model.IPlayer;
 import model.card.AbstractCard;
 import model.card.Aesculapinum;
 import model.card.CardType;
+import model.card.Centurio;
+import model.card.Consul;
+import model.card.Gladiator;
 import model.card.Haruspex;
 import model.card.ICardChecker;
+import model.card.Legat;
+import model.card.Legionarius;
+import model.card.Mercator;
+import model.card.Mercatus;
+import model.card.Nero;
+import model.card.Onager;
+import model.card.Praetorianus;
+import model.card.Sicarius;
+import model.card.TribunusPlebis;
+import model.card.Velites;
 import model.runner.CardActivateManager;
 import controller.GuiInputHandler;
 import controller.IGameState;
+import controller.IGuiCardInputListener;
+import controller.IGuiDieInputListener;
+import controller.IGuiDiscInputListener;
 import controller.ILayCardListener;
 import controller.IPassListener;
 import controller.IUseDieInputListener;
 
-public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameState, IPassListener {
+public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameState, IPassListener, 
+                                 IGuiDieInputListener, IGuiCardInputListener, IGuiDiscInputListener {
 
     private Game g;
     private GraphicalView view;
@@ -41,6 +59,9 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         handler.setLayCardListener(this);
         handler.setUseActionDieListener(this);
         handler.setPassListener(this);
+        handler.setCardInputListener(this);
+        handler.setDieInputListener(this);
+        handler.setDiscInputListener(this);
         
         view.showGameStarts();
         g.setPlayerVictoryPoints(1, 10);
@@ -48,11 +69,11 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         
     }
     
-    public void useDice(int dieValue, int diceIndex) {
+    public void useDice(int dieValue, int discIndex) {
         
         IPlayer player = g.getCurrentPlayer();
         
-        if(diceIndex == 0) {
+        if(discIndex == 0) {
             
             Card selected = selectCard(g.getDeck(), dieValue);
             AbstractCard card = g.getDeckStorage().getCard(selected);
@@ -68,23 +89,30 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             g.getDiceManager().getActionDie(dieValue).use();
             
             g.getNotifier().notifyListeners();
-        } else if(diceIndex == 8) {
+            
+        } else if(discIndex == 8) {
             g.getBank().transferMoney(player, dieValue);
             g.getDiceManager().getActionDie(dieValue).use();
             g.getNotifier().notifyListeners();
         
         } else {
             
-            IDisc disc = player.getField().getDisc(diceIndex - 1);
-            
-            if(!disc.isBlocked() && !disc.isEmpty()) {
+            if(dieValue == discIndex || discIndex == 7) {
+                IDisc disc = player.getField().getDisc(discIndex - 1);
                 
-                if(disc instanceof BribeDisc) {
-                    BribeDisc bribe = (BribeDisc)disc;
-                    bribe.giveBribe(dieValue);
+                if(!disc.isBlocked() && !disc.isEmpty()) {
+                    
+                    if(disc instanceof BribeDisc) {
+                        BribeDisc bribe = (BribeDisc)disc;
+                        bribe.giveBribe(dieValue);
+                        if(g.getCurrentPlayer().getMoney() >= dieValue) {
+                            activateCard(dieValue, disc);
+                        }
+                        
+                    } else {
+                        activateCard(dieValue, disc);
+                    }
                 }
-                
-                activateCard(dieValue, disc);
             }
         }
     }
@@ -198,6 +226,50 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                 manager.complete();
 
             }
+            
+        } else if(card instanceof Gladiator || card instanceof Sicarius 
+                || card instanceof Onager || card instanceof Velites || card instanceof Nero) {
+            
+            view.showTargetInputDialog();
+            die.use();
+        
+        } else if(card instanceof Legionarius) {
+            die.use();
+            g.getDiceManager().rollBattleDice();
+            manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
+            manager.complete();
+            
+        } else if(card instanceof Legat || card instanceof TribunusPlebis|| card instanceof Mercatus) {
+            die.use();
+            manager.complete();
+        } else if(card instanceof Mercator) {
+            
+            int maxCanBuy = g.getCurrentPlayer().getMoney() / 2;
+            int maxVP = g.getCurrentPlayer().getOpponent().getVP();
+            
+            int min = Math.min(maxCanBuy, maxVP);
+            
+            int amount = view.showMercatorBuyingDialog(min);
+            if(amount != - 1) {
+                while(amount == 0) {
+                    amount = view.showMercatorBuyingDialog(min);
+                }
+                manager.chooseMercatorBuyNum(amount);
+                die.use();
+                manager.complete();
+            }
+        } else if(card instanceof Praetorianus) {
+            view.showTargetInputDialog();
+            die.use();
+        } else if(card instanceof Consul) {
+            if(g.getActionDice().length > 1) {
+                die.use();
+                view.showDieInputDialog();
+                view.enableActionDiceAdapter(false);
+            }
+        } else if(card instanceof Centurio) {
+            view.showTargetInputDialog();
+            die.use();
         }
         
         g.getNotifier().notifyListeners();
@@ -215,5 +287,79 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         
         return hasCard;
         
+    }
+
+    public void discInput(int discIndex) {
+        
+        CardActivateManager manager = g.getCardActivateManager();
+        AbstractCard card = manager.getActivatedCard();
+        
+        if(card instanceof Gladiator || card instanceof Sicarius 
+                || card instanceof Onager || card instanceof Velites || card instanceof Nero) {
+            
+            IField field = g.getCurrentPlayer().getOpponent().getField();
+            IDisc disc = field.getDisc(discIndex);
+            
+            if(!disc.isEmpty()) {
+                boolean confirm = view.showTargetConfirmDialog(disc.getCard().getName());
+                if(confirm) {
+                    ICardChecker checker = (ICardChecker) card.getBehaviour();
+                    
+                    if(checker.isValidCard(disc.getCard())) {
+                        manager.chooseDiceDisc(discIndex + 1);
+                        if(card instanceof Onager || card instanceof Velites) {
+                            g.getDiceManager().rollBattleDice();
+                            manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
+                        }
+                        manager.complete();
+                    }
+                }
+            }
+        } else if(card instanceof Praetorianus) {
+            
+            IField field = g.getCurrentPlayer().getOpponent().getField();
+            IDisc disc = field.getDisc(discIndex);
+            
+            manager.chooseDiceDisc(discIndex + 1);
+            manager.complete();
+        
+        } else if(card instanceof Centurio) {
+            
+        }
+        
+        g.getNotifier().notifyListeners();
+    }
+
+    public void cardInput(Card card) {
+        
+    }
+
+    public void dieInput(int dieValue) {
+        
+        CardActivateManager manager = g.getCardActivateManager();
+        AbstractCard card = manager.getActivatedCard();
+        
+        if(card instanceof Consul) {
+
+            manager.chooseWhichDiceChanges(dieValue);
+            
+            Integer[] availableAmount = null;
+            
+            if(dieValue > 1 && dieValue < 6) {
+                availableAmount = new Integer[] {-1,1};
+            } else if(dieValue == 1) {
+                availableAmount = new Integer[] {1};  
+            } else if(dieValue == 6) {
+                availableAmount = new Integer[] {-1};
+            }
+            
+            int amount = view.showDieAmountChangeInput(availableAmount);
+            manager.chooseConsulChangeAmount(amount);
+            manager.complete();
+            
+            view.enableActionDiceAdapter(true);
+        }
+        
+        g.getNotifier().notifyListeners();
     }
 }

@@ -4,7 +4,7 @@ import model.ICardResources;
 import model.IGameIO;
 import framework.cards.Card;
 
-class Praetorianus extends AbstractCard {
+public class Praetorianus extends AbstractCard {
 
     private static final int COST = 4;
     private static final int DEFENCE = 4;
