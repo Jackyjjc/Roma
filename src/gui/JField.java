@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import model.IGameDisplayState;
 import controller.CardDropTargetListener;
 import controller.CustomizedTransferHandler;
+import controller.FieldClickListener;
 import framework.cards.Card;
 
 
@@ -60,6 +61,7 @@ public class JField extends JPanel implements IListener {
         
         for(int i = 0; i < cards.length; i++) {
             card = new JCard(cdm, i, Card.NOT_A_CARD);
+            card.addActionListener(new FieldClickListener(idm.getInputHandler()));
             card.setTransferHandler(new CustomizedTransferHandler());
             card.setDropTarget(new DropTarget(card, new CardDropTargetListener(card, idm.getInputHandler())));
             add(card);

@@ -3,10 +3,16 @@ package controller;
 import framework.cards.Card;
 
 public class GuiInputHandler {
-
+    
     ILayCardListener layCardListener;
     IUseDieInputListener useDieInputListener;
     IPassListener passListener;
+    
+    volatile boolean hasInput;
+    
+    Card cardInput;
+    int intInput;
+    boolean booleanInput;
     
     public GuiInputHandler() {
 
@@ -36,28 +42,76 @@ public class GuiInputHandler {
         }
     }
     
-    public void addCardInput(int playerId, Card card) {
-        
+    public void addCardInput(Card card) {
+        this.cardInput = card;
+        hasInput = true;
     }
 
-    public void addDiscInput(int playerId, int index) {
-        // TODO Auto-generated method stub
-        
+    public void addDiscInput(int index) {
+        this.intInput = index;
+        hasInput = true;
     }
 
+    public void addDieInput(int value) {
+        this.intInput = value;
+        hasInput = true;
+    }
+
+    public void addIntInput(int amount) {
+        this.intInput = amount;
+        hasInput = true;
+    }
+    
     public void addUseActionDieInput(int dieValue, int discInex) {
         if(useDieInputListener != null) {
             useDieInputListener.useDice(dieValue, discInex);
         }
     }
-
-    public void addDieInput(int index) {
-        // TODO Auto-generated method stub
+    
+    public Card getCardInput() {
         
+        hasInput = false;
+        
+        while(!hasInput) {
+            //wait
+        }
+        
+        return cardInput;
     }
-
-    public void addIntInput() {
-
+    
+    public int getDiscInput() {
+        
+        hasInput = false;
+        
+        while(!hasInput) {
+            //wait
+        }
+        
+        return intInput;
+    }
+    
+    
+    public int getDieInput() {
+        
+        hasInput = false;
+        
+        while(!hasInput) {
+            //wait
+        }
+        
+        return intInput;
+    }
+    
+    
+    public boolean getBooleanInput() {
+        
+        hasInput = false;
+        
+        while(!hasInput) {
+            //wait
+        }
+        
+        return booleanInput;
     }
     
 }

@@ -1,15 +1,51 @@
 package model.runner;
 
-import framework.cards.Card;
-import framework.interfaces.GameState;
-import framework.interfaces.activators.*;
-import model.*;
-import model.action.*;
+import model.IDisc;
+import model.IGameIO;
+import model.IPlayer;
+import model.IPlayerManager;
+import model.InputHandler;
+import model.TurnMover;
+import model.action.AddBattleDieInput;
+import model.action.AddBooleanInputAction;
+import model.action.AddCardInputAction;
+import model.action.AddDieInputAction;
+import model.action.AddDiscInputAction;
+import model.action.AddIntInputAction;
+import model.action.ChooseCardFromPileAction;
+import model.action.CompleteAction;
+import model.action.MimicAction;
 import model.card.AbstractCard;
 import model.card.Aesculapinum;
 import model.card.Haruspex;
 import model.card.TelephoneBox;
 import model.card.behaviour.ScaenicusBehaviour;
+import framework.cards.Card;
+import framework.interfaces.GameState;
+import framework.interfaces.activators.AesculapinumActivator;
+import framework.interfaces.activators.ArchitectusActivator;
+import framework.interfaces.activators.CardActivator;
+import framework.interfaces.activators.CenturioActivator;
+import framework.interfaces.activators.ConsiliariusActivator;
+import framework.interfaces.activators.ConsulActivator;
+import framework.interfaces.activators.EssedumActivator;
+import framework.interfaces.activators.ForumActivator;
+import framework.interfaces.activators.GladiatorActivator;
+import framework.interfaces.activators.HaruspexActivator;
+import framework.interfaces.activators.LegatActivator;
+import framework.interfaces.activators.LegionariusActivator;
+import framework.interfaces.activators.MachinaActivator;
+import framework.interfaces.activators.MercatorActivator;
+import framework.interfaces.activators.MercatusActivator;
+import framework.interfaces.activators.NeroActivator;
+import framework.interfaces.activators.OnagerActivator;
+import framework.interfaces.activators.PraetorianusActivator;
+import framework.interfaces.activators.ScaenicusActivator;
+import framework.interfaces.activators.SenatorActivator;
+import framework.interfaces.activators.SicariusActivator;
+import framework.interfaces.activators.TelephoneBoxActivator;
+import framework.interfaces.activators.TribunusPlebisActivator;
+import framework.interfaces.activators.VelitesActivator;
 
 public class CardActivateManager implements AesculapinumActivator, ArchitectusActivator,
 CenturioActivator, ConsiliariusActivator, ConsulActivator, EssedumActivator, ForumActivator, GladiatorActivator,
@@ -123,17 +159,11 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
         return this;
     }
     
-    public boolean activate(IDisc disc) {
+    public void activate(IDisc disc) {
         
-        boolean succeed = false;
+        this.activatedCard = disc.getCard();
+        disc.activateCard();
         
-        if(!disc.isEmpty()) {
-            this.activatedCard = disc.getCard();
-            disc.activateCard();
-            succeed = true;
-        }
-        
-        return succeed;
     }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
     public void layCard(Card name, int whichDiceDisc) {

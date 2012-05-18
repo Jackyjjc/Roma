@@ -55,7 +55,7 @@ public class JHand extends JPanel implements IListener {
             if (!display) {
                 displayCard.setCard();
             } else {
-                displayCard.addMouseListener(new MouseDraggingAdapter());
+                displayCard.addMouseListener(new MouseDraggingAdapter(idm.getInputHandler()));
                 displayCard.setTransferHandler(new CustomizedTransferHandler());
             }
             add(displayCard);

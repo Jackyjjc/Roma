@@ -1,6 +1,5 @@
 package controller;
 
-import gui.JCard;
 import gui.JDie;
 
 import java.awt.event.MouseAdapter;
@@ -33,15 +32,9 @@ public class MouseDraggingAdapter extends MouseAdapter {
         
         JComponent source = (JComponent) e.getSource();
         
-        if(source instanceof JCard) {
-            
-            JCard card = (JCard) source;
-            
-            handler.addCardInput(card.getCard());
-        } else if(source instanceof JDie) {
-            
+        if(source instanceof JDie) {
+            JDie die = (JDie) source;
+            handler.addDieInput(die.getValue());
         }
-        
     }
-    
 }

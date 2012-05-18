@@ -5,10 +5,18 @@ import gui.GraphicalView;
 
 import java.util.List;
 
+import model.BribeDisc;
+import model.Die;
 import model.Game;
+import model.ICardStorage;
 import model.IDisc;
 import model.IPlayer;
 import model.card.AbstractCard;
+import model.card.Aesculapinum;
+import model.card.CardType;
+import model.card.Haruspex;
+import model.card.ICardChecker;
+import model.runner.CardActivateManager;
 import controller.GuiInputHandler;
 import controller.IGameState;
 import controller.ILayCardListener;
@@ -56,7 +64,6 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                     g.getDiscardStorage().pushCard(c);
                 }
             }
-
             
             g.getDiceManager().getActionDie(dieValue).use();
             
@@ -68,13 +75,16 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         
         } else {
             
-            System.out.println("disc " + diceIndex + " actived");
-            
             IDisc disc = player.getField().getDisc(diceIndex - 1);
-            if(g.getCardActivateManager().activate(disc)) {
-                g.getCardActivateManager().complete();
-                g.getDiceManager().getActionDie(dieValue).use();
-                g.getNotifier().notifyListeners();
+            
+            if(!disc.isBlocked() && !disc.isEmpty()) {
+                
+                if(disc instanceof BribeDisc) {
+                    BribeDisc bribe = (BribeDisc)disc;
+                    bribe.giveBribe(dieValue);
+                }
+                
+                activateCard(dieValue, disc);
             }
         }
     }
@@ -95,10 +105,9 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
 
     private Card selectCard(List<Card> cards, int numCards) {
         
-        List<Card> deck = g.getDeck();
         Card[] deckList = new Card[numCards];
-        for(int i = 0 ; i < numCards && i < deck.size(); i++) {
-            deckList[i] = deck.get(i);
+        for(int i = 0 ; i < numCards && i < cards.size(); i++) {
+            deckList[i] = cards.get(i);
         }
         
         Card selected = null;
@@ -118,17 +127,93 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
     }
 
     public void pass() {
+        
+        boolean rollAgain = true;;
+        
         if(view.showPassDialog()) {
             g.advanceTurn();
             g.getDiceManager().rollActionDice();
             g.getNotifier().notifyListeners();
             
-            while(g.getDiceManager().isAllSame()) {
+            while(rollAgain && g.getDiceManager().isAllSame()) {
+                
                 if(view.reRollDialog()) {
                    g.getDiceManager().rollActionDice(); 
+                } else {
+                    rollAgain = false;
                 }
             }
             g.getNotifier().notifyListeners();
         }
+    }
+    
+    private void activateCard(int dieValue, IDisc disc) {
+        
+        Die die = g.getDiceManager().getActionDie(dieValue);
+        
+        g.getCardActivateManager().activate(disc);
+        
+        CardActivateManager manager = g.getCardActivateManager();
+        AbstractCard card = manager.getActivatedCard();
+        AbstractCard target = null;
+        
+        if(card instanceof Aesculapinum || card instanceof Haruspex) {
+
+            ICardStorage pileStorage;
+            List<Card> pile;
+            CardType type;
+            
+            if(card instanceof Aesculapinum) {
+                pileStorage = g.getDiscardStorage();
+                pile = g.getDiscard();
+                type = CardType.CHARACTER;
+            } else {
+                pileStorage = g.getDeckStorage();
+                pile = g.getDeck();
+                type = null;
+            }
+            
+            if (hasCardTypeOf(pileStorage, type) 
+                 && pile.size() != 0) {
+
+                Card c = selectCard(pile, pile.size());
+                target = pileStorage.getCard(c);
+
+                ICardChecker checker = (ICardChecker) card.getBehaviour();
+                while (!checker.isValidCard(target)) {
+                    c = selectCard(pile, pile.size());
+                    target = pileStorage.getCard(c);
+                }
+
+                die.use();
+
+                int index = 0;
+                for (int i = 0; i < pile.size(); i++) {
+                    if (pile.get(i) == c) {
+                        index = i;
+                    }
+                }
+
+                manager.chooseCardFromPile(index);
+                manager.complete();
+
+            }
+        }
+        
+        g.getNotifier().notifyListeners();
+    }
+    
+    private boolean hasCardTypeOf(ICardStorage list, CardType type) {
+        
+        boolean hasCard = false;
+        
+        for(int i = 0; i < list.size() && list.size() != 0; i++) {
+            if(type == null || list.getCard(i).getType() == type) {
+                hasCard = true;
+            }
+        }
+        
+        return hasCard;
+        
     }
 }
