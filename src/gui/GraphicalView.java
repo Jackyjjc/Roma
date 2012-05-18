@@ -2,19 +2,16 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import model.IGameDisplayState;
 import model.IGameIO;
-import model.InputHandler;
 import model.Notifier;
-import controller.ActionDieClickListener;
-import controller.DiscClickListener;
-import controller.FieldClickListener;
-import controller.HandClickListener;
-import controller.SwapConfirmListener;
+import controller.GuiInputHandler;
+import framework.cards.Card;
 
 public class GraphicalView extends JFrame implements IListener, IDisplayManager {
     
@@ -31,22 +28,18 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
     private DiscDisplayManager ddm;
     private ResourceManager rm;
     private JBackground background;
-    private FieldClickListener fListener;
-    private HandClickListener hListener;
-    private DiscClickListener dListener;
-    private ActionDieClickListener adListener;
     private Notifier notifier;
-    private InputHandler handler;
-    private SwapConfirmListener confimrListener;
+    private GuiInputHandler handler;
 
-    public GraphicalView(IGameIO gameIO) {
+    public GraphicalView(IGameIO gameIO, GuiInputHandler handler) {
         
         super(NAME);
+        
+        this.handler = handler;
         
         initElements(gameIO);
         initUI();
         
-        //setExtendedState(JFrame.MAXIMIZED_BOTH);
     }
     
     private void initUI() {
@@ -90,7 +83,6 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
     
     private void initElements(IGameIO gameIO) {
         
-        this.handler = gameIO.getInputHandler();
         this.notifier = gameIO.getNotifier();
         this.scalingFactor = calculateScalingFactor();
         this.rm = new ResourceManager(scalingFactor);
@@ -98,11 +90,6 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
         this.actionDiceManager = new DieDisplayManager(rm, DieDisplayManager.Type.ACTION);
         this.battleDieManager = new DieDisplayManager(rm, DieDisplayManager.Type.BATTLE);
         this.ddm = new DiscDisplayManager(rm);
-        this.fListener = new FieldClickListener(handler);
-        this.hListener = new HandClickListener(handler);
-        this.dListener = new DiscClickListener(handler);
-        this.adListener = new ActionDieClickListener(handler);
-        this.confimrListener = new SwapConfirmListener(handler);
     }
 
     public int scale(int original) {
@@ -130,32 +117,77 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
         return battleDieManager;
     }
 
-    public ActionDieClickListener getActionDieClickListener() {
-        return adListener;
-    }
-
-    public DiscClickListener getDiscClickListener() {
-        return dListener;
-    }
-
-    public FieldClickListener getFieldClickListener() {
-        return fListener;
-    }
-
-    public HandClickListener getHandClickListener() {
-        return hListener;
-    }
-
-    public InputHandler getInputHandler() {
+    public GuiInputHandler getInputHandler() {
         return handler;
-    }
-    
-    public SwapConfirmListener getConfirmListener() {
-        return confimrListener;
     }
 
     public Notifier getNotifier() {
         return notifier;
     }
+
+    public void setSwapConfirmListener(ActionListener l) {
+        background.setSwapConfirmListener(l);
+    }
     
+    public void showSwapDialog(int player) {
+        JOptionPane.showMessageDialog(this,
+                "Player " + player + " please choose two cards to swap and place them at the bottom right corner");
+    }
+    
+    public void showLayCardDialog() {
+        JOptionPane.showMessageDialog(this,
+                "Please Lay Down All the cards (for free :P)");
+    }
+    
+    public void showGameStarts() {
+        JOptionPane.showMessageDialog(this,
+                "Game Starts! Have Fun!!");
+    }
+    
+    public Card showCards(Card[] cards) {
+        
+        Card s = (Card) JOptionPane.showInputDialog(this,
+                                    "Choose one of these cards",
+                                    "Choose Card",
+                                    JOptionPane.PLAIN_MESSAGE,
+                                    null,
+                                    cards,
+                                    cards[0]);
+
+        return s;
+    }
+    
+    public boolean showPassDialog() {
+        boolean isPass = false;
+        
+        
+        int n = JOptionPane.showConfirmDialog(
+                this,
+                "You sure you want to pass the turn?",
+                "Pass",
+                JOptionPane.YES_NO_OPTION);
+        
+        if(n == JOptionPane.YES_OPTION) {
+            isPass = true;
+        }
+        
+        return isPass;
+    }
+    
+    public boolean reRollDialog() {
+        boolean isPass = false;
+        
+        
+        int n = JOptionPane.showConfirmDialog(
+                this,
+                "The three dice are the same, do you want to roll again?",
+                "Roll Dice",
+                JOptionPane.YES_NO_OPTION);
+        
+        if(n == JOptionPane.YES_OPTION) {
+            isPass = true;
+        }
+        
+        return isPass;
+    }
 }

@@ -23,9 +23,9 @@ public class DieDropTargetListener implements DropTargetListener {
     private static final Cursor notDroppableCursor = Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR);
     
     private JDisc disc;
-    private InputHandler handler;
+    private GuiInputHandler handler;
     
-    public DieDropTargetListener(JDisc disc, InputHandler handler) {
+    public DieDropTargetListener(JDisc disc, GuiInputHandler handler) {
         this.disc = disc;
         this.handler = handler;
     }
@@ -71,7 +71,7 @@ public class DieDropTargetListener implements DropTargetListener {
             DropTarget target = (DropTarget) event.getSource();
             JDisc disc = (JDisc) target.getComponent();
             
-            handler.addUseActionDieInput(die.getIndex(), disc.getIndex());
+            handler.addUseActionDieInput(die.getValue(), disc.getIndex());
         }
     }
     

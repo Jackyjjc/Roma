@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.ILayCardInputListener;
+import controller.IUseDieInputListener;
+
 import model.card.AbstractCard;
 import framework.Rules;
 import framework.cards.Card;

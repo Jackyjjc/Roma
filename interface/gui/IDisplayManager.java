@@ -1,12 +1,7 @@
 package gui;
 
-import model.InputHandler;
 import model.Notifier;
-import controller.ActionDieClickListener;
-import controller.DiscClickListener;
-import controller.FieldClickListener;
-import controller.HandClickListener;
-import controller.SwapConfirmListener;
+import controller.GuiInputHandler;
 
 public interface IDisplayManager {
 
@@ -22,17 +17,7 @@ public interface IDisplayManager {
     
     public int scale(int original);
     
-    public ActionDieClickListener getActionDieClickListener();
-    
-    public DiscClickListener getDiscClickListener();
-    
-    public FieldClickListener getFieldClickListener();
-    
-    public HandClickListener getHandClickListener();
-    
-    public InputHandler getInputHandler();
-    
-    public SwapConfirmListener getConfirmListener();
+    public GuiInputHandler getInputHandler();
     
     public Notifier getNotifier();
 }

@@ -25,7 +25,6 @@ public class ActionDicePanel extends JPanel implements IListener {
         
         for(int i = 0; i < NUM_DICES; i++) {
             dice[i] = new JDie(i,idm.getActionDiceDisplayManager());
-            //dice[i].addActionListener(idm.getActionDieClickListener());
             dice[i].addMouseListener(new MouseDraggingAdapter());
             dice[i].setTransferHandler(new CustomizedTransferHandler());
             add(dice[i]);
@@ -36,8 +35,13 @@ public class ActionDicePanel extends JPanel implements IListener {
         
         int[] actionDice = state.getActionDice();
         
-        for(int i = 0; i < NUM_DICES; i++) {
+        for(int i = 0; i < actionDice.length; i++) {
             dice[i].setValue(actionDice[i]);
+            dice[i].setVisible(true);
+        }
+        
+        for(int i = actionDice.length; i < NUM_DICES; i++) {
+            dice[i].setVisible(false);
         }
         
         revalidate();

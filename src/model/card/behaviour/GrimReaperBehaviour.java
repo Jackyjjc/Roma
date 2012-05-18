@@ -13,14 +13,13 @@ public class GrimReaperBehaviour extends Behaviour implements IDiscardListener {
 	
     public GrimReaperBehaviour(AbstractCard host) {
         super(host);
-        this.discard = getHost().getCardResources().getDiscardStorage();
+
     }
 
     @Override
     public boolean lay(IDisc disc) {
-
+        this.discard = getHost().getCardResources().getDiscardStorage();
         discard.addDiscardListener(this);
-        
         return super.lay(disc);
         
     }

@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
+import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
@@ -40,4 +41,9 @@ public class JBackground extends JPanel implements IListener {
         gameArea.updateView(state);
         rightBar.updateView(state);
     }
+
+    public void setSwapConfirmListener(ActionListener l) {
+        rightBar.setSwapConfirmListener(l);
+    }
+
 }

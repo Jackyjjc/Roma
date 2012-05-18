@@ -21,6 +21,7 @@ public class Die {
     public int roll() {
         
         int roll = (int) (Math.random() * MAX_VALUE + 1);
+        setValue(roll);
         reset();
         
         return roll;

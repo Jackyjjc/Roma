@@ -123,9 +123,17 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
         return this;
     }
     
-    public void activate(IDisc disc) {
-        this.activatedCard = disc.getCard();
-        disc.activateCard();
+    public boolean activate(IDisc disc) {
+        
+        boolean succeed = false;
+        
+        if(!disc.isEmpty()) {
+            this.activatedCard = disc.getCard();
+            disc.activateCard();
+            succeed = true;
+        }
+        
+        return succeed;
     }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
     public void layCard(Card name, int whichDiceDisc) {

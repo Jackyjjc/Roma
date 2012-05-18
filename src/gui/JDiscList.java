@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import model.IGameDisplayState;
 import controller.CustomizedTransferHandler;
 import controller.DieDropTargetListener;
-import controller.DiscClickListener;
 
 public class JDiscList extends JPanel implements IListener {
     
@@ -24,11 +23,11 @@ public class JDiscList extends JPanel implements IListener {
         this.ddm = idm.getDiscDisplayManager();
         this.setLayout(new FlowLayout(FlowLayout.CENTER,idm.scale(40), 0));
         
-        initUI(idm.getDiscClickListener());
+        initUI();
         setOpaque(false);
     }
 
-    private void initUI(DiscClickListener listener) {
+    private void initUI() {
         
         discs = new JDisc[NUM_DISCS];
         JDisc disc;

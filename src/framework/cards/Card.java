@@ -36,7 +36,7 @@ public enum Card {
    VELITES ("Velites"),
    GRIMREAPER ("Grimreaper"),
    KAT ("Kat"),
-   TELEPHONEBOX ("TelephoneBox"),
+   TELEPHONEBOX ("Telephonebox"),
    NOT_A_CARD ("Not A Card");
 
    // Member to hold the name as a string.
@@ -48,6 +48,7 @@ public enum Card {
    }
 
    // Overwrites the toString function.
+   @Override
    public String toString () {
        return string;
    }

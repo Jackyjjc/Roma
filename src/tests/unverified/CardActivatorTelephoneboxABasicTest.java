@@ -1,14 +1,16 @@
 package tests.unverified;
 
-import framework.Rules;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.LinkedList;
+
 import framework.Test;
+import framework.Rules;
 import framework.cards.Card;
 import framework.interfaces.GameState;
 import framework.interfaces.MoveMaker;
-import framework.interfaces.activators.TelephoneBoxActivator;
-
-import java.util.LinkedList;
-import java.util.List;
+import framework.interfaces.activators.*;
 
 /**
  *

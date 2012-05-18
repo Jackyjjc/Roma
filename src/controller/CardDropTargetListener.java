@@ -15,6 +15,7 @@ import java.awt.dnd.DropTargetListener;
 import java.io.IOException;
 
 import model.InputHandler;
+import controller.gameState.LayCard;
 
 public class CardDropTargetListener implements DropTargetListener {
 
@@ -22,9 +23,10 @@ public class CardDropTargetListener implements DropTargetListener {
     private static final Cursor notDroppableCursor = Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR);
     
     private JCard fieldCard;
-    private InputHandler handler;
+    private GuiInputHandler handler;
+    private LayCard layCard;
     
-    public CardDropTargetListener(JCard fieldCard, InputHandler handler) {
+    public CardDropTargetListener(JCard fieldCard, GuiInputHandler handler) {
         this.fieldCard = fieldCard;
         this.handler = handler;
     }
@@ -72,14 +74,19 @@ public class CardDropTargetListener implements DropTargetListener {
             
             if(to.getIndex() >= 10) {
                 to.setCard(from.getCard());
+                from.setVisible(false);
             } else {
-                handler.placeCardInput(from.getIndex(), to.getIndex());
+                handler.layCard(from.getIndex(), to.getIndex());
             }
         }
     }
     
     public void dropActionChanged(DropTargetDragEvent arg0) {
         //nothing to do here atm
+    }
+    
+    public void setLayCardHandler(LayCard layCard) {
+        this.layCard = layCard;
     }
 
 }

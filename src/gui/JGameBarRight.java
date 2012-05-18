@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -69,6 +70,10 @@ public class JGameBarRight extends JPanel implements ISwapListener {
         rigidArea = Box.createRigidArea(new Dimension(0,idm.scale(225)));
         add(rigidArea);
         add(statusBar);
+    }
+
+    public void setSwapConfirmListener(ActionListener l) {
+        swapArea.setSwapCardConfirmListener(l);
     }
     
 }

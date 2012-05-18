@@ -73,10 +73,8 @@ public class JStatusBar extends JPanel implements IListener, MouseListener {
         
     }
 
-    @Override
     public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
+        idm.getInputHandler().pass();
     }
 
     @Override

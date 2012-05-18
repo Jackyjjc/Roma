@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 
 import model.IGameDisplayState;
 import controller.CustomizedTransferHandler;
-import controller.HandClickListener;
 import controller.MouseDraggingAdapter;
 import framework.cards.Card;
 
@@ -15,7 +14,6 @@ public class JHand extends JPanel implements IListener {
     private final boolean FACE_UP = true;
     private final boolean FACE_DOWN = false;
     
-    private final HandClickListener listener;
     private final CardDisplayManager cdm;
     private IDisplayManager idm;
     private int panelId;
@@ -26,7 +24,6 @@ public class JHand extends JPanel implements IListener {
         this.idm = idm;
         this.cdm = idm.getCardDisplayManager();
         this.panelId = panelID;
-        this.listener = idm.getHandClickListener();
         
         setOpaque(false);
     }

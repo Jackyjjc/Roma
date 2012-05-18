@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.dnd.DropTarget;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ public class SwapArea extends JPanel {
     private IDisplayManager idm;
     
     private InnerPanel innerPanel;
+    private JButton confirm;
     
     public SwapArea(IDisplayManager idm) {
         
@@ -26,10 +28,30 @@ public class SwapArea extends JPanel {
         this.innerPanel = new InnerPanel(idm);
         add(innerPanel);
         
-        JButton confirm = new JButton("Confirm");
-        confirm.addActionListener(idm.getConfirmListener());
+        confirm = new JButton("Confirm");
+        add(confirm);
+    }
+    
+    public JCard[] getCards() {
+        return innerPanel.getCards();
+    }
+    
+    public void clear() {
+        
+        JButton confirm = (JButton) getComponent(1);
+        
+        remove(innerPanel);
+        remove(confirm);
+        
+        this.innerPanel = new InnerPanel(idm);
+        add(innerPanel);
         add(confirm);
         
+        revalidate();
+    }
+    
+    public void setSwapCardConfirmListener(ActionListener l) {
+        confirm.addActionListener(l);
     }
     
     private class InnerPanel extends JPanel {
@@ -67,23 +89,5 @@ public class SwapArea extends JPanel {
             return cards;
         }
         
-    }
-    
-    public JCard[] getCards() {
-        return innerPanel.getCards();
-    }
-    
-    public void clear() {
-        
-        JButton confirm = (JButton) getComponent(1);
-        
-        remove(innerPanel);
-        remove(confirm);
-        
-        this.innerPanel = new InnerPanel(idm);
-        add(innerPanel);
-        add(confirm);
-        
-        revalidate();
     }
 }
