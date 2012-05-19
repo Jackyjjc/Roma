@@ -45,11 +45,6 @@ public class TurnMover implements ITurnMover {
             l.endTurn();
         }
     }
-    
-    public void gameOver() {
-        g.setFinish(true);
-        System.out.println("Game Over");
-    }
 
     public Turn getTurn(int numTurnsAgo) {
         
@@ -70,7 +65,8 @@ public class TurnMover implements ITurnMover {
     public void replay (int numTurnsAgo) {
         
         List<Turn> turnsToReplay =  new ArrayList<Turn>();
-        
+
+        int currentPlayer = g.getCurrentPlayer().getId();
         int currentTurn = turns.size() - 1;
         numTurnsAgo = turns.size() - 1 - numTurnsAgo;
 
@@ -83,9 +79,20 @@ public class TurnMover implements ITurnMover {
         turns.add(restoredTurn);
         this.currentTurn = restoredTurn;
         
-        for (Turn turn : turnsToReplay) {
+        for (int i = 0 ; !g.isGameCompleted() && i < turnsToReplay.size(); i++) {
+            Turn turn = turnsToReplay.get(i);
             turn.run(g);
         }
+
+        if (g.isGameCompleted()) {
+            g.timeParadox(currentPlayer);
+        }
+
+    }
+
+    @Override
+    public void gameOver() {
+        g.setFinish(true);
     }
 
     public Turn getCurrentTurn() {

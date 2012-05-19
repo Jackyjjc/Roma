@@ -75,8 +75,10 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
     
     public void complete() {
         turnMover.getCurrentTurn().addAction(new CompleteAction(g, this, handler));
-        activatedCard.complete();
-        activatedCard = null;
+        if(activatedCard != null) {
+            activatedCard.complete();
+            activatedCard = null;  
+        }
     }
 
     public void giveAttackDieRoll(int roll) {

@@ -48,7 +48,6 @@ public enum Card {
    }
 
    // Overwrites the toString function.
-   @Override
    public String toString () {
        return string;
    }

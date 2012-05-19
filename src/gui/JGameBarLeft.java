@@ -1,10 +1,14 @@
 package gui;
 
+import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import controller.StopButtonClickListener;
 
 import model.IGameDisplayState;
 
@@ -15,6 +19,9 @@ public class JGameBarLeft extends JPanel implements IListener {
     private JStatusBar statusBar;
     private JPiles piles;
     private ActionDicePanel dicePanel;
+    private JButton stopButton;
+    private Component rigidAreaWithoutStop;
+    private Component rigidAreaWithStop;
     
     public JGameBarLeft(IDisplayManager idm) {
         
@@ -25,9 +32,6 @@ public class JGameBarLeft extends JPanel implements IListener {
     }
 
     private void createElements() {
-        
-
-        
         statusBar = new JStatusBar(idm,1);
         dicePanel = new ActionDicePanel(idm);
         piles = new JPiles(idm);
@@ -41,7 +45,10 @@ public class JGameBarLeft extends JPanel implements IListener {
         add(Box.createRigidArea(new Dimension(0,idm.scale(90))));
         add(dicePanel);
         add(piles);
-        add(Box.createRigidArea(new Dimension(0,idm.scale(135))));
+        rigidAreaWithoutStop = Box.createRigidArea(new Dimension(0,idm.scale(135)));
+        rigidAreaWithStop = Box.createRigidArea(new Dimension(0,idm.scale(115)));
+        stopButton = new JButton("Stop Effect");
+        stopButton.addActionListener(new StopButtonClickListener(idm.getInputHandler()));
     }
     
     public void updateView(IGameDisplayState state) {
@@ -54,4 +61,17 @@ public class JGameBarLeft extends JPanel implements IListener {
         dicePanel.enableAdapters(enable);
     }
 
+    public void enableStopButton(boolean enable) {
+        if(enable) {
+            remove(rigidAreaWithoutStop);
+            add(rigidAreaWithStop);
+            add(stopButton);
+        } else {
+            remove(stopButton);
+            remove(rigidAreaWithStop);
+            add(rigidAreaWithoutStop);
+        }
+        
+        revalidate();
+    }
 }

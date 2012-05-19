@@ -1,14 +1,15 @@
 package model;
 
-import framework.cards.Card;
-import framework.interfaces.GameState;
+import java.util.Collection;
+import java.util.List;
+
 import model.card.AbstractCard;
 import model.card.CardFactory;
 import model.cardcollection.CardCollectionFactory;
 import model.runner.CardActivateManager;
-
-import java.util.Collection;
-import java.util.List;
+import framework.Rules;
+import framework.cards.Card;
+import framework.interfaces.GameState;
 
 public class Game implements GameState, IGameDisplayState, ICardResources, 
                              IGameIO, IPlayerManager{
@@ -54,6 +55,8 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
 		this.discard = CardCollectionFactory.create(!DECK, cardFactory);
 		
 		createPlayers(numPlayers);
+		
+		inputHandler.setList(getCurrentPlayer().getHand());
 		
 		isFinished = false;
 		turnMover.startGame();
@@ -288,6 +291,24 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
 
     public int getBattleDiceValue() {
         return diceManager.getBattleDie().getValue();
+    }
+    
+    public void timeParadox (int player) {
+
+        Card[] blankField = new Card[] {
+                Card.NOT_A_CARD,
+                Card.NOT_A_CARD,
+                Card.NOT_A_CARD,
+                Card.NOT_A_CARD,
+                Card.NOT_A_CARD,
+                Card.NOT_A_CARD,
+                Card.NOT_A_CARD
+        };
+
+        for (int i = 0; i < Rules.NUM_PLAYERS; i++) {
+            this.setPlayerCardsOnDiscs(i,blankField);
+        }
+        this.setPlayerVictoryPoints(player, 0);
     }
     
 }

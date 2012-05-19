@@ -1,12 +1,10 @@
 package tests.verified;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.LinkedList;
 
-import framework.Test;
 import framework.Rules;
+import framework.Test;
 import framework.cards.Card;
 import framework.interfaces.GameState;
 import framework.interfaces.MoveMaker;
@@ -17,6 +15,7 @@ import framework.interfaces.activators.ForumActivator;
  * Test the basic functionality of Templum
  *
  * @author Karla Burnett
+ * @author Junjie CHEN
  *
  */
 
@@ -51,7 +50,7 @@ public class CardActivatorTemplumBasicTest extends Test {
       gameState.setPlayerVictoryPoints(0, 15);
       gameState.setPlayerVictoryPoints(1, 15);
       
-      List<Card> hand = new ArrayList();
+      List<Card> hand = new ArrayList<Card>();
       hand.add(Card.FORUM);
       hand.add(Card.FORUM);
       hand.add(Card.FORUM);
@@ -93,7 +92,7 @@ public class CardActivatorTemplumBasicTest extends Test {
       // ---- TEMPLUM TO THE LEFT ----
       
       // Set the action dice for this turn
-      gameState.setActionDice(new int[] {2, 6, 1});
+      gameState.setActionDice(new int[] {2, 5, 1});
       
       // Lay a Templum over the existing Forum and lay a Forum on dice disc 2
       move.placeCard(Card.TEMPLUM, Rules.DICE_DISC_1);
@@ -110,12 +109,12 @@ public class CardActivatorTemplumBasicTest extends Test {
       activator = (ForumActivator) move.chooseCardToActivate(2);
       activator.chooseActivateTemplum(true);
       activator.chooseActivateTemplum(1);
-      activator.chooseActionDice(6);
+      activator.chooseActionDice(5);
       activator.complete();
       
-      // Check that the correct number of VPs were gained (6 for the Forum,
+      // Check that the correct number of VPs were gained (5 for the Forum,
       // 1 for the Templum)
-      assert(gameState.getPlayerVictoryPoints(0) == 14 + 6 + 1);
+      assert(gameState.getPlayerVictoryPoints(0) == 14 + 5 + 1);
       assert(gameState.getPlayerVictoryPoints(1) == 15);
       
       // Start a new turn for this player (checking that they have lost the 
@@ -124,7 +123,7 @@ public class CardActivatorTemplumBasicTest extends Test {
       // on disc 2
       move.endTurn();
       move.endTurn();
-      assert(gameState.getPlayerVictoryPoints(0) == 21 - 5);
+      assert(gameState.getPlayerVictoryPoints(0) == 20 - 5);
       assert(gameState.getPlayerVictoryPoints(1) == 15);
       
       // ---- TEMPLUMS ON BOTH SIDES -----
@@ -138,7 +137,7 @@ public class CardActivatorTemplumBasicTest extends Test {
       // Check that the correct number of sestertii were lost
       assert(gameState.getPlayerSestertii(0) == 100 - 5 - 5 - 2 - 2);
       assert(gameState.getPlayerSestertii(1) == 100);
-      assert(gameState.getPlayerVictoryPoints(0) == 21 - 5);
+      assert(gameState.getPlayerVictoryPoints(0) == 20 - 5);
       assert(gameState.getPlayerVictoryPoints(1) == 15);
       assert(gameState.getPlayerHand(0).size() == 1);
       
@@ -151,7 +150,7 @@ public class CardActivatorTemplumBasicTest extends Test {
       
       // Check that the correct number of VPs were gained (1 for the Forum,
       // 3 for the Templum)
-      assert(gameState.getPlayerVictoryPoints(0) == 16 + 1 + 3);
+      assert(gameState.getPlayerVictoryPoints(0) == 15 + 1 + 3);
       assert(gameState.getPlayerVictoryPoints(1) == 15);
       
       // Start a new turn for this player (checking that they have lost the 
@@ -159,13 +158,13 @@ public class CardActivatorTemplumBasicTest extends Test {
       // This time only 4 VP are lost by player 1
       move.endTurn();
       move.endTurn();
-      assert(gameState.getPlayerVictoryPoints(0) == 20 - 4);
+      assert(gameState.getPlayerVictoryPoints(0) == 19 - 4);
       assert(gameState.getPlayerVictoryPoints(1) == 15);
       
       // ---- TEMPLUM ON THE RIGHT ----
       
       // Set the action dice for this turn
-      gameState.setActionDice(new int[] {2, 4, 1});
+      gameState.setActionDice(new int[] {2, 4, 2});
       
       // Lay a Forum over the Templum on dice disc 1
       move.placeCard(Card.FORUM, Rules.DICE_DISC_1);
@@ -173,20 +172,20 @@ public class CardActivatorTemplumBasicTest extends Test {
       // Check that the correct number of sestertii were lost
       assert(gameState.getPlayerSestertii(0) == 100 - 5 - 5 - 2 - 2 - 5);
       assert(gameState.getPlayerSestertii(1) == 100);
-      assert(gameState.getPlayerVictoryPoints(0) == 20 - 4);
+      assert(gameState.getPlayerVictoryPoints(0) == 19 - 4);
       assert(gameState.getPlayerVictoryPoints(1) == 15);
       assert(gameState.getPlayerHand(0).size() == 0);
       
       // Activate the forum with the 4
       activator = (ForumActivator) move.chooseCardToActivate(2);
       activator.chooseActivateTemplum(true);
-      activator.chooseActivateTemplum(1);
+      activator.chooseActivateTemplum(2);
       activator.chooseActionDice(4);
       activator.complete();
       
       // Check that the correct number of VPs were gained (4 for the Forum,
-      // 1 for the Templum)
-      assert(gameState.getPlayerVictoryPoints(0) == 16 + 4 + 1);
+      // 2 for the Templum)
+      assert(gameState.getPlayerVictoryPoints(0) == 15 + 4 + 2);
       assert(gameState.getPlayerVictoryPoints(1) == 15);
     }
 }

@@ -16,11 +16,17 @@ public class KatBehaviour extends Behaviour {
     @Override
     public void disCard() {
         if (getHost().getOwner() != getHost().getCardResources().getCurrentPlayer()
-        		&& livesLeft > 0) {
-        	livesLeft--;
+                && livesLeft > 0) {
+            livesLeft--;
+
+            if (livesLeft == 0) {
+                super.disCard();
+                reset();
+            }
+
         } else {
-        	super.disCard();
-        	reset();
+            super.disCard();
+            reset();
         }
     }
     

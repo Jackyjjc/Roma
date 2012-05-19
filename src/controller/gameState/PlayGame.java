@@ -14,8 +14,10 @@ import model.IField;
 import model.IPlayer;
 import model.card.AbstractCard;
 import model.card.Aesculapinum;
+import model.card.Architectus;
 import model.card.CardType;
 import model.card.Centurio;
+import model.card.Consiliarius;
 import model.card.Consul;
 import model.card.Gladiator;
 import model.card.Haruspex;
@@ -27,6 +29,7 @@ import model.card.Mercatus;
 import model.card.Nero;
 import model.card.Onager;
 import model.card.Praetorianus;
+import model.card.Senator;
 import model.card.Sicarius;
 import model.card.TribunusPlebis;
 import model.card.Velites;
@@ -38,10 +41,12 @@ import controller.IGuiDieInputListener;
 import controller.IGuiDiscInputListener;
 import controller.ILayCardListener;
 import controller.IPassListener;
+import controller.IStopEffectListener;
 import controller.IUseDieInputListener;
 
 public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameState, IPassListener, 
-                                 IGuiDieInputListener, IGuiCardInputListener, IGuiDiscInputListener {
+                                 IGuiDieInputListener, IGuiCardInputListener, IGuiDiscInputListener, 
+                                 IStopEffectListener {
 
     private Game g;
     private GraphicalView view;
@@ -62,6 +67,7 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         handler.setCardInputListener(this);
         handler.setDieInputListener(this);
         handler.setDiscInputListener(this);
+        handler.setStopEffectListener(this);
         
         view.showGameStarts();
         g.setPlayerVictoryPoints(1, 10);
@@ -129,6 +135,16 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         }
 
         g.getNotifier().notifyListeners();
+        
+        AbstractCard activatedCard = g.getCardActivateManager().getActivatedCard();
+        ICardStorage hand = g.getCurrentPlayer().getHand();
+        if(activatedCard != null && activatedCard instanceof Architectus || activatedCard instanceof Senator) {
+            if((activatedCard instanceof Architectus && hand.getCardsOf(CardType.BUILDING).size() == 0) 
+             || activatedCard instanceof Senator && hand.getCardsOf(CardType.CHARACTER).size() == 0) {
+                view.enableStopButton(false);
+                g.getCardActivateManager().complete();
+            }
+        }
     }
 
     private Card selectCard(List<Card> cards, int numCards) {
@@ -233,11 +249,28 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             view.showTargetInputDialog();
             die.use();
         
-        } else if(card instanceof Legionarius) {
+        } else if(card instanceof Legionarius || card instanceof Centurio) {
             die.use();
             g.getDiceManager().rollBattleDice();
             manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
-            manager.complete();
+            
+            boolean addDie = false;
+            g.getNotifier().notifyListeners();
+            
+            if(card instanceof Centurio) {
+                
+                if(g.getActionDice().length != 0) {
+                    addDie = view.centurioAddDieDialog();
+                    manager.chooseCenturioAddActionDie(addDie);
+                    if(addDie) {
+                        view.enableActionDiceAdapter(false);
+                    }
+                }
+            }
+            
+            if(!addDie || !(card instanceof Centurio)) {
+                manager.complete();
+            }
             
         } else if(card instanceof Legat || card instanceof TribunusPlebis|| card instanceof Mercatus) {
             die.use();
@@ -267,9 +300,10 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                 view.showDieInputDialog();
                 view.enableActionDiceAdapter(false);
             }
-        } else if(card instanceof Centurio) {
-            view.showTargetInputDialog();
+        } else if(card instanceof Architectus || card instanceof Senator) {
             die.use();
+            view.layCardForFreeDialog();
+            view.enableStopButton(true);
         }
         
         g.getNotifier().notifyListeners();
@@ -312,19 +346,15 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                             manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
                         }
                         manager.complete();
+                    } else {
+                        view.showTargetInputDialog();
                     }
                 }
             }
+            
         } else if(card instanceof Praetorianus) {
-            
-            IField field = g.getCurrentPlayer().getOpponent().getField();
-            IDisc disc = field.getDisc(discIndex);
-            
             manager.chooseDiceDisc(discIndex + 1);
             manager.complete();
-        
-        } else if(card instanceof Centurio) {
-            
         }
         
         g.getNotifier().notifyListeners();
@@ -358,6 +388,26 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             manager.complete();
             
             view.enableActionDiceAdapter(true);
+        
+        } else if(card instanceof Centurio) {
+
+            g.getDiceManager().getActionDie(dieValue).use();
+            manager.chooseActionDice(dieValue);
+            manager.complete();
+            view.enableActionDiceAdapter(true);
+        }
+        
+        g.getNotifier().notifyListeners();
+    }
+
+    public void stopEffect() {
+        
+        CardActivateManager manager = g.getCardActivateManager();
+        AbstractCard card = manager.getActivatedCard();
+        
+        view.enableStopButton(false);
+        if(card instanceof Architectus || card instanceof Senator) {
+            manager.complete();
         }
         
         g.getNotifier().notifyListeners();

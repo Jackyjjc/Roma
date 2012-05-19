@@ -31,7 +31,6 @@ public class InputHandler {
     
     public InputHandler(Game g) {
         this.g = g;
-        
         cardInputQueue = new ArrayList<AbstractCard>();
         discInputQueue = new ArrayList<IDisc>();
         dieInputQueue = new ArrayList<Die>();

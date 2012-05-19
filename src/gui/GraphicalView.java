@@ -266,4 +266,31 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
         
         return result;
     }
+    
+    public boolean centurioAddDieDialog() {
+        
+        boolean attackAgain = false;
+        
+        int n = JOptionPane.showConfirmDialog(
+                this,
+                "Do you want to attack again?",
+                "Centurio",
+                JOptionPane.YES_NO_OPTION);
+        
+        if(n == JOptionPane.YES_OPTION) {
+            attackAgain = true;
+        }
+        
+        return attackAgain;
+    }
+    
+    public void enableStopButton(boolean enable) {
+        background.enableStopButton(enable);
+    }
+    
+    public void layCardForFreeDialog() {
+        JOptionPane.showMessageDialog(this,
+                "Now you can lay card for free. \n" +
+                "Press the bottom right corner button to stop the effect");
+    }
 }

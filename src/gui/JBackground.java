@@ -50,4 +50,8 @@ public class JBackground extends JPanel implements IListener {
         leftBar.enableActionDiceAdapter(enable);
     }
 
+    public void enableStopButton(boolean enable) {
+        leftBar.enableStopButton(enable);
+    }
+
 }

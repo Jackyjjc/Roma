@@ -1,22 +1,11 @@
 package model.runner;
 
-import model.BribeDisc;
-import model.DiceManager;
-import model.Game;
-import model.ICardStorage;
-import model.IDisc;
-import model.IPlayer;
-import model.IResourceStorage;
-import model.action.ActivateBribeDiscAction;
-import model.action.ActivateCardAction;
-import model.action.DrawCardsAction;
-import model.action.EndTurnAction;
-import model.action.GetMoneyAction;
-import model.action.PlaceCardAction;
-import model.card.AbstractCard;
 import framework.cards.Card;
 import framework.interfaces.MoveMaker;
 import framework.interfaces.activators.CardActivator;
+import model.*;
+import model.action.*;
+import model.card.AbstractCard;
 
 /**
  * 
@@ -113,7 +102,6 @@ public class GameController implements MoveMaker {
             activator = activateManager; 
             activateManager.activate(bribeDisc);
             g.getDiceManager().getActionDie(diceToUse).use();
-            
             g.getTurnMover().getCurrentTurn().addAction(new ActivateBribeDiscAction(g, this, diceToUse));
         }
         

@@ -27,6 +27,8 @@ public class SenatorBehaviour extends Behaviour implements ICardChecker {
             c.setCost(c.getDefaultCost());
         }
 
+        charCards.clear();
+        
     }
 
     public void initialise() {
@@ -43,9 +45,14 @@ public class SenatorBehaviour extends Behaviour implements ICardChecker {
     private void layCards() {
         
         InputHandler handler = getHost().getGameIO().getInputHandler();
-        
+      
         AbstractCard card = handler.getCardInput();
+        
+        IPlayer owner = getHost().getOwner();
+       
         while(card != null) {
+            
+            owner.getHand().removeCard(card);
             
             IDisc disc = handler.getDiscInput();        
             card.lay(disc);

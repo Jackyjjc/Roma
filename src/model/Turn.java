@@ -98,21 +98,23 @@ public class Turn {
 
 	}
 
-	public void run (Game g) {
+    public void run (Game g) {
 
-	    g.setActionDice(actionDie);
-	    
-	    for(Action action : moves) {
-	        
-	        if(action.isValid()) {
-	            action.run();
-	        } else {
-	            System.out.println("Miaowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
-	            assert(false);
-	        }
-	    }
+        g.setActionDice(actionDie);
+        Action action = null;
 
-	}
+        for(int i = 0 ; !g.isGameCompleted() && i < moves.size(); i++) {
+
+            action = moves.get(i);
+
+            if(action.isValid()) {
+                action.run();
+            } else {
+                g.setFinish(true);
+            }
+        }
+
+    }
 
 	public void addAction(Action action) {
 	    moves.add(action);

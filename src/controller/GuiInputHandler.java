@@ -10,6 +10,7 @@ public class GuiInputHandler {
     IGuiCardInputListener cardInputListener;
     IGuiDieInputListener dieInputListener;
     IGuiDiscInputListener discInputListener;
+    IStopEffectListener stopEffectListener;
     
     public GuiInputHandler() {
 
@@ -24,6 +25,12 @@ public class GuiInputHandler {
     public void pass() {
         if(passListener != null) {
             passListener.pass();
+        }
+    }
+    
+    public void stopEffect() {
+        if(stopEffectListener != null) {
+            stopEffectListener.stopEffect();
         }
     }
     
@@ -73,5 +80,9 @@ public class GuiInputHandler {
     
     public void setCardInputListener(IGuiCardInputListener l) {
         cardInputListener = l;
+    }
+    
+    public void setStopEffectListener(IStopEffectListener l) {
+        stopEffectListener = l;
     }
 }

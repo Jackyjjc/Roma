@@ -37,6 +37,7 @@ public class TelephoneBoxBehaviour extends Behaviour implements IDieChecker {
                 turnMover.replay(travelTime);
             }
         }
+
     }
 
     public boolean isValidDie(Die die) {

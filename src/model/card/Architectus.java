@@ -4,7 +4,7 @@ import model.ICardResources;
 import model.IGameIO;
 import framework.cards.Card;
 
-class Architectus extends AbstractCard {
+public class Architectus extends AbstractCard {
 
     private static final int COST = 3;
     private static final int DEFENCE = 4;

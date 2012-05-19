@@ -67,16 +67,18 @@ public class CardDropTargetListener implements DropTargetListener {
         
         if(transferableObj != null) {
             
-            JCard from = (JCard) transferableObj;
-            
-            DropTarget target = (DropTarget) event.getSource();
-            JCard to = (JCard) target.getComponent();
-            
-            if(to.getIndex() >= 10) {
-                to.setCard(from.getCard());
-                from.setVisible(false);
-            } else {
-                handler.layCard(from.getIndex(), to.getIndex());
+            if(transferableObj instanceof JCard) {
+                JCard from = (JCard) transferableObj;
+
+                DropTarget target = (DropTarget) event.getSource();
+                JCard to = (JCard) target.getComponent();
+
+                if (to.getIndex() >= 10) {
+                    to.setCard(from.getCard());
+                    from.setVisible(false);
+                } else {
+                    handler.layCard(from.getIndex(), to.getIndex());
+                }
             }
         }
     }

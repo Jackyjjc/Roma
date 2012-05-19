@@ -101,7 +101,7 @@ public class CardFactory {
                 break;
             case SCAENICUS:
                 card = new Scaenicus(cardResources, gameIO);
-                card.setBehaviour(new ScaenicusBehaviour(card));
+                card.setBehaviour(new ScaenicusBehaviour(card, this));
                 break;
             case SENATOR:
                 card = new Senator(cardResources, gameIO);
