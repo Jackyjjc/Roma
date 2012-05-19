@@ -1,6 +1,5 @@
 package model;
 
-import framework.cards.Card;
 import model.card.CardFactory;
 import model.cardcollection.CardCollectionFactory;
 

@@ -1,19 +1,16 @@
 package model;
 
-import framework.Rules;
-import framework.cards.Card;
-import model.action.Action;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import model.action.Action;
+import framework.Rules;
+import framework.cards.Card;
+
 public class Turn {
 
 	private List<Action> moves;
-
-	private final int PLAYER_1 = 0;
-	private final int PLAYER_2 = 1;
 
 	private int whoseTurn;
     private int turnNum;
@@ -35,7 +32,8 @@ public class Turn {
 	private List<Card> deck;
 	private List<Card> discards;
 
-	public Turn (Game g) {
+	@SuppressWarnings("unchecked")
+    public Turn (Game g) {
 
 		this.playerVPs = new int[Rules.NUM_PLAYERS];
 		this.playerSestertiis = new int[Rules.NUM_PLAYERS];

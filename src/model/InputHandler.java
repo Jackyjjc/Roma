@@ -3,9 +3,6 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import controller.ILayCardInputListener;
-import controller.IUseDieInputListener;
-
 import model.card.AbstractCard;
 import framework.Rules;
 import framework.cards.Card;
@@ -14,10 +11,6 @@ public class InputHandler {
     
     private Game g;
     private List<IListener> inputListeners;
-    private List<IListener> actionDiceInputListeners;
-    private ISwapCardInputListener swapListener;
-    private ILayCardInputListener layCardListener;
-    private IUseDieInputListener useDieInputListener;
     
     private List<AbstractCard> cardInputQueue;
     private List<IDisc> discInputQueue;
@@ -25,7 +18,6 @@ public class InputHandler {
     private int intInput;
     private List<Boolean> boolInput;
     private int battleDieInput;
-    private int dieUsedInput;
     
     private ICardStorage list;
     
@@ -38,7 +30,6 @@ public class InputHandler {
         boolInput = new ArrayList<Boolean>();
         battleDieInput = 0;
         this.inputListeners = new ArrayList<IListener>();
-        this.actionDiceInputListeners = new ArrayList<IListener>();
     }
     
     public void addCardInput(int playerId, Card name) {
@@ -53,10 +44,6 @@ public class InputHandler {
             }
         }
         
-    }
-    
-    public void setList(ICardStorage list) {
-        this.list = list;
     }
     
 	public void addCardInput(int playerId, AbstractCard c) {
@@ -157,6 +144,11 @@ public class InputHandler {
         return battleDieInput;
     }
 
+    
+    public void setList(ICardStorage list) {
+        this.list = list;
+    }
+    
     public void addInputListener(IListener l) {
         inputListeners.add(l);
     }
@@ -169,62 +161,6 @@ public class InputHandler {
         for(IListener l : inputListeners) {
             l.update();
         }
-    }
-    
-    public void addSwapListener(ISwapCardInputListener l) {
-        swapListener = l;
-    }
-    
-    public void removeSwapListener() {
-        swapListener = null;
-    }
-    
-    public void addDieUseListener(IUseDieInputListener l) {
-        useDieInputListener = l;
-    }
-    
-    public void removeDieUseListener() {
-        useDieInputListener = null;
-    }
-    
-    public void addLayCardListener(ILayCardInputListener l) {
-        layCardListener = l;
-    }
-    
-    public void removeLayCardListener() {
-        layCardListener = null;
-    }
-    
-    public void addDieInputListener(IListener l) {
-        inputListeners.add(l);
-    }
-    
-    public void removeDieInputListener(IListener l) {
-        inputListeners.remove(l);
-    }
-    
-    public void addDieUseInput(int index) {
-        if(index >= 0 && index < Rules.NUM_DICE_DISCS + 2) {
-            dieUsedInput = index;
-        }
-    }
-
-    public int getDieUsedInput() {
-        return dieUsedInput;
-    }
-    
-    public void placeCardInput(int fromIndex, int toIndex) {
-        layCardListener.layCard(fromIndex, toIndex);
-    }
-    
-    public void addSwapCardInput(Card[] cards) {
-        if(swapListener != null) {
-            swapListener.update(cards);
-        }
-    }
-    
-    public void addUseActionDieInput(int dieIndex, int discIndex) {
-        useDieInputListener.useDice(dieIndex, discIndex);
     }
 
 }
