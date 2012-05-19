@@ -21,7 +21,7 @@ public class ConsulBehaviour extends Behaviour implements IDieChecker {
 
     public void complete() {
 
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
 
         Die input = handler.getDieInput();
         int valueChange = handler.getIntInput();

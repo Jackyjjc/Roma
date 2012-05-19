@@ -2,10 +2,8 @@ package model.card;
 
 import model.ICardResources;
 import model.IDisc;
-import model.IGameIO;
 import model.IPlayer;
 import model.card.behaviour.Behaviour;
-import model.card.behaviour.ScaenicusBehaviour;
 import framework.cards.Card;
 
 public class AbstractCard {
@@ -23,12 +21,11 @@ public class AbstractCard {
     private IDisc disc;
 
     private ICardResources cardResources;
-    private IGameIO gameIO;
 
     private Behaviour behaviour;
 
     public AbstractCard(Card name, CardType type, int cost, int defence,
-                        ICardResources cardResources, IGameIO gameIO) {
+                        ICardResources cardResources) {
 
         this.name = name;
         this.type = type;
@@ -37,7 +34,6 @@ public class AbstractCard {
         this.cost = cost;
         this.defence = defence;
         this.owner = null;
-        this.gameIO = gameIO;
         this.cardResources = cardResources;
 
     }
@@ -62,11 +58,6 @@ public class AbstractCard {
     public ICardResources getCardResources () {
         return this.cardResources;
     }
-
-    public IGameIO getGameIO () {
-        return this.gameIO;
-    }
-
     
     public Card getName() {
         return name;
@@ -123,9 +114,6 @@ public class AbstractCard {
 	
 	public void complete() {
 		behaviour.complete();
-//		if (this instanceof Scaenicus) {
-//			Scaenicus.getBehaviour(
-//		}
 	}
-    
+ 
 }

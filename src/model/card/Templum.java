@@ -1,24 +1,34 @@
 package model.card;
 
 import model.ICardResources;
-import model.IGameIO;
+import model.card.behaviour.TemplumBehaviour;
 import framework.cards.Card;
 
-class Templum extends AbstractCard implements IForumListener {
+public class Templum extends AbstractCard implements IForumListener {
 
     private static final int COST = 2;
     private static final int DEFENCE = 2;
     
-    Templum(ICardResources cardResources, IGameIO gameIO) {
+    private Templum(ICardResources cardResources) {
         
-        super(Card.TEMPLUM, CardType.BUILDING,
-              COST, DEFENCE, cardResources, gameIO);
+        super(Card.TEMPLUM, 
+              CardType.BUILDING,
+              COST, 
+              DEFENCE, 
+              cardResources);
         
     }
     
-	public void alert() {
+    static AbstractCard create(ICardResources cardResources) {
+        
+        AbstractCard card = new Templum(cardResources);
+        card.setBehaviour(new TemplumBehaviour(card));
+        
+        return card;
+    }
+    
+    public void alert() {
 		((IForumListener)getBehaviour()).alert();
 	}
     
-
 }

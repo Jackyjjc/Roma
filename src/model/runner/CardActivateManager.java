@@ -160,7 +160,6 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
         
         ScaenicusBehaviour behaviour = ((ScaenicusBehaviour)activatedCard.getBehaviour()).getMimicBehaviour();
         behaviour.mimic();
-        
         return this;
     }
     

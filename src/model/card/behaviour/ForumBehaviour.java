@@ -21,7 +21,7 @@ public class ForumBehaviour extends Behaviour implements IDieChecker {
         IDisc disc = getHost().getDisc();
         IPlayer player = getHost().getOwner();
 
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
         IResourceStorage bank = getHost().getCardResources().getBank();
 
         Die toUse = handler.getDieInput();

@@ -26,7 +26,7 @@ public class CenturioBehaviour extends Behaviour implements ICardChecker, IDieCh
     public void complete() {
 
         AbstractCard card = getOppositeCard();
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
         int dieValue;
 
         if(card != null && isValidCard(card)) {

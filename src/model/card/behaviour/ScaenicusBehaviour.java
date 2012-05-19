@@ -27,7 +27,7 @@ public class ScaenicusBehaviour extends Behaviour implements ICardChecker {
     public void mimic() {
     	
 		AbstractCard host = getHost();
-		IDisc disc = host.getGameIO().getInputHandler().getDiscInput();
+		IDisc disc = host.getCardResources().getInputHandler().getDiscInput();
 		
 		AbstractCard mimicCard = factory.create(disc.getCard().getName());
 		mimicBehaviour = mimicCard.getBehaviour();

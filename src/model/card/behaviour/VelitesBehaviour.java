@@ -26,7 +26,7 @@ public class VelitesBehaviour extends Behaviour implements ICardChecker{
 
     public void complete() {
 
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
 
         IDisc targetDisc = handler.getDiscInput();
 

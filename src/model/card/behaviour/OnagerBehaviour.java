@@ -22,7 +22,7 @@ public class OnagerBehaviour extends Behaviour implements ICardChecker {
 
     public void complete() {
 
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
 
         AbstractCard target = handler.getDiscInput().getCard();
 

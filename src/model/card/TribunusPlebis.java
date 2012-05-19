@@ -1,7 +1,7 @@
 package model.card;
 
 import model.ICardResources;
-import model.IGameIO;
+import model.card.behaviour.TribunusPlebisBehaviour;
 import framework.cards.Card;
 
 public class TribunusPlebis extends AbstractCard {
@@ -9,9 +9,21 @@ public class TribunusPlebis extends AbstractCard {
     private static final int COST = 5;
     private static final int DEFENCE = 5;
     
-    TribunusPlebis(ICardResources cardResources, IGameIO gameIO) {
-        super(Card.TRIBUNUSPLEBIS, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, gameIO);
+    private TribunusPlebis(ICardResources cardResources) {
+        
+        super(Card.TRIBUNUSPLEBIS, 
+              CardType.CHARACTER,
+              COST, 
+              DEFENCE, 
+              cardResources);
+    
     }
 
+    static AbstractCard create(ICardResources cardResources) {
+        
+        AbstractCard card = new TribunusPlebis(cardResources);
+        card.setBehaviour(new TribunusPlebisBehaviour(card));
+    
+        return card;
+    }
 }

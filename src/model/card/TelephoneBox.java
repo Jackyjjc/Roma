@@ -1,25 +1,36 @@
 package model.card;
 
-import framework.cards.Card;
 import model.ICardResources;
-import model.IGameIO;
+import model.card.behaviour.TelephoneBoxBehaviour;
+import framework.cards.Card;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Administrator
- * Date: 16/05/12
- * Time: 11:45 PM
- * To change this template use File | Settings | File Templates.
+ * 
+ * @author Chris Fong
+ * @author Junjie CHEN
+ * 
  */
+
 public class TelephoneBox extends AbstractCard {
 
     private static final int COST = 5;
     private static final int DEFENCE = 2;
 
-    public TelephoneBox(ICardResources cardResources, IGameIO gameIO) {
-        super(Card.TELEPHONEBOX, CardType.BUILDING,
-                COST, DEFENCE, cardResources, gameIO);
+    public TelephoneBox(ICardResources cardResources) {
+        
+        super(Card.TELEPHONEBOX, 
+              CardType.BUILDING,
+              COST, 
+              DEFENCE, 
+              cardResources);
+    
     }
 
-
+    static AbstractCard create(ICardResources cardResources) {
+        
+        AbstractCard card = new TelephoneBox(cardResources);
+        card.setBehaviour(new TelephoneBoxBehaviour(card, cardResources.getTurnMover()));
+    
+        return card;
+    }
 }

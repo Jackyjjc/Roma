@@ -19,7 +19,7 @@ public class PraetorianusBehaviour extends Behaviour {
 
     public void complete() {
 
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
         IDisc target = handler.getDiscInput();
 
         target.block();

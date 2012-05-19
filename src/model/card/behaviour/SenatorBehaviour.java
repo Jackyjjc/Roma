@@ -44,7 +44,7 @@ public class SenatorBehaviour extends Behaviour implements ICardChecker {
     
     private void layCards() {
         
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
       
         AbstractCard card = handler.getCardInput();
         

@@ -21,7 +21,7 @@ public class NeroBehaviour extends Behaviour implements ICardChecker {
 
 	public void complete() {
 
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
         IDisc disc = handler.getDiscInput();
         AbstractCard target = disc.getCard();
 

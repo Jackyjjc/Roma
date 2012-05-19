@@ -26,7 +26,7 @@ public class MachinaBehaviour extends Behaviour implements ICardChecker {
             c.setCost(0);
         }
 
-        getHost().getGameIO().getInputHandler().setList(buildingCards);
+        getHost().getCardResources().getInputHandler().setList(buildingCards);
     }
     
     public void complete() {
@@ -39,12 +39,12 @@ public class MachinaBehaviour extends Behaviour implements ICardChecker {
             c.setCost(c.getDefaultCost());
         }
         
-        getHost().getGameIO().getInputHandler().setList(hand);
+        getHost().getCardResources().getInputHandler().setList(hand);
     }
     
     private void layCards() {
         
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
         
         AbstractCard card = handler.getCardInput();
         while(card != null) {

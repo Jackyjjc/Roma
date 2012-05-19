@@ -19,7 +19,7 @@ public class LegionariusBehaviour extends Behaviour implements ICardChecker {
 
         if(target != null && isValidCard(target)) {
 
-            int value = getHost().getGameIO().getInputHandler().getBattleDieInput();
+            int value = getHost().getCardResources().getInputHandler().getBattleDieInput();
             Action.attack(target, value);
 
         }

@@ -13,14 +13,14 @@ public class HaruspexBehaviour extends Behaviour implements ICardChecker {
 
     @Override
     public void initialise() {
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
         ICardStorage deck = getHost().getCardResources().getDeckStorage();
         handler.setList(deck);
     }
     
     public void complete() {
 
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
         ICardStorage hand = getHost().getOwner().getHand();
         ICardStorage deck = getHost().getCardResources().getDeckStorage();
 

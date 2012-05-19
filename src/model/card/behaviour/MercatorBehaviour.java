@@ -20,7 +20,7 @@ public class MercatorBehaviour extends Behaviour {
         IPlayer owner = getHost().getOwner();
         IPlayer opponent = owner.getOpponent();
 
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
 
         while (handler.getBooleanInput()) {
 

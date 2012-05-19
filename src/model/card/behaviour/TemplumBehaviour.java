@@ -38,7 +38,7 @@ public class TemplumBehaviour extends Behaviour implements IForumListener {
     @Override
     public void alert() {
 
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
 
         IResourceStorage bank = getHost().getCardResources().getBank();
         IPlayer player = getHost().getOwner();

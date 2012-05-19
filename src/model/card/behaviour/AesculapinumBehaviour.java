@@ -22,14 +22,14 @@ public class AesculapinumBehaviour extends Behaviour implements ICardChecker, II
 
     @Override
     public void initialise() {
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
         ICardStorage discard = getHost().getCardResources().getDiscardStorage();
         handler.setList(discard);
     }
     
     public void complete() {
 
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
         ICardStorage hand = getHost().getOwner().getHand();
         ICardStorage discard = getHost().getCardResources().getDiscardStorage();
         AbstractCard card = handler.getCardInput();

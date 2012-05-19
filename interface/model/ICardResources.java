@@ -1,5 +1,14 @@
 package model;
 
+/**
+ * 
+ * All the functions a card needs when activates
+ * 
+ * @author Chris Fong
+ * @author Junjie CHEN
+ *
+ */
+
 public interface ICardResources {
 
     public IResourceStorage getBank();
@@ -8,12 +17,10 @@ public interface ICardResources {
     
     public ICardStorage getDiscardStorage();
     
-    public DiceManager getDiceManager();
-    
     public IPlayer getCurrentPlayer();
 
-    public void addTurnListener(ITurnListener listener);
-    
-    public void removeTurnListener(ITurnListener listener);
+    public ITurnMover getTurnMover();
+
+    public InputHandler getInputHandler();
     
 }

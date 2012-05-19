@@ -32,7 +32,7 @@ public class ConsiliariusBehaviour extends Behaviour implements ICardChecker {
             c.setCost(0);
         }
 
-        getHost().getGameIO().getInputHandler().setList(charCards);
+        getHost().getCardResources().getInputHandler().setList(charCards);
 
     }
 
@@ -46,13 +46,13 @@ public class ConsiliariusBehaviour extends Behaviour implements ICardChecker {
             c.setCost(c.getDefaultCost());
         }
 
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
         handler.setList(hand);
     }
 
     private void layCards() {
         
-        InputHandler handler = getHost().getGameIO().getInputHandler();
+        InputHandler handler = getHost().getCardResources().getInputHandler();
         
         AbstractCard card = handler.getCardInput();
         while(card != null) {

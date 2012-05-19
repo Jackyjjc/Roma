@@ -1,18 +1,35 @@
 package model.card;
 
 import model.ICardResources;
-import model.IGameIO;
+import model.card.behaviour.ArchitectusBehaviour;
 import framework.cards.Card;
+
+/**
+ * Reviewed at 19/05/2012
+ * 
+ * @author Chris Fong
+ * @author Junjie CHEN
+ */
 
 public class Architectus extends AbstractCard {
 
     private static final int COST = 3;
     private static final int DEFENCE = 4;
     
-    Architectus(ICardResources cardResources, IGameIO gameIO) {
-        super(Card.ARCHITECTUS, CardType.CHARACTER,
-              COST, DEFENCE, cardResources, gameIO);
+    private Architectus(ICardResources cardResources) {
+        
+        super(Card.ARCHITECTUS, 
+              CardType.CHARACTER,
+              COST, 
+              DEFENCE, 
+              cardResources);
         
     }
  
+    static AbstractCard create(ICardResources cardResources) {
+        AbstractCard card = new Architectus(cardResources);
+        card.setBehaviour(new ArchitectusBehaviour(card));
+        return card;
+    }
+    
 }

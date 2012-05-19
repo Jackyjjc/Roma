@@ -1,23 +1,24 @@
 package model.card;
 
-import framework.cards.Card;
-import model.Game;
 import model.ICardResources;
-import model.IGameIO;
-import model.card.behaviour.*;
+import framework.cards.Card;
+
+/**
+ * 
+ * Reviewed at 20/05/2012
+ * 
+ * @author Chris Fong
+ * @author Junjie CHEN
+ *
+ */
 
 public class CardFactory {
 
     private ICardResources cardResources;
-    private IGameIO gameIO;
-    private Game game;
 
-    public CardFactory(Game game) {
+    public CardFactory(ICardResources cardResources) {
 
-        this.cardResources = (ICardResources) game;
-        this.gameIO = (IGameIO) game;
-        this.game = game;
-
+        this.cardResources = cardResources;
     }
 
     public AbstractCard create(Card name) {
@@ -26,123 +27,94 @@ public class CardFactory {
 
         switch(name) {
             case AESCULAPINUM:
-                card = new Aesculapinum(cardResources, gameIO);
-                card.setBehaviour(new AesculapinumBehaviour(card));
+                card = Aesculapinum.create(cardResources);
                 break;
             case ARCHITECTUS:
-                card = new Architectus(cardResources, gameIO);
-                card.setBehaviour(new ArchitectusBehaviour(card));
+                card = Architectus.create(cardResources);
                 break;
             case BASILICA:
-                card = new Basilica(cardResources, gameIO);
-                card.setBehaviour(new BasilicaBehaviour(card));
+                card = Basilica.create(cardResources);
                 break;
             case CENTURIO:
-                card = new Centurio(cardResources, gameIO);
-                card.setBehaviour(new CenturioBehaviour(card));
+                card = Centurio.create(cardResources);
                 break;
             case CONSILIARIUS:
-                card = new Consiliarius(cardResources, gameIO);
-                card.setBehaviour(new ConsiliariusBehaviour(card));
+                card = Consiliarius.create(cardResources);
                 break;
             case CONSUL:
-                card = new Consul(cardResources, gameIO);
-                card.setBehaviour(new ConsulBehaviour(card));
+                card = Consul.create(cardResources);
                 break;
             case ESSEDUM:
-                card = new Essedum(cardResources, gameIO);
-                card.setBehaviour(new EssedumBehaviour(card,game.getTurnMover()));
+                card = Essedum.create(cardResources);
                 break;
             case FORUM:
-                card = new Forum(cardResources, gameIO);
-                card.setBehaviour(new ForumBehaviour(card));
+                card = Forum.create(cardResources);
                 break;
             case GLADIATOR:
-                card = new Gladiator(cardResources, gameIO);
-                card.setBehaviour(new GladiatorBehaviour(card));
+                card = Gladiator.create(cardResources);
+                break;
+            case GRIMREAPER:
+                card = GrimReaper.create(cardResources);
                 break;
             case HARUSPEX:
-                card = new Haruspex(cardResources, gameIO);
-                card.setBehaviour(new HaruspexBehaviour(card));
+                card = Haruspex.create(cardResources);
+                break;
+            case KAT:
+                card = Kat.create(cardResources);
                 break;
             case LEGAT:
-                card = new Legat(cardResources, gameIO);
-                card.setBehaviour(new LegatBehaviour(card));
+                card = Legat.create(cardResources);
                 break;
             case LEGIONARIUS:
-                card = new Legionarius(cardResources, gameIO);
-                card.setBehaviour(new LegionariusBehaviour(card));
+                card = Legionarius.create(cardResources);
                 break;
             case MACHINA:
-                card = new Machina(cardResources, gameIO);
-                card.setBehaviour(new MachinaBehaviour(card));
+                card = Machina.create(cardResources);
                 break;
             case MERCATOR:
-                card = new Mercator(cardResources, gameIO);
-                card.setBehaviour(new MercatorBehaviour(card));
+                card = Mercator.create(cardResources);
                 break;
             case MERCATUS:
-                card = new Mercatus(cardResources, gameIO);
-                card.setBehaviour(new MercatusBehaviour(card));
+                card = Mercatus.create(cardResources);
                 break;
             case NERO:
-                card = new Nero(cardResources, gameIO);
-                card.setBehaviour(new NeroBehaviour(card));
+                card = Nero.create(cardResources);
                 break;
             case NOT_A_CARD:
                 break;
             case ONAGER:
-                card = new Onager(cardResources, gameIO);
-                card.setBehaviour(new OnagerBehaviour(card));
+                card = Onager.create(cardResources);
                 break;
             case PRAETORIANUS:
-                card = new Praetorianus(cardResources, gameIO);
-                card.setBehaviour(new PraetorianusBehaviour(card));
+                card = Praetorianus.create(cardResources);
                 break;
             case SCAENICUS:
-                card = new Scaenicus(cardResources, gameIO);
-                card.setBehaviour(new ScaenicusBehaviour(card, this));
+                card = Scaenicus.create(cardResources, this);
                 break;
             case SENATOR:
-                card = new Senator(cardResources, gameIO);
-                card.setBehaviour(new SenatorBehaviour(card));
+                card = Senator.create(cardResources);
                 break;
             case SICARIUS:
-                card = new Sicarius(cardResources, gameIO);
-                card.setBehaviour(new SicariusBehaviour(card));
-                break;
-            case TEMPLUM:
-                card = new Templum(cardResources, gameIO);
-                card.setBehaviour(new TemplumBehaviour(card));
+                card = Sicarius.create(cardResources);
                 break;
             case TELEPHONEBOX:
-                card = new TelephoneBox(cardResources, gameIO);
-                card.setBehaviour(new TelephoneBoxBehaviour(card, game.getTurnMover()));
+                card = TelephoneBox.create(cardResources);
+                break;
+            case TEMPLUM:
+                card = Templum.create(cardResources);
                 break;
             case TRIBUNUSPLEBIS:
-                card = new TribunusPlebis(cardResources, gameIO);
-                card.setBehaviour(new TribunusPlebisBehaviour(card));
+                card = TribunusPlebis.create(cardResources);
                 break;
             case TURRIS:
-                card = new Turris(cardResources, gameIO);
-                card.setBehaviour(new TurrisBehaviour(card));
+                card = Turris.create(cardResources);
                 break;
             case VELITES:
-                card = new Velites(cardResources, gameIO);
-                card.setBehaviour(new VelitesBehaviour(card));
-                break;
-            case KAT:
-                card = new Kat(cardResources, gameIO);
-                card.setBehaviour(new KatBehaviour(card));
-                break;
-            case GRIMREAPER:
-                card = new GrimReaper(cardResources, gameIO);
-                card.setBehaviour(new GrimReaperBehaviour(card));
+                card = Velites.create(cardResources);
                 break;
 
         }
 
         return card;
     }
-
 }
