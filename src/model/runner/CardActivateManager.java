@@ -128,7 +128,7 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
         } else {
             player = manager.getCurrentPlayer().getOpponent();
         }
-        turnMover.getCurrentTurn().addAction(new AddDiscInputAction(g, this, handler, player.getId(), diceDisc));
+        turnMover.getCurrentTurn().addAction(new AddDiscInputAction(g, this, handler, player.getId(), diceDisc - 1));
         handler.addDiscInput(player.getId(), diceDisc - 1);
     }
 

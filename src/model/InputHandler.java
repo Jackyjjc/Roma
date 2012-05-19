@@ -203,12 +203,6 @@ public class InputHandler {
         inputListeners.remove(l);
     }
     
-    private void notifyDieInputListener() {
-        for(IListener l : actionDiceInputListeners) {
-            l.update();
-        }
-    }
-    
     public void addDieUseInput(int index) {
         if(index >= 0 && index < Rules.NUM_DICE_DISCS + 2) {
             dieUsedInput = index;
