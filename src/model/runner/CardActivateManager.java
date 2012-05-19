@@ -67,9 +67,11 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
     }
 
     public void chooseCardFromPile(int indexOfCard) {
-        
-        Card card = findCardFromPile(indexOfCard);
-        turnMover.getCurrentTurn().addAction(new ChooseCardFromPileAction(g, this, handler, card, indexOfCard));
+        chooseCardFromPile(findCardFromPile(indexOfCard));
+    }
+    
+    public void chooseCardFromPile(Card card) {
+        turnMover.getCurrentTurn().addAction(new ChooseCardFromPileAction(g, this, handler, card));
         handler.addCardInput(manager.getCurrentPlayer().getId(), card);
     }
     

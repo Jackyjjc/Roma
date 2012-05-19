@@ -3,7 +3,6 @@ package model.action;
 import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.ICardChecker;
-import model.card.IIntegerChecker;
 import model.runner.CardActivateManager;
 import framework.cards.Card;
 import framework.interfaces.GameState;
@@ -11,18 +10,16 @@ import framework.interfaces.GameState;
 public class ChooseCardFromPileAction extends InputAction {
     
     private Card name;
-    private int index;
     
     public ChooseCardFromPileAction(GameState g, CardActivateManager manager,
-                                      InputHandler handler, Card name, int index) {
+                                      InputHandler handler, Card name) {
         
         super(g, manager, handler);
         this.name = name;
-        this.index = index;
     }
 
     public void run() {
-        getCardActivateManager().chooseCardFromPile(index);
+        getCardActivateManager().chooseCardFromPile(name);
     }
 
     public boolean isValid() {
@@ -30,17 +27,11 @@ public class ChooseCardFromPileAction extends InputAction {
         boolean isValid = false;
         
         ICardChecker cardChecker = (ICardChecker) getCardActivateManager().getActivatedCard().getBehaviour();
-        IIntegerChecker intChecker = (IIntegerChecker) getCardActivateManager().getActivatedCard().getBehaviour();
+        getCardActivateManager().chooseCardFromPile(name);
+        AbstractCard card = getInputHandler().getCardInput();
         
-        if(intChecker.isValidInt(index)) {
-            
-            getCardActivateManager().chooseCardFromPile(index);
-            AbstractCard card = getInputHandler().getCardInput();
-            
-            if(cardChecker.isValidCard(card) && card.getName() == name) {
-                isValid = true;
-            }
-            
+        if(cardChecker.isValidCard(card) || card.getName() == name) {
+            isValid = true;
         }
         
         return isValid;
