@@ -85,7 +85,7 @@ public class Turn {
 		for (int playerNum = 0; playerNum < Rules.NUM_PLAYERS; playerNum++) {
 
 			g.setPlayerVictoryPoints(playerNum,this.playerVPs[playerNum]);
-			g.setPlayerSestertii(playerNum,this.playerVPs[playerNum]);
+			g.setPlayerSestertii(playerNum,this.playerSestertiis[playerNum]);
 			g.setPlayerHand(playerNum,this.playerHands[playerNum]);
 			g.setPlayerCardsOnDiscs(playerNum,this.playerDiscs[playerNum]);
 

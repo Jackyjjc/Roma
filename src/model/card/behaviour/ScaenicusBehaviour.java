@@ -56,14 +56,17 @@ public class ScaenicusBehaviour extends Behaviour implements ICardChecker {
 		
 	}
 	
-	public ScaenicusBehaviour getMimicBehaviour() {
+	public Behaviour getMimicBehaviour() {
 		
-		ScaenicusBehaviour behaviour = null;
+		Behaviour behaviour = null;
 		
 		if(mimicBehaviour != null && mimicBehaviour instanceof ScaenicusBehaviour) {
-			behaviour = ((ScaenicusBehaviour)mimicBehaviour).getMimicBehaviour();
+		    
+			behaviour = (ScaenicusBehaviour) ((ScaenicusBehaviour)mimicBehaviour).getMimicBehaviour();
+		} else if(mimicBehaviour != null) {
+			behaviour = mimicBehaviour;
 		} else {
-			behaviour = this;
+		    behaviour = this;
 		}
 		
 		return behaviour;

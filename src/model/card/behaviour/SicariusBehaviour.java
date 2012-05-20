@@ -36,8 +36,7 @@ public class SicariusBehaviour extends Behaviour implements ICardChecker {
 
         boolean isValid = false;
 
-        if(c.getOwner() != null && c.getOwner() != getHost().getOwner()
-                && c.getType() == CardType.CHARACTER) {
+        if(c.getOwner() != null && c.getOwner() != getHost().getOwner()) {
             isValid = true;
         }
 

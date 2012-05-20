@@ -12,6 +12,7 @@ public class MimicAction extends InputAction {
     
     public MimicAction(GameState g, CardActivateManager manager, InputHandler handler, int diceDisc) {
         super(g, manager, handler);
+        this.diceDisc = diceDisc;
     }
 
     public void run() {

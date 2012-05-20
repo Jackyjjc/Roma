@@ -158,7 +158,7 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
         
         handler.addDiscInput(player.getId(), diceDisc - 1);
         
-        ScaenicusBehaviour behaviour = ((ScaenicusBehaviour)activatedCard.getBehaviour()).getMimicBehaviour();
+        ScaenicusBehaviour behaviour = (ScaenicusBehaviour) ((ScaenicusBehaviour)activatedCard.getBehaviour()).getMimicBehaviour();
         behaviour.mimic();
         return this;
     }

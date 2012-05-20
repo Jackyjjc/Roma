@@ -35,8 +35,7 @@ public class NeroBehaviour extends Behaviour implements ICardChecker {
     public boolean isValidCard(AbstractCard c) {
         boolean isValid = false;
 
-        if(c.getOwner() != null && c.getOwner() != getHost().getOwner()
-                && c.getType() == CardType.BUILDING) {
+        if(c.getOwner() != null && c.getOwner() != getHost().getOwner()) {
             isValid = true;
         }
 
