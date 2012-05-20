@@ -293,4 +293,8 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
                 "Now you can lay card for free. \n" +
                 "Press the bottom right corner button to stop the effect");
     }
+    
+    public JHand getHand() {
+        return background.getHand();
+    }
 }

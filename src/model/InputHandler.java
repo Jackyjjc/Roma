@@ -15,8 +15,9 @@ public class InputHandler {
     private List<AbstractCard> cardInputQueue;
     private List<IDisc> discInputQueue;
     private List<Die> dieInputQueue;
+    private List<Boolean> boolInputQueue;
+    
     private int intInput;
-    private List<Boolean> boolInput;
     private int battleDieInput;
     
     private ICardStorage list;
@@ -26,10 +27,10 @@ public class InputHandler {
         cardInputQueue = new ArrayList<AbstractCard>();
         discInputQueue = new ArrayList<IDisc>();
         dieInputQueue = new ArrayList<Die>();
-        intInput = 0;
-        boolInput = new ArrayList<Boolean>();
-        battleDieInput = 0;
+        boolInputQueue = new ArrayList<Boolean>();
         this.inputListeners = new ArrayList<IListener>();
+        intInput = 0;
+        battleDieInput = 0;
     }
     
     public void addCardInput(int playerId, Card name) {
@@ -119,7 +120,7 @@ public class InputHandler {
     }
     
     public void addBooleanInput(boolean value) {
-        this.boolInput.add(value);
+        this.boolInputQueue.add(value);
         notifyInputListener();
     }
     
@@ -127,8 +128,8 @@ public class InputHandler {
     	
     	boolean input = false;
     	
-    	if (!boolInput.isEmpty()) {
-    		input = this.boolInput.remove(0);
+    	if (!boolInputQueue.isEmpty()) {
+    		input = this.boolInputQueue.remove(0);
     	}
     	
     	return input;

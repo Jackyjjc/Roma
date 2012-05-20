@@ -25,6 +25,7 @@ public class JGameArea extends JPanel implements IListener {
     }
 
     public void updateView(IGameDisplayState state) {
+        
         hand0.updateView(state);
         hand1.updateView(state);
         field0.updateView(state);
@@ -52,4 +53,8 @@ public class JGameArea extends JPanel implements IListener {
         add(hand0);
     }
 
+    public JHand getHand() {
+        return hand0;
+    }
+    
 }

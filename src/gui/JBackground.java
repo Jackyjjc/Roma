@@ -54,4 +54,8 @@ public class JBackground extends JPanel implements IListener {
         leftBar.enableStopButton(enable);
     }
 
+    public JHand getHand() {
+        return gameArea.getHand();
+    }
+
 }
