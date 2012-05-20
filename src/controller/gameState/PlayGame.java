@@ -3,6 +3,7 @@ package controller.gameState;
 import framework.cards.Card;
 import gui.GraphicalView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.BribeDisc;
@@ -24,6 +25,7 @@ import model.card.Haruspex;
 import model.card.ICardChecker;
 import model.card.Legat;
 import model.card.Legionarius;
+import model.card.Machina;
 import model.card.Mercator;
 import model.card.Mercatus;
 import model.card.Nero;
@@ -304,6 +306,15 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             die.use();
             view.layCardForFreeDialog();
             view.enableStopButton(true);
+        } else if(card instanceof Machina || card instanceof Consiliarius) {
+            die.use();
+            ICardStorage list = g.getInputHandler().getList();
+            List<Card> displayList = new ArrayList<Card>();
+            for(int i = 0; i < list.size(); i++) {
+                displayList.add(list.getCard(i).getName());
+                System.out.println("added " + list.getCard(i).getName());
+            }
+            view.getHand().setHand(displayList);
         }
         
         g.getNotifier().notifyListeners();

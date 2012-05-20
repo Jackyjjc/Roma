@@ -24,7 +24,7 @@ public class MimicAction extends InputAction {
         
         getInputHandler().addDiscInput(getGameState().getWhoseTurn(), diceDisc);
         IDisc disc = getInputHandler().getDiscInput();
-        ICardChecker checker = (ICardChecker) getCardActivateManager().getActivatedCard();
+        ICardChecker checker = (ICardChecker) getCardActivateManager().getActivatedCard().getBehaviour();
         
         if(!disc.isEmpty() && checker.isValidCard(disc.getCard())) {
             isValid = true;

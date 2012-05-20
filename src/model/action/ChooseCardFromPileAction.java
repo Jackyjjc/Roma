@@ -30,7 +30,7 @@ public class ChooseCardFromPileAction extends InputAction {
         getCardActivateManager().chooseCardFromPile(name);
         AbstractCard card = getInputHandler().getCardInput();
         
-        if(cardChecker.isValidCard(card) || card.getName() == name) {
+        if(cardChecker.isValidCard(card) || (card != null && card.getName() == name)) {
             isValid = true;
         }
         

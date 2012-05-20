@@ -70,6 +70,10 @@ public class TurnMover implements ITurnMover {
         int currentTurn = turns.size() - 1;
         numTurnsAgo = turns.size() - 1 - numTurnsAgo;
 
+        if(numTurnsAgo < 0) {
+            numTurnsAgo = 0;
+        }
+        
         for (int i = numTurnsAgo ; i <= currentTurn; i++) {
             turnsToReplay.add(turns.remove(numTurnsAgo));
         }

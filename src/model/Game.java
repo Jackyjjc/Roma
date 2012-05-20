@@ -14,7 +14,7 @@ import framework.interfaces.GameState;
 public class Game implements GameState, IGameDisplayState, ICardResources, 
                              IGameIO, IPlayerManager{
 	
-    private static final int TOTAL_MONEY = Integer.MAX_VALUE;
+    private static final int TOTAL_MONEY = 100000;
     private static final int TOTAL_VP = 36;
     private static final int NUM_ACTION_DICE = 3;
     

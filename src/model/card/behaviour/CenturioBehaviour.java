@@ -35,8 +35,8 @@ public class CenturioBehaviour extends Behaviour implements ICardChecker, IDieCh
             boolean isAddDie = handler.getBooleanInput();
             if(isAddDie) {
                 Die die = handler.getDieInput();
-
                 if(isValidDie(die)) {
+                    die.use();
                     dieValue += die.getValue();
                 }
             }

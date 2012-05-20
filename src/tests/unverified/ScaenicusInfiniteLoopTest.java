@@ -9,7 +9,11 @@ import framework.interfaces.activators.ConsulActivator;
 import framework.interfaces.activators.ScaenicusActivator;
 
 /**
+ * Created with IntelliJ IDEA.
  * @Author : Junjie CHEN
+ * Date: 19/05/12
+ * Time: 10:56 PM
+ * To change this template use File | Settings | File Templates.
  */
 public class ScaenicusInfiniteLoopTest extends Test {
 
@@ -50,15 +54,16 @@ public class ScaenicusInfiniteLoopTest extends Test {
 
         gameState.setPlayerCardsOnDiscs(PLAYER_1,playerFields[PLAYER_1]);
         gameState.setPlayerCardsOnDiscs(PLAYER_2,playerFields[PLAYER_2]);
-
         ScaenicusActivator ditto = (ScaenicusActivator) move.chooseCardToActivate(Rules.DICE_DISC_1);
         ScaenicusActivator ditto1 = (ScaenicusActivator) ditto.getScaenicusMimicTarget(Rules.DICE_DISC_2);
-        ConsulActivator consul = (ConsulActivator) ditto.getScaenicusMimicTarget(Rules.DICE_DISC_5);
+        ScaenicusActivator ditto2 = (ScaenicusActivator) ditto1.getScaenicusMimicTarget(Rules.DICE_DISC_1);
+        ConsulActivator consul = (ConsulActivator) ditto2.getScaenicusMimicTarget(Rules.DICE_DISC_5);
         consul.chooseWhichDiceChanges(5);
         consul.chooseConsulChangeAmount(1);
         consul.complete();
-        ditto.complete();
+        ditto2.complete();
         ditto1.complete();
+        ditto.complete();
 
         boolean found = false;
         for (int i = 0; !found && i < gameState.getActionDice().length ; i++) {

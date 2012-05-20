@@ -19,11 +19,14 @@ public class JHand extends JPanel implements IListener {
     private int panelId;
     private int currentPlayer;
     
+    private boolean displayingList;
+    
     public JHand(int panelID, IDisplayManager idm) {
         
         this.idm = idm;
         this.cdm = idm.getCardDisplayManager();
         this.panelId = panelID;
+        this.displayingList = false;
         
         setOpaque(false);
     }
@@ -33,17 +36,24 @@ public class JHand extends JPanel implements IListener {
         List<Card> cards;
         this.currentPlayer = state.getWhoseTurn();
         
-        if (panelId == 0) {
-            cards = (List<Card>) state.getPlayerHand(currentPlayer);
-            setHand(cards, FACE_UP);
-        } else {
-            cards = (List<Card>) state.getPlayerHand((currentPlayer + 1) % 2);
-            setHand(cards, FACE_DOWN);
+        if(!displayingList) {
+            if (panelId == 0) {
+                cards = (List<Card>) state.getPlayerHand(currentPlayer);
+                setHand(cards, FACE_UP);
+            } else {
+                cards = (List<Card>) state.getPlayerHand((currentPlayer + 1) % 2);
+                setHand(cards, FACE_DOWN);
+            }
         }
     }
     
     public int getPlayerId() {
         return currentPlayer;
+    }
+    
+    public void setHand(List<Card> cards) {
+        displayingList = !displayingList;
+        setHand(cards, true);
     }
     
     public void setHand(List<Card> cards, boolean display) {

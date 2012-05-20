@@ -43,8 +43,7 @@ public class CardActivatorScaenicusCopyArchitectusTest extends Test {
         assert(gameState.getPoolVictoryPoints() == 11);
 
         //Place cards on player discs
-        Card[] cardsOnCurrentPlayerDisc = {
-                Card.ARCHITECTUS,
+        Card[] cardsOnCurrentPlayerDisc = {Card.ARCHITECTUS,
                 Card.SCAENICUS,
                 Card.NOT_A_CARD,
                 Card.NOT_A_CARD,

@@ -150,6 +150,10 @@ public class InputHandler {
         this.list = list;
     }
     
+    public ICardStorage getList() {
+        return list;
+    }
+    
     public void addInputListener(IListener l) {
         inputListeners.add(l);
     }

@@ -38,6 +38,7 @@ public class CardActivatorScaenicusCopyConsiliariusTest extends Test {
                 Card.NOT_A_CARD};
         gameState.setPlayerCardsOnDiscs(0,cardsOnP1Discs);
         gameState.setActionDice(new int[]{2,3,4});
+        gameState.setWhoseTurn(0);
         ScaenicusActivator scaenicusActivator = (ScaenicusActivator)move.chooseCardToActivate(3);
         ConsiliariusActivator consiliariusActivator = (ConsiliariusActivator)scaenicusActivator.getScaenicusMimicTarget(2);
         consiliariusActivator.placeCard(Card.MERCATOR,3);
@@ -54,7 +55,6 @@ public class CardActivatorScaenicusCopyConsiliariusTest extends Test {
         assert(gameState.getPlayerCardsOnDiscs(0)[2]==Card.MERCATOR);
         assert(gameState.getPlayerCardsOnDiscs(0)[3]==Card.LEGIONARIUS);
         assert(gameState.getPlayerCardsOnDiscs(0)[4]==Card.SCAENICUS);
-        System.out.println(gameState.getPlayerCardsOnDiscs(0)[5]);
         assert(gameState.getPlayerCardsOnDiscs(0)[5]==Card.CONSILIARIUS);
         assert(gameState.getPlayerCardsOnDiscs(0)[6]==Card.LEGAT);
 
