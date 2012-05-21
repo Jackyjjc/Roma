@@ -11,13 +11,15 @@ import model.card.IDieChecker;
  * @author Jacky CHEN
  */
 
-public class ConsulBehaviour extends Behaviour implements IDieChecker {
+public class ConsulBehaviour extends Behaviour {
 
-    private static final int MIN_DIE_VALUE = 1;
-    private static final int MAX_DIE_VALUE = 6;
-
-    public ConsulBehaviour(AbstractCard host, ICardResources cardResources) {
+    private IDieChecker checker;
+    
+    public ConsulBehaviour(AbstractCard host, 
+                           ICardResources cardResources, IDieChecker dieChecker) {
+        
         super(host, cardResources);
+        this.checker = dieChecker;
     }
 
     public void complete() {
@@ -27,13 +29,9 @@ public class ConsulBehaviour extends Behaviour implements IDieChecker {
         Die input = handler.getDieInput();
         int valueChange = handler.getIntInput();
 
-        if (isValidDie(input, valueChange)) {
+        if (checker.isValidDie(input)) {
             input.setValue(input.getValue() + valueChange);
         }
-    }
-
-    public boolean isValidDie(Die die) {
-        return !die.isUsed();
     }
 
 }

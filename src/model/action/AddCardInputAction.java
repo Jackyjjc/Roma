@@ -28,7 +28,7 @@ public class AddCardInputAction extends InputAction {
 
         boolean isValid = false;
 
-        ICardChecker checker = (ICardChecker) getCardActivateManager().getActivatedCard().getBehaviour();
+        ICardChecker checker = (ICardChecker) getCardActivateManager().getActivatedCard();
 
         getInputHandler().addCardInput(playerId, name);
         AbstractCard card = getInputHandler().getCardInput();

@@ -24,17 +24,6 @@ public class TemplumBehaviour extends Behaviour implements IForumListener {
         //itself can't be activated
     }
 
-    public boolean isValidDie(Die die) {
-
-        boolean isValid = false;
-
-        if (die != null && !die.isUsed()) {
-            isValid = true;
-        }
-
-        return isValid;
-    }
-
     @Override
     public void alert() {
 

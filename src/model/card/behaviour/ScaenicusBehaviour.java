@@ -4,8 +4,6 @@ import model.ICardResources;
 import model.IDisc;
 import model.card.AbstractCard;
 import model.card.CardFactory;
-import model.card.CardType;
-import model.card.ICardChecker;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,13 +12,14 @@ import model.card.ICardChecker;
  * Time: 11:04 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ScaenicusBehaviour extends Behaviour implements ICardChecker {
+public class ScaenicusBehaviour extends Behaviour {
 
     private Behaviour mimicBehaviour;
     private AbstractCard oldHost;
     private CardFactory factory;
-
-    public ScaenicusBehaviour(AbstractCard host, ICardResources cardResources, CardFactory factory) {
+    
+    public ScaenicusBehaviour(AbstractCard host, 
+                              ICardResources cardResources, CardFactory factory) {
         super(host, cardResources);
         this.factory = factory;
     }
@@ -70,20 +69,6 @@ public class ScaenicusBehaviour extends Behaviour implements ICardChecker {
         }
 
         return behaviour;
-    }
-
-    public boolean isValidCard(AbstractCard card) {
-
-        boolean isValid = false;
-
-        if (card != null && card.getOwner() == getHost().getOwner()
-                && card.getType() == CardType.CHARACTER) {
-
-            isValid = true;
-        }
-
-
-        return isValid;
     }
 
 }

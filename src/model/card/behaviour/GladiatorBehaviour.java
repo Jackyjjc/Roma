@@ -5,13 +5,17 @@ import model.ICardStorage;
 import model.IDisc;
 import model.InputHandler;
 import model.card.AbstractCard;
-import model.card.CardType;
 import model.card.ICardChecker;
 
-public class GladiatorBehaviour extends Behaviour implements ICardChecker {
+public class GladiatorBehaviour extends Behaviour {
 
-    public GladiatorBehaviour(AbstractCard host, ICardResources cardResources) {
+    private ICardChecker checker;
+    
+    public GladiatorBehaviour(AbstractCard host, 
+                              ICardResources cardResources, ICardChecker checker) {
+        
         super(host, cardResources);
+        this.checker = checker;
     }
 
     public void complete() {
@@ -21,7 +25,7 @@ public class GladiatorBehaviour extends Behaviour implements ICardChecker {
         AbstractCard target = disc.getCard();
         ICardStorage opponentHand;
 
-        if (target != null && isValidCard(target)) {
+        if (target != null && checker.isValidCard(target)) {
 
             target.getDisc().removeCard();
 
@@ -29,16 +33,4 @@ public class GladiatorBehaviour extends Behaviour implements ICardChecker {
             opponentHand.pushCard(target);
         }
     }
-
-    public boolean isValidCard(AbstractCard target) {
-        boolean isValid = false;
-
-        if (target != null && target.getOwner() != this.getHost().getOwner()
-                && target.getType() == CardType.CHARACTER) {
-            isValid = true;
-        }
-
-        return isValid;
-    }
-
 }

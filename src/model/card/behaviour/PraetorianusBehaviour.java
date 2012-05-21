@@ -26,6 +26,4 @@ public class PraetorianusBehaviour extends Behaviour {
         target.block();
 
     }
-
-
 }

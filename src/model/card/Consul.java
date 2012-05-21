@@ -12,7 +12,7 @@ import model.card.behaviour.ConsulBehaviour;
  * @author Junjie CHEN
  */
 
-public class Consul extends AbstractCard implements IDieChecker {
+public class Consul extends AbstractCard implements IDieChecker, IIntegerChecker {
 
     private static final int COST = 3;
     private static final int DEFENCE = 3;
@@ -28,10 +28,25 @@ public class Consul extends AbstractCard implements IDieChecker {
     
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Consul();
-        card.setBehaviour(new ConsulBehaviour(card, cardResources));
+        Consul card = new Consul();
+        card.setBehaviour(new ConsulBehaviour(card, cardResources, card));
 
         return card;
+    }
+
+    public boolean isValidInt(int input) {
+        
+        boolean isValid = false;
+        
+        if(input == 1 || input == -1) {
+            isValid = true;
+        }
+        
+        return isValid;
+    }
+
+    public boolean isValidDie(Die die) {
+        return !die.isUsed();
     }
 
 }
