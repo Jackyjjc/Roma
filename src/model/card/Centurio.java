@@ -1,6 +1,7 @@
 package model.card;
 
 import framework.cards.Card;
+import model.Die;
 import model.ICardResources;
 import model.card.behaviour.CenturioBehaviour;
 
@@ -11,25 +12,39 @@ import model.card.behaviour.CenturioBehaviour;
  * @author Junjie CHEN
  */
 
-public class Centurio extends AbstractCard {
+public class Centurio extends AbstractCard implements ICardChecker, IDieChecker {
 
     private static final int COST = 9;
     private static final int DEFENCE = 5;
 
-    private Centurio(ICardResources cardResources) {
+    private Centurio() {
 
         super(Card.CENTURIO,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
+    public boolean isValidCard(AbstractCard target) {
+        boolean isValid = false;
+
+        if (target.getOwner() != null
+                && target.getOwner() != getOwner()) {
+            isValid = true;
+        }
+
+        return isValid;
+    }
+
+    public boolean isValidDie(Die die) {
+        return !die.isUsed();
+    }
+    
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Centurio(cardResources);
-        card.setBehaviour(new CenturioBehaviour(card));
+        Centurio card = new Centurio();
+        card.setBehaviour(new CenturioBehaviour(card, cardResources, card, card));
 
         return card;
     }

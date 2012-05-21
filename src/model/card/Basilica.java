@@ -16,20 +16,19 @@ public class Basilica extends AbstractCard implements IForumListener {
     private static final int COST = 6;
     private static final int DEFENCE = 5;
 
-    private Basilica(ICardResources cardResources) {
+    private Basilica() {
 
         super(Card.BASILICA,
                 CardType.BUILDING,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Basilica(cardResources);
-        card.setBehaviour(new BasilicaBehaviour(card));
+        AbstractCard card = new Basilica();
+        card.setBehaviour(new BasilicaBehaviour(card, cardResources));
 
         return card;
     }

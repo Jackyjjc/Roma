@@ -26,7 +26,7 @@ public class ChooseCardFromPileAction extends InputAction {
 
         boolean isValid = false;
 
-        ICardChecker cardChecker = (ICardChecker) getCardActivateManager().getActivatedCard().getBehaviour();
+        ICardChecker cardChecker = (ICardChecker) getCardActivateManager().getActivatedCard();
         getCardActivateManager().chooseCardFromPile(name);
         AbstractCard card = getInputHandler().getCardInput();
 

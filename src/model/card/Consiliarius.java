@@ -1,8 +1,8 @@
 package model.card;
 
-import framework.cards.Card;
 import model.ICardResources;
-import model.card.behaviour.ConsiliariusBehaviour;
+import model.card.behaviour.RearrangerBehaviour;
+import framework.cards.Card;
 
 /**
  * Reviewed at 20/05/2012
@@ -11,26 +11,37 @@ import model.card.behaviour.ConsiliariusBehaviour;
  * @author Junjie CHEN
  */
 
-public class Consiliarius extends AbstractCard {
+public class Consiliarius extends AbstractCard implements ICardChecker {
 
     private static final int COST = 4;
     private static final int DEFENCE = 4;
 
 
-    private Consiliarius(ICardResources cardResources) {
+    private Consiliarius() {
 
         super(Card.CONSILIARIUS,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
+    public boolean isValidCard(AbstractCard c) {
+
+        boolean isValid = false;
+
+        if (c != null && c.getType() == CardType.CHARACTER) {
+            isValid = true;
+        }
+
+        return isValid;
+
+    }
+    
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Consiliarius(cardResources);
-        card.setBehaviour(new ConsiliariusBehaviour(card));
+        Consiliarius card = new Consiliarius();
+        card.setBehaviour(new RearrangerBehaviour(card, cardResources, CardType.CHARACTER));
 
         return card;
     }

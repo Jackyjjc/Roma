@@ -1,8 +1,8 @@
 package model.card;
 
-import framework.cards.Card;
 import model.ICardResources;
-import model.card.behaviour.LegionariusBehaviour;
+import model.card.behaviour.AttackOppositeBehaviour;
+import framework.cards.Card;
 
 /**
  * Reviewed at 20/05/2012
@@ -11,25 +11,36 @@ import model.card.behaviour.LegionariusBehaviour;
  * @author Junjie CHEN
  */
 
-public class Legionarius extends AbstractCard {
+public class Legionarius extends AbstractCard implements ICardChecker {
 
     private static final int COST = 4;
     private static final int DEFENCE = 5;
 
-    private Legionarius(ICardResources cardResources) {
+    private Legionarius() {
 
         super(Card.LEGIONARIUS,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
+    public boolean isValidCard(AbstractCard target) {
+        boolean isValid = false;
+
+        if (target.getOwner() != null
+                && target.getOwner() != getOwner()) {
+            isValid = true;
+        }
+
+        return isValid;
+    }
+
+    
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Legionarius(cardResources);
-        card.setBehaviour(new LegionariusBehaviour(card));
+        Legionarius card = new Legionarius();
+        card.setBehaviour(new AttackOppositeBehaviour(card, cardResources, card));
 
         return card;
     }

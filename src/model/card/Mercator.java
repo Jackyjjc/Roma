@@ -16,20 +16,19 @@ public class Mercator extends AbstractCard {
     private static final int COST = 7;
     private static final int DEFENCE = 2;
 
-    private Mercator(ICardResources cardResources) {
+    private Mercator() {
 
         super(Card.MERCATOR,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Mercator(cardResources);
-        card.setBehaviour(new MercatorBehaviour(card));
+        AbstractCard card = new Mercator();
+        card.setBehaviour(new MercatorBehaviour(card, cardResources));
 
         return card;
     }

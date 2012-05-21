@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.ICardStorage;
 import model.IDisc;
 import model.InputHandler;
@@ -9,13 +10,13 @@ import model.card.ICardChecker;
 
 public class GladiatorBehaviour extends Behaviour implements ICardChecker {
 
-    public GladiatorBehaviour(AbstractCard host) {
-        super(host);
+    public GladiatorBehaviour(AbstractCard host, ICardResources cardResources) {
+        super(host, cardResources);
     }
 
     public void complete() {
 
-        InputHandler handler = getHost().getCardResources().getInputHandler();
+        InputHandler handler = getCardResources().getInputHandler();
         IDisc disc = handler.getDiscInput();
         AbstractCard target = disc.getCard();
         ICardStorage opponentHand;

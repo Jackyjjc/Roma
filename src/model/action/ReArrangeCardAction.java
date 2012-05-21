@@ -7,12 +7,12 @@ import model.runner.CardActivateManager;
 import framework.cards.Card;
 import framework.interfaces.GameState;
 
-public class ReLayCardAction extends InputAction {
+public class ReArrangeCardAction extends InputAction {
 
     private Card name;
     private int diceDisc;
     
-    public ReLayCardAction(GameState g, CardActivateManager manager,
+    public ReArrangeCardAction(GameState g, CardActivateManager manager,
                            InputHandler handler, Card name, int diceDisc) {
         super(g, manager, handler);
         this.name = name;
@@ -27,7 +27,7 @@ public class ReLayCardAction extends InputAction {
         
         boolean isValid = false;
         
-        ICardChecker checker = (ICardChecker) getCardActivateManager().getActivatedCard().getBehaviour();
+        ICardChecker checker = (ICardChecker) getCardActivateManager().getActivatedCard();
         getInputHandler().addCardInput(getGameState().getWhoseTurn(), name);
         AbstractCard card = getInputHandler().getCardInput();
         

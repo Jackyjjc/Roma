@@ -1,10 +1,9 @@
 package model.card;
 
-import framework.cards.Card;
-import model.ICardResources;
 import model.IDisc;
 import model.IPlayer;
 import model.card.behaviour.Behaviour;
+import framework.cards.Card;
 
 public class AbstractCard {
 
@@ -20,12 +19,9 @@ public class AbstractCard {
     private int defence;
     private IDisc disc;
 
-    private ICardResources cardResources;
-
     private Behaviour behaviour;
 
-    public AbstractCard(Card name, CardType type, int cost, int defence,
-                        ICardResources cardResources) {
+    public AbstractCard(Card name, CardType type, int cost, int defence) {
 
         this.name = name;
         this.type = type;
@@ -34,7 +30,6 @@ public class AbstractCard {
         this.cost = cost;
         this.defence = defence;
         this.owner = null;
-        this.cardResources = cardResources;
 
     }
 
@@ -53,10 +48,6 @@ public class AbstractCard {
 
     public void setBehaviour(Behaviour behaviour) {
         this.behaviour = behaviour;
-    }
-
-    public ICardResources getCardResources() {
-        return this.cardResources;
     }
 
     public Card getName() {

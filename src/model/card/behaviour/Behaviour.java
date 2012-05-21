@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.IDisc;
 import model.IPlayer;
 import model.IResourceStorage;
@@ -10,11 +11,13 @@ public abstract class Behaviour {
     private static final int DEFAULT_LIVES = 1;
     
     private AbstractCard host;
+    private ICardResources cardResources;
     private int livesLeft;
     
-    public Behaviour (AbstractCard host) {
+    public Behaviour (AbstractCard host, ICardResources cardResources) {
         this.host = host;
         this.livesLeft = DEFAULT_LIVES;
+        this.cardResources = cardResources;
     }
     
     public void initialise() {
@@ -28,7 +31,7 @@ public abstract class Behaviour {
         boolean succeed = false;
 
         AbstractCard host = getHost();
-        IResourceStorage bank = getHost().getCardResources().getBank();
+        IResourceStorage bank = getCardResources().getBank();
 
         if (host.getOwner() == null || host.getOwner().getMoney() >= host.getCost()) {
             disc.layCard(host);
@@ -43,7 +46,7 @@ public abstract class Behaviour {
     public void disCard() {
 
         AbstractCard host = getHost();
-        IPlayer currentPlayer = host.getCardResources().getCurrentPlayer();
+        IPlayer currentPlayer = getCardResources().getCurrentPlayer();
         
         if (host.getOwner() != currentPlayer
                 && livesLeft > 1) {
@@ -58,7 +61,7 @@ public abstract class Behaviour {
             host.setCost(host.getDefaultCost());
             host.setDefence(host.getDefaultDefence());
 
-            host.getCardResources().getDiscardStorage().pushCard(host);
+            getCardResources().getDiscardStorage().pushCard(host);
             
             reset();
         }
@@ -82,5 +85,9 @@ public abstract class Behaviour {
     
     void reset() {
         livesLeft = DEFAULT_LIVES;
+    }
+    
+    public ICardResources getCardResources() {
+        return this.cardResources;
     }
 }

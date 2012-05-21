@@ -16,20 +16,19 @@ public class Consul extends AbstractCard {
     private static final int COST = 3;
     private static final int DEFENCE = 3;
 
-    private Consul(ICardResources cardResources) {
+    private Consul() {
 
         super(Card.CONSUL,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Consul(cardResources);
-        card.setBehaviour(new ConsulBehaviour(card));
+        AbstractCard card = new Consul();
+        card.setBehaviour(new ConsulBehaviour(card, cardResources));
 
         return card;
     }

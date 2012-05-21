@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.IDisc;
 import model.card.AbstractCard;
 import model.card.CardFactory;
@@ -19,15 +20,14 @@ public class ScaenicusBehaviour extends Behaviour implements ICardChecker {
     private AbstractCard oldHost;
     private CardFactory factory;
 
-    public ScaenicusBehaviour(AbstractCard host, CardFactory factory) {
-        super(host);
+    public ScaenicusBehaviour(AbstractCard host, ICardResources cardResources, CardFactory factory) {
+        super(host, cardResources);
         this.factory = factory;
     }
 
     public void mimic() {
 
-        AbstractCard host = getHost();
-        IDisc disc = host.getCardResources().getInputHandler().getDiscInput();
+        IDisc disc = getCardResources().getInputHandler().getDiscInput();
 
         AbstractCard mimicCard = factory.create(disc.getCard().getName());
         mimicBehaviour = mimicCard.getBehaviour();

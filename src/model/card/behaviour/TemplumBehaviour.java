@@ -1,6 +1,7 @@
 package model.card.behaviour;
 
 import model.Die;
+import model.ICardResources;
 import model.IPlayer;
 import model.IResourceStorage;
 import model.InputHandler;
@@ -8,16 +9,15 @@ import model.card.AbstractCard;
 import model.card.IForumListener;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Administrator
- * Date: 13/05/12
- * Time: 11:07 PM
- * To change this template use File | Settings | File Templates.
+ *
+ *@author Chris Fong
+ *@author Junjie CHEN
+ *
  */
 public class TemplumBehaviour extends Behaviour implements IForumListener {
 
-    public TemplumBehaviour(AbstractCard host) {
-        super(host);
+    public TemplumBehaviour(AbstractCard host, ICardResources cardResources) {
+        super(host, cardResources);
     }
 
     public void complete() {
@@ -38,9 +38,9 @@ public class TemplumBehaviour extends Behaviour implements IForumListener {
     @Override
     public void alert() {
 
-        InputHandler handler = getHost().getCardResources().getInputHandler();
+        InputHandler handler = getCardResources().getInputHandler();
 
-        IResourceStorage bank = getHost().getCardResources().getBank();
+        IResourceStorage bank = getCardResources().getBank();
         IPlayer player = getHost().getOwner();
 
         Die dieInput = handler.getDieInput();

@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.IPlayer;
 import model.InputHandler;
 import model.card.AbstractCard;
@@ -9,9 +10,8 @@ public class MercatorBehaviour extends Behaviour {
     private static final int TRADING_PRICE = 2;
     private static final int TRADING_REWARD = 1;
 
-    public MercatorBehaviour(AbstractCard host) {
-        super(host);
-        // TODO Auto-generated constructor stub
+    public MercatorBehaviour(AbstractCard host, ICardResources cardResources) {
+        super(host, cardResources);
     }
 
 
@@ -20,7 +20,7 @@ public class MercatorBehaviour extends Behaviour {
         IPlayer owner = getHost().getOwner();
         IPlayer opponent = owner.getOpponent();
 
-        InputHandler handler = getHost().getCardResources().getInputHandler();
+        InputHandler handler = getCardResources().getInputHandler();
 
         while (handler.getBooleanInput()) {
 

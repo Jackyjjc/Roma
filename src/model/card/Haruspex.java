@@ -1,8 +1,9 @@
 package model.card;
 
-import framework.cards.Card;
 import model.ICardResources;
-import model.card.behaviour.HaruspexBehaviour;
+import model.ICardStorage;
+import model.card.behaviour.RetrieveCardFromPileBehaviour;
+import framework.cards.Card;
 
 /**
  * Reviewed at 20/05/2012
@@ -11,26 +12,39 @@ import model.card.behaviour.HaruspexBehaviour;
  * @author Junjie CHEN
  */
 
-public class Haruspex extends AbstractCard {
+public class Haruspex extends AbstractCard implements ICardChecker {
 
     private static final int COST = 4;
     private static final int DEFENCE = 3;
 
-    private Haruspex(ICardResources cardResources) {
+    private Haruspex() {
 
         super(Card.HARUSPEX,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Haruspex(cardResources);
-        card.setBehaviour(new HaruspexBehaviour(card));
+        Haruspex card = new Haruspex();
+        ICardStorage deck = cardResources.getDeckStorage();
+        
+        card.setBehaviour(new RetrieveCardFromPileBehaviour(card, cardResources, deck, card));
 
+        
         return card;
+    }
+    
+    public boolean isValidCard(AbstractCard card) {
+
+        boolean isValid = false;
+
+        if (card != null) {
+            isValid = true;
+        }
+
+        return isValid;
     }
 }

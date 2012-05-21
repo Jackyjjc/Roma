@@ -10,13 +10,12 @@ public class Scaenicus extends AbstractCard {
     private static final int COST = 8;
     private static final int DEFENCE = 3;
 
-    private Scaenicus(ICardResources cardResources) {
+    private Scaenicus() {
 
         super(Card.SCAENICUS,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
@@ -28,8 +27,8 @@ public class Scaenicus extends AbstractCard {
 
     static AbstractCard create(ICardResources cardResources, CardFactory factory) {
 
-        AbstractCard card = new Scaenicus(cardResources);
-        card.setBehaviour(new ScaenicusBehaviour(card, factory));
+        AbstractCard card = new Scaenicus();
+        card.setBehaviour(new ScaenicusBehaviour(card, cardResources, factory));
 
         return card;
     }

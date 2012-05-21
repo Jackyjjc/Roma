@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.IResourceStorage;
 import model.card.AbstractCard;
 import model.card.Action;
@@ -16,8 +17,8 @@ public class BasilicaBehaviour extends Behaviour implements IForumListener {
 
     private static final int ADDITIONAL_VP = 2;
 
-    public BasilicaBehaviour(AbstractCard host) {
-        super(host);
+    public BasilicaBehaviour(AbstractCard host, ICardResources cardResources) {
+        super(host, cardResources);
     }
 
     public void complete() {
@@ -26,7 +27,7 @@ public class BasilicaBehaviour extends Behaviour implements IForumListener {
 
     public void alert() {
 
-        IResourceStorage bank = getHost().getCardResources().getBank();
+        IResourceStorage bank = getCardResources().getBank();
         Action.attainVP(bank, getHost().getOwner(), ADDITIONAL_VP);
 
     }

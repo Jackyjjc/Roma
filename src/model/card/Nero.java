@@ -1,8 +1,8 @@
 package model.card;
 
-import framework.cards.Card;
 import model.ICardResources;
-import model.card.behaviour.NeroBehaviour;
+import model.card.behaviour.KamikazeBehaviour;
+import framework.cards.Card;
 
 /**
  * Reviewed at 20/05/2012
@@ -11,25 +11,34 @@ import model.card.behaviour.NeroBehaviour;
  * @author Junjie CHEN
  */
 
-public class Nero extends AbstractCard {
+public class Nero extends AbstractCard implements ICardChecker {
 
     private static final int COST = 8;
     private static final int DEFENCE = 9;
 
-    private Nero(ICardResources cardResources) {
+    private Nero() {
 
         super(Card.NERO,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
+    public boolean isValidCard(AbstractCard c) {
+        boolean isValid = false;
+
+        if (c.getOwner() != null && c.getOwner() != getOwner()) {
+            isValid = true;
+        }
+
+        return isValid;
+    }
+    
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Nero(cardResources);
-        card.setBehaviour(new NeroBehaviour(card));
+        Nero card = new Nero();
+        card.setBehaviour(new KamikazeBehaviour(card, CardType.BUILDING, cardResources, card));
 
         return card;
     }

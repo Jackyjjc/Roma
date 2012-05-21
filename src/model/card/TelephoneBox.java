@@ -14,20 +14,19 @@ public class TelephoneBox extends AbstractCard {
     private static final int COST = 5;
     private static final int DEFENCE = 2;
 
-    public TelephoneBox(ICardResources cardResources) {
+    public TelephoneBox() {
 
         super(Card.TELEPHONEBOX,
                 CardType.BUILDING,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new TelephoneBox(cardResources);
-        card.setBehaviour(new TelephoneBoxBehaviour(card, cardResources.getTurnMover()));
+        AbstractCard card = new TelephoneBox();
+        card.setBehaviour(new TelephoneBoxBehaviour(card, cardResources, cardResources.getTurnMover()));
 
         return card;
     }

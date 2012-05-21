@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.IPlayer;
 import model.card.AbstractCard;
 import model.card.Action;
@@ -15,8 +16,8 @@ public class TribunusPlebisBehaviour extends Behaviour {
 
     private static final int AMOUNT = 1;
 
-    public TribunusPlebisBehaviour(AbstractCard host) {
-        super(host);
+    public TribunusPlebisBehaviour(AbstractCard host, ICardResources cardResources) {
+        super(host, cardResources);
     }
 
     public void complete() {
