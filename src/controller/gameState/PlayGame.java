@@ -267,9 +267,10 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             view.enableStopButton(true);
         
         } else if (card == Card.FORUM) {
-            
-            view.showDieInputDialog();
-            view.enableActionDiceAdapter(false);
+            if(g.getActionDice().length >= 1) {
+                view.showDieInputDialog();
+                view.enableActionDiceAdapter(false);
+            }
         } else if (card == Card.TELEPHONEBOX) {
             
             if(g.getActionDice().length >= 2) {
