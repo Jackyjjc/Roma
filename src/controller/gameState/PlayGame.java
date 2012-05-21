@@ -232,9 +232,11 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                 }
 
                 int index = 0;
-                for (int i = 0; i < pile.size(); i++) {
+                boolean found = false;
+                for (int i = 0; !found && i < pile.size(); i++) {
                     if (pile.get(i) == c) {
                         index = i;
+                        found =  true;
                     }
                 }
 

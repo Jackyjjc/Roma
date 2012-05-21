@@ -192,7 +192,7 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
 
             c = g.getDiscard().get(index);
 
-        } else if (activatedCard instanceof Haruspex) {
+        } else {
 
             c = g.getDeck().get(index);
         }
