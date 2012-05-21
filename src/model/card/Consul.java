@@ -1,6 +1,7 @@
 package model.card;
 
 import framework.cards.Card;
+import model.Die;
 import model.ICardResources;
 import model.card.behaviour.ConsulBehaviour;
 
@@ -11,7 +12,7 @@ import model.card.behaviour.ConsulBehaviour;
  * @author Junjie CHEN
  */
 
-public class Consul extends AbstractCard {
+public class Consul extends AbstractCard implements IDieChecker {
 
     private static final int COST = 3;
     private static final int DEFENCE = 3;
@@ -24,7 +25,7 @@ public class Consul extends AbstractCard {
                 DEFENCE);
 
     }
-
+    
     static AbstractCard create(ICardResources cardResources) {
 
         AbstractCard card = new Consul();
@@ -32,4 +33,5 @@ public class Consul extends AbstractCard {
 
         return card;
     }
+
 }

@@ -26,14 +26,12 @@ public class Haruspex extends AbstractCard implements ICardChecker {
 
     }
 
-    static AbstractCard create(ICardResources cardResources) {
+    static AbstractCard create(ICardResources cardResources, ICardStorage deck) {
 
         Haruspex card = new Haruspex();
-        ICardStorage deck = cardResources.getDeckStorage();
         
         card.setBehaviour(new RetrieveCardFromPileBehaviour(card, cardResources, deck, card));
 
-        
         return card;
     }
     

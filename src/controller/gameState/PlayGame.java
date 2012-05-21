@@ -206,7 +206,7 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                 Card c = selectCard(pile, pile.size());
                 target = pileStorage.getCard(c);
 
-                ICardChecker checker = (ICardChecker) g.getCardActivateManager().getActivatedCard().getBehaviour();
+                ICardChecker checker = (ICardChecker) g.getCardActivateManager().getActivatedCard();
                 while (!checker.isValidCard(target)) {
                     c = selectCard(pile, pile.size());
                     target = pileStorage.getCard(c);
@@ -319,7 +319,7 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             if(!disc.isEmpty()) {
                 boolean confirm = view.showTargetConfirmDialog(disc.getCard().getName());
                 if(confirm) {
-                    ICardChecker checker = (ICardChecker) behaviour;
+                    ICardChecker checker = (ICardChecker) card;
                     
                     if(checker.isValidCard(disc.getCard())) {
                         

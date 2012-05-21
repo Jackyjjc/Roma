@@ -32,18 +32,6 @@ public class ConsulBehaviour extends Behaviour implements IDieChecker {
         }
     }
 
-    private boolean isValidDie(Die die, int change) {
-
-        boolean isValid = false;
-
-        if (!die.isUsed() && (die.getValue() + change) <= MAX_DIE_VALUE
-                && (die.getValue() + change >= MIN_DIE_VALUE)) {
-            isValid = true;
-        }
-
-        return isValid;
-    }
-
     public boolean isValidDie(Die die) {
         return !die.isUsed();
     }
