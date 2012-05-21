@@ -40,28 +40,12 @@ public class ConsiliariusBehaviour extends Behaviour implements ICardChecker {
 
         ICardStorage hand = getHost().getOwner().getHand();
         
-        layCards();
-        
         for (AbstractCard c : charCards) {
             c.setCost(c.getDefaultCost());
         }
 
         InputHandler handler = getHost().getCardResources().getInputHandler();
         handler.setList(hand);
-    }
-
-    private void layCards() {
-        
-        InputHandler handler = getHost().getCardResources().getInputHandler();
-        
-        AbstractCard card = handler.getCardInput();
-        while(card != null) {
-            
-            IDisc disc = handler.getDiscInput();        
-            card.lay(disc);
-            
-            card = handler.getCardInput();
-        }
     }
     
     public boolean isValidCard (AbstractCard c) {

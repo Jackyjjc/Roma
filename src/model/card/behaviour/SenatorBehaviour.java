@@ -20,8 +20,6 @@ public class SenatorBehaviour extends Behaviour implements ICardChecker {
 	}
 
 	public void complete() {
-
-	    layCards();
 	    
         for (AbstractCard c : charCards) {
             c.setCost(c.getDefaultCost());
@@ -40,25 +38,6 @@ public class SenatorBehaviour extends Behaviour implements ICardChecker {
             c.setCost(0);
         }
 
-    }
-    
-    private void layCards() {
-        
-        InputHandler handler = getHost().getCardResources().getInputHandler();
-      
-        AbstractCard card = handler.getCardInput();
-        
-        IPlayer owner = getHost().getOwner();
-       
-        while(card != null) {
-            
-            owner.getHand().removeCard(card);
-            
-            IDisc disc = handler.getDiscInput();        
-            card.lay(disc);
-            
-            card = handler.getCardInput();
-        }
     }
 
     public boolean isValidCard(AbstractCard card) {

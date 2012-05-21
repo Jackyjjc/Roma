@@ -32,8 +32,6 @@ public class MachinaBehaviour extends Behaviour implements ICardChecker {
     public void complete() {
      
         ICardStorage hand = getHost().getOwner().getHand();
-     
-        layCards();
         
         for (AbstractCard c : buildingCards) {
             c.setCost(c.getDefaultCost());
@@ -41,21 +39,6 @@ public class MachinaBehaviour extends Behaviour implements ICardChecker {
         
         getHost().getCardResources().getInputHandler().setList(hand);
     }
-    
-    private void layCards() {
-        
-        InputHandler handler = getHost().getCardResources().getInputHandler();
-        
-        AbstractCard card = handler.getCardInput();
-        while(card != null) {
-            
-            IDisc disc = handler.getDiscInput();        
-            card.lay(disc);
-            
-            card = handler.getCardInput();
-        }
-    }
-
     
     public boolean isValidCard(AbstractCard c) {
         

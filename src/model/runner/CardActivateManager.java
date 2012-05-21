@@ -1,5 +1,6 @@
 package model.runner;
 
+import model.ICardStorage;
 import model.IDisc;
 import model.IGameIO;
 import model.IPlayer;
@@ -15,6 +16,7 @@ import model.action.AddIntInputAction;
 import model.action.ChooseCardFromPileAction;
 import model.action.CompleteAction;
 import model.action.MimicAction;
+import model.action.ReLayCardAction;
 import model.card.AbstractCard;
 import model.card.Aesculapinum;
 import model.card.Haruspex;
@@ -100,12 +102,16 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
 
     public void placeCard(Card name, int diceDisc) {
 
+        turnMover.getCurrentTurn().addAction(new ReLayCardAction(g, this, handler, name, diceDisc));
+        
         IPlayer player = manager.getCurrentPlayer();
-
-        turnMover.getCurrentTurn().addAction(new AddCardInputAction(g, this, handler, player.getId(), name));
-        handler.addCardInput(player.getId(), name);
-        turnMover.getCurrentTurn().addAction(new AddDiscInputAction(g, this, handler, player.getId(), diceDisc));
-        handler.addDiscInput(player.getId(), diceDisc - 1);
+        ICardStorage listOfCards = handler.getList();
+        
+        IDisc disc = player.getField().getDisc(diceDisc - 1);
+        AbstractCard card = listOfCards.getCard(name);
+        
+        card.lay(disc);
+        listOfCards.removeCard(card);
         
     }
 

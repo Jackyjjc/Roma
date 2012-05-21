@@ -34,8 +34,6 @@ public class ArchitectusBehaviour extends Behaviour implements ICardChecker {
     }
     
     public void complete() {
-
-        layCards();
         
         for (AbstractCard card : buildingCards) {
             card.setCost(card.getDefaultCost());
@@ -44,21 +42,6 @@ public class ArchitectusBehaviour extends Behaviour implements ICardChecker {
         buildingCards.clear();
     }
 
-
-    private void layCards() {
-        
-        InputHandler handler = getHost().getCardResources().getInputHandler();
-        AbstractCard card = handler.getCardInput();
-        IPlayer owner = getHost().getOwner();
-        
-        while(card != null) {
-            owner.getHand().removeCard(card);
-            IDisc disc = handler.getDiscInput();
-            card.lay(disc);
-            card = handler.getCardInput();
-        }
-    }
-    
     public boolean isValidCard(AbstractCard card) {
         
         boolean isValid = false;
