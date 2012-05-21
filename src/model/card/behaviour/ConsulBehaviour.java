@@ -4,13 +4,14 @@ import model.Die;
 import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.IDieChecker;
+import model.card.IIntegerChecker;
 
 /**
  * @author Chris Fong
  * @author Jacky CHEN
  */
 
-public class ConsulBehaviour extends Behaviour implements IDieChecker {
+public class ConsulBehaviour extends Behaviour implements IDieChecker, IIntegerChecker {
 
     private static final int MIN_DIE_VALUE = 1;
     private static final int MAX_DIE_VALUE = 6;
@@ -43,6 +44,17 @@ public class ConsulBehaviour extends Behaviour implements IDieChecker {
         return isValid;
     }
 
+    //the two function below are for time paradox checking
+    public boolean isValidInt(int change) {
+        boolean isValid = false;
+        
+        if(change == 1 || change == -1) {
+            isValid = true;
+        }
+        
+        return isValid;
+    }
+    
     public boolean isValidDie(Die die) {
         return !die.isUsed();
     }

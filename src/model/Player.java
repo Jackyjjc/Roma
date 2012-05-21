@@ -1,6 +1,5 @@
 package model;
 
-import framework.cards.Card;
 import model.card.CardFactory;
 import model.cardcollection.CardCollectionFactory;
 
@@ -59,7 +58,6 @@ class Player extends ResourceStorage implements IPlayer {
 
         this.id = id;
         this.hand = CardCollectionFactory.create(factory);
-        hand.appendCard(factory.create(Card.SCAENICUS));
         this.hand.setOwner(this);
         this.field = Field.createField(turnMover, this, bank);
     }

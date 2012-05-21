@@ -72,6 +72,10 @@ public abstract class Behaviour {
         return host;
     }
 
+    public IPlayer getOwner() {
+        return getHost().getOwner();
+    }
+    
     public void setLives(int newLives) {
         this.livesLeft = newLives;
     }

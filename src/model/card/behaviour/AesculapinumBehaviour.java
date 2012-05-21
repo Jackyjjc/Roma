@@ -14,22 +14,22 @@ import model.card.IIntegerChecker;
 
 public class AesculapinumBehaviour extends Behaviour implements ICardChecker, IIntegerChecker {
 
+    private InputHandler handler;
+    private ICardStorage discard;
+    
     public AesculapinumBehaviour(AbstractCard host) {
         super(host);
+        this.handler = getHost().getCardResources().getInputHandler();
+        this.discard = getHost().getCardResources().getDiscardStorage();
     }
 
     @Override
     public void initialise() {
-        InputHandler handler = getHost().getCardResources().getInputHandler();
-        ICardStorage discard = getHost().getCardResources().getDiscardStorage();
         handler.setList(discard);
     }
 
     public void complete() {
-
-        InputHandler handler = getHost().getCardResources().getInputHandler();
-        ICardStorage hand = getHost().getOwner().getHand();
-        ICardStorage discard = getHost().getCardResources().getDiscardStorage();
+        ICardStorage hand = getOwner().getHand();
         AbstractCard card = handler.getCardInput();
 
         if (isValidCard(card)) {
@@ -43,8 +43,7 @@ public class AesculapinumBehaviour extends Behaviour implements ICardChecker, II
     public boolean isValidInt(int index) {
 
         boolean isValid = false;
-
-        ICardStorage discard = getHost().getCardResources().getDiscardStorage();
+        
         AbstractCard card = discard.getCard(index);
 
         if (discard.size() > index) {
