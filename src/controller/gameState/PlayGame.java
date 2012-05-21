@@ -127,7 +127,14 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
     
     public void layCard(int fromIndex, int toIndex) {
         
+        AbstractCard activatedCard = g.getCardActivateManager().getActivatedCard();
         IPlayer currentPlayer = g.getCurrentPlayer();
+        
+        if(activatedCard instanceof Machina || activatedCard instanceof Consiliarius) {
+            g.getInputHandler().addDiscInput(currentPlayer.getId(), toIndex);
+            g.getInputHandler().addCardInput(currentPlayer.getId(), g.getInputHandler().getList().getCard(fromIndex).getName());
+        }
+        
         AbstractCard card = currentPlayer.getHand().getCard(fromIndex);
         IDisc disc = currentPlayer.getField().getDisc(toIndex);
         
@@ -138,7 +145,6 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
 
         g.getNotifier().notifyListeners();
         
-        AbstractCard activatedCard = g.getCardActivateManager().getActivatedCard();
         ICardStorage hand = g.getCurrentPlayer().getHand();
         if(activatedCard != null && activatedCard instanceof Architectus || activatedCard instanceof Senator) {
             if((activatedCard instanceof Architectus && hand.getCardsOf(CardType.BUILDING).size() == 0) 
@@ -351,12 +357,19 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                     ICardChecker checker = (ICardChecker) card.getBehaviour();
                     
                     if(checker.isValidCard(disc.getCard())) {
-                        manager.chooseDiceDisc(discIndex + 1);
-                        if(card instanceof Onager || card instanceof Velites) {
-                            g.getDiceManager().rollBattleDice();
-                            manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
+                        
+                        if(!(card instanceof Nero && card instanceof Sicarius) 
+                           || (card instanceof Nero && disc.getCard().getType() == CardType.BUILDING) 
+                           || (card instanceof Sicarius && disc.getCard().getType() == CardType.CHARACTER)) {
+                             
+                            manager.chooseDiceDisc(discIndex + 1);
+                            if(card instanceof Onager || card instanceof Velites) {
+                                g.getDiceManager().rollBattleDice();
+                                manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
+                            }
+                            manager.complete();
                         }
-                        manager.complete();
+                        
                     } else {
                         view.showTargetInputDialog();
                     }

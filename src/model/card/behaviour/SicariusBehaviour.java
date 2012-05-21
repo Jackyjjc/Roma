@@ -3,7 +3,6 @@ package model.card.behaviour;
 import model.IDisc;
 import model.InputHandler;
 import model.card.AbstractCard;
-import model.card.CardType;
 import model.card.ICardChecker;
 
 /**
