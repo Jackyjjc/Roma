@@ -1,17 +1,22 @@
 package model.card.behaviour;
 
 import model.IDisc;
+import model.IPlayer;
 import model.IResourceStorage;
 import model.card.AbstractCard;
 
 public abstract class Behaviour {
 
+    private static final int DEFAULT_LIVES = 1;
+    
     private AbstractCard host;
-
-    public Behaviour(AbstractCard host) {
+    private int livesLeft;
+    
+    public Behaviour (AbstractCard host) {
         this.host = host;
+        this.livesLeft = DEFAULT_LIVES;
     }
-
+    
     public void initialise() {
         //hook
     }
@@ -38,18 +43,25 @@ public abstract class Behaviour {
     public void disCard() {
 
         AbstractCard host = getHost();
+        IPlayer currentPlayer = host.getCardResources().getCurrentPlayer();
+        
+        if (host.getOwner() != currentPlayer
+                && livesLeft > 1) {
+            livesLeft--;
+           
+        } else {
+            
+            if (host.getDisc() != null) {
+                host.getDisc().removeCard();
+            }
 
-        if (host.getDisc() != null) {
+            host.setCost(host.getDefaultCost());
+            host.setDefence(host.getDefaultDefence());
 
-            host.getDisc().removeCard();
-
+            host.getCardResources().getDiscardStorage().pushCard(host);
+            
+            reset();
         }
-
-        host.setCost(host.getDefaultCost());
-        host.setDefence(host.getDefaultDefence());
-
-        host.getCardResources().getDiscardStorage().pushCard(host);
-
     }
 
     public void setHost(AbstractCard newHost) {
@@ -60,4 +72,15 @@ public abstract class Behaviour {
         return host;
     }
 
+    public void setLives(int newLives) {
+        this.livesLeft = newLives;
+    }
+    
+    public int getLives() {
+        return livesLeft;
+    }
+    
+    void reset() {
+        livesLeft = DEFAULT_LIVES;
+    }
 }

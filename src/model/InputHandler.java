@@ -47,15 +47,6 @@ public class InputHandler {
 
     }
 
-    public void addCardInput(int playerId, AbstractCard c) {
-
-        IPlayer currentPlayer = g.getCurrentPlayer();
-
-        if (playerId == currentPlayer.getId()) {
-            cardInputQueue.add(c);
-        }
-    }
-
     public AbstractCard getCardInput() {
 
         AbstractCard cardInput = null;
@@ -144,7 +135,6 @@ public class InputHandler {
     public int getBattleDieInput() {
         return battleDieInput;
     }
-
 
     public void setList(ICardStorage list) {
         this.list = list;

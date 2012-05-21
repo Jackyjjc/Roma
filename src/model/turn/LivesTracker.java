@@ -33,6 +33,7 @@ public class LivesTracker implements ICardTracker {
 
     public int getLives(int index) {
         int lives = 9;
+        
         if (!isEmpty()) {
             lives = katLives.get(index);
         }

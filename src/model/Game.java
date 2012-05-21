@@ -19,8 +19,6 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
     private static final int TOTAL_VP = 36;
     private static final int NUM_ACTION_DICE = 3;
 
-    private static final boolean DECK = true;
-
     private ICardStorage deck;
     private ICardStorage discard;
     private DiceManager diceManager;
