@@ -27,4 +27,5 @@ public interface IGameDisplayState {
     
     public int getBattleDiceValue();
     
+    public List<Card> getList();
 }

@@ -46,6 +46,7 @@ public class TemplumBehaviour extends Behaviour implements IForumListener {
         Die dieInput = handler.getDieInput();
         
         if(dieInput != null) {
+            dieInput.use();
             bank.transferVP(player, dieInput.getValue());
         }
     }

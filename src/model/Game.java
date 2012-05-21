@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -137,6 +138,8 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
         
         int VPdeductAmount = currentPlayer.getField().countUnoccupiedDiscs();
         currentPlayer.transferVP(bank, VPdeductAmount);
+        
+        diceManager.rollActionDice();
     }
     
     /* =========================================================================*
@@ -309,6 +312,17 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
             this.setPlayerCardsOnDiscs(i,blankField);
         }
         this.setPlayerVictoryPoints(player, 0);
+    }
+
+    public List<Card> getList() {
+        
+        ICardStorage storage = inputHandler.getList();
+        List<Card> list = new ArrayList<Card>();
+        for(int i = 0; i < storage.size(); i++) {
+            list.add(storage.getCard(i).getName());
+        }
+        
+        return list;
     }
     
 }

@@ -39,6 +39,7 @@ public class MouseDraggingAdapter extends MouseAdapter {
 
             if (source instanceof JDie) {
                 JDie die = (JDie) source;
+                die.setVisible(false);
                 handler.addDieInput(die.getValue());
             }
         }

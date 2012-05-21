@@ -297,4 +297,45 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
     public JHand getHand() {
         return background.getHand();
     }
+    
+    public boolean showTemplumConfirmDialog() {
+        
+        boolean confirm = false;
+        
+        int n = JOptionPane.showConfirmDialog(
+                this,
+                "Do you want to activate templum?",
+                "Activate Templum",
+                JOptionPane.YES_NO_OPTION);
+        
+        if(n == JOptionPane.YES_OPTION) {
+            confirm = true;
+        }
+        
+        return confirm;
+    }
+    
+    
+    public boolean showTelephoneBoxConfirmDialog() {
+        
+        boolean confirm = false;
+        
+        int n = JOptionPane.showConfirmDialog(
+                this,
+                "Do you want to travel forward??",
+                "Dr. Who",
+                JOptionPane.YES_NO_OPTION);
+        
+        if(n == JOptionPane.YES_OPTION) {
+            confirm = true;
+        }
+        
+        return confirm;
+    }
+    
+    public void gameOver() {
+        JOptionPane.showMessageDialog(this,
+                "Game Over!!!");
+        System.exit(1);
+    }
 }

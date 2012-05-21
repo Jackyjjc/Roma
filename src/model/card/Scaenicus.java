@@ -5,7 +5,7 @@ import model.card.behaviour.Behaviour;
 import model.card.behaviour.ScaenicusBehaviour;
 import framework.cards.Card;
 
-class Scaenicus extends AbstractCard {
+public class Scaenicus extends AbstractCard {
 
     private static final int COST = 8;
     private static final int DEFENCE = 3;

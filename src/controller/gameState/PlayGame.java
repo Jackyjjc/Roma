@@ -1,44 +1,53 @@
 package controller.gameState;
 
 import framework.cards.Card;
+import framework.interfaces.MoveMaker;
 import gui.GraphicalView;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import model.BribeDisc;
-import model.Die;
 import model.Game;
 import model.ICardStorage;
 import model.IDisc;
 import model.IField;
 import model.IPlayer;
 import model.card.AbstractCard;
-import model.card.Aesculapinum;
 import model.card.Architectus;
 import model.card.CardType;
 import model.card.Centurio;
 import model.card.Consiliarius;
 import model.card.Consul;
+import model.card.Forum;
 import model.card.Gladiator;
-import model.card.Haruspex;
 import model.card.ICardChecker;
-import model.card.Legat;
-import model.card.Legionarius;
 import model.card.Machina;
-import model.card.Mercator;
-import model.card.Mercatus;
 import model.card.Nero;
 import model.card.Onager;
 import model.card.Praetorianus;
+import model.card.Scaenicus;
 import model.card.Senator;
 import model.card.Sicarius;
-import model.card.TribunusPlebis;
+import model.card.TelephoneBox;
+import model.card.Templum;
 import model.card.Velites;
+import model.card.behaviour.ArchitectusBehaviour;
+import model.card.behaviour.Behaviour;
+import model.card.behaviour.CenturioBehaviour;
+import model.card.behaviour.ConsulBehaviour;
+import model.card.behaviour.ForumBehaviour;
+import model.card.behaviour.GladiatorBehaviour;
+import model.card.behaviour.NeroBehaviour;
+import model.card.behaviour.OnagerBehaviour;
+import model.card.behaviour.PraetorianusBehaviour;
+import model.card.behaviour.ScaenicusBehaviour;
+import model.card.behaviour.SenatorBehaviour;
+import model.card.behaviour.SicariusBehaviour;
+import model.card.behaviour.TelephoneBoxBehaviour;
+import model.card.behaviour.VelitesBehaviour;
 import model.runner.CardActivateManager;
+import model.runner.GameController;
 import controller.GuiInputHandler;
 import controller.IGameState;
-import controller.IGuiCardInputListener;
 import controller.IGuiDieInputListener;
 import controller.IGuiDiscInputListener;
 import controller.ILayCardListener;
@@ -47,18 +56,23 @@ import controller.IStopEffectListener;
 import controller.IUseDieInputListener;
 
 public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameState, IPassListener, 
-                                 IGuiDieInputListener, IGuiCardInputListener, IGuiDiscInputListener, 
+                                 IGuiDieInputListener, IGuiDiscInputListener, 
                                  IStopEffectListener {
 
     private Game g;
     private GraphicalView view;
     private GuiInputHandler handler;
     private IGameState next;
+    private MoveMaker moveMaker;
+    
+    private boolean activateTemplum;
     
     public PlayGame(Game g, GraphicalView view, GuiInputHandler handler) {
         this.g = g;
         this.view = view;
         this.handler = handler;
+        this.activateTemplum = false;
+        this.moveMaker = new GameController(g);
     }
 
     public void run() {
@@ -66,7 +80,6 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         handler.setLayCardListener(this);
         handler.setUseActionDieListener(this);
         handler.setPassListener(this);
-        handler.setCardInputListener(this);
         handler.setDieInputListener(this);
         handler.setDiscInputListener(this);
         handler.setStopEffectListener(this);
@@ -84,41 +97,30 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         if(discIndex == 0) {
             
             Card selected = selectCard(g.getDeck(), dieValue);
-            AbstractCard card = g.getDeckStorage().getCard(selected);
-            player.getHand().appendCard(card);
             
-            for(int i = 0; i < dieValue && i < g.getDeckStorage().size(); i++) {
-                AbstractCard c = g.getDeckStorage().popCard();
-                if(c != card) {
-                    g.getDiscardStorage().pushCard(c);
-                }
-            }
-            
-            g.getDiceManager().getActionDie(dieValue).use();
+            moveMaker.activateCardsDisc(dieValue, selected);
             
             g.getNotifier().notifyListeners();
             
         } else if(discIndex == 8) {
-            g.getBank().transferMoney(player, dieValue);
-            g.getDiceManager().getActionDie(dieValue).use();
+            
+            moveMaker.activateMoneyDisc(dieValue);
+            
             g.getNotifier().notifyListeners();
         
         } else {
             
-            if(dieValue == discIndex || discIndex == 7) {
-                IDisc disc = player.getField().getDisc(discIndex - 1);
+            IDisc disc = player.getField().getDisc(discIndex - 1);
+            
+            if(!disc.isEmpty() && (dieValue == discIndex || discIndex == 7)) {
                 
-                if(!disc.isBlocked() && !disc.isEmpty()) {
-                    
-                    if(disc instanceof BribeDisc) {
-                        BribeDisc bribe = (BribeDisc)disc;
-                        bribe.giveBribe(dieValue);
-                        if(g.getCurrentPlayer().getMoney() >= dieValue) {
-                            activateCard(dieValue, disc);
-                        }
-                        
-                    } else {
-                        activateCard(dieValue, disc);
+                if (discIndex != 7) {
+                    moveMaker.chooseCardToActivate(discIndex);
+                    activation(g.getCardActivateManager().getActivatedCard().getName());
+                } else {
+                    if (g.getCurrentPlayer().getMoney() >= dieValue) {
+                        moveMaker.activateBribeDisc(dieValue);
+                        activation(g.getCardActivateManager().getActivatedCard().getName());
                     }
                 }
             }
@@ -131,28 +133,32 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         IPlayer currentPlayer = g.getCurrentPlayer();
         
         if(activatedCard instanceof Machina || activatedCard instanceof Consiliarius) {
-            g.getInputHandler().addDiscInput(currentPlayer.getId(), toIndex);
-            g.getInputHandler().addCardInput(currentPlayer.getId(), g.getInputHandler().getList().getCard(fromIndex).getName());
-        }
+            Card name = g.getInputHandler().getList().getCard(fromIndex).getName();
+            g.getCardActivateManager().placeCard(name, toIndex + 1);
+            if(g.getInputHandler().getList().size() == 0) {
+                g.getCardActivateManager().complete();
+            }
+            g.getNotifier().notifyListeners();
         
-        AbstractCard card = currentPlayer.getHand().getCard(fromIndex);
-        IDisc disc = currentPlayer.getField().getDisc(toIndex);
-        
-        if(currentPlayer.getMoney() >= card.getCost()) {
-            g.getCurrentPlayer().getHand().removeCard(card);
-            card.lay(disc);
-        }
+        } else {
+            AbstractCard card = currentPlayer.getHand().getCard(fromIndex);
+            Behaviour behaviour = card.getBehaviour();
+            
+            if(currentPlayer.getMoney() >= card.getCost()) {
+                moveMaker.placeCard(card.getName(), toIndex + 1);
+            }
 
-        g.getNotifier().notifyListeners();
-        
-        ICardStorage hand = g.getCurrentPlayer().getHand();
-        if(activatedCard != null && activatedCard instanceof Architectus || activatedCard instanceof Senator) {
-            if((activatedCard instanceof Architectus && hand.getCardsOf(CardType.BUILDING).size() == 0) 
-             || activatedCard instanceof Senator && hand.getCardsOf(CardType.CHARACTER).size() == 0) {
+            g.getNotifier().notifyListeners();
+            
+            ICardStorage hand = g.getCurrentPlayer().getHand();
+            if ((behaviour instanceof ArchitectusBehaviour && hand.getCardsOf(
+                    CardType.BUILDING).size() == 0)
+                    || behaviour instanceof SenatorBehaviour
+                    && hand.getCardsOf(CardType.CHARACTER).size() == 0) {
                 view.enableStopButton(false);
                 g.getCardActivateManager().complete();
             }
-        }
+        }    
     }
 
     private Card selectCard(List<Card> cards, int numCards) {
@@ -183,14 +189,19 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         boolean rollAgain = true;;
         
         if(view.showPassDialog()) {
-            g.advanceTurn();
-            g.getDiceManager().rollActionDice();
+            moveMaker.endTurn();
+            
+            if(g.isGameCompleted()) {
+                view.gameOver();
+            }
+            
             g.getNotifier().notifyListeners();
             
             while(rollAgain && g.getDiceManager().isAllSame()) {
                 
                 if(view.reRollDialog()) {
                    g.getDiceManager().rollActionDice(); 
+                   g.setActionDice(g.getActionDice());
                 } else {
                     rollAgain = false;
                 }
@@ -199,45 +210,26 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         }
     }
     
-    private void activateCard(int dieValue, IDisc disc) {
-        
-        Die die = g.getDiceManager().getActionDie(dieValue);
-        
-        g.getCardActivateManager().activate(disc);
-        
+    private void activation(Card card) {
+    
         CardActivateManager manager = g.getCardActivateManager();
-        AbstractCard card = manager.getActivatedCard();
         AbstractCard target = null;
         
-        if(card instanceof Aesculapinum || card instanceof Haruspex) {
+        if(card == Card.AESCULAPINUM || card == Card.HARUSPEX) {
 
-            ICardStorage pileStorage;
-            List<Card> pile;
-            CardType type;
+            ICardStorage pileStorage = g.getInputHandler().getList();
+            List<Card> pile = pileStorage.getCardsWithNames();
             
-            if(card instanceof Aesculapinum) {
-                pileStorage = g.getDiscardStorage();
-                pile = g.getDiscard();
-                type = CardType.CHARACTER;
-            } else {
-                pileStorage = g.getDeckStorage();
-                pile = g.getDeck();
-                type = null;
-            }
-            
-            if (hasCardTypeOf(pileStorage, type) 
-                 && pile.size() != 0) {
+            if (pile.size() != 0) {
 
                 Card c = selectCard(pile, pile.size());
                 target = pileStorage.getCard(c);
 
-                ICardChecker checker = (ICardChecker) card.getBehaviour();
+                ICardChecker checker = (ICardChecker) g.getCardActivateManager().getActivatedCard().getBehaviour();
                 while (!checker.isValidCard(target)) {
                     c = selectCard(pile, pile.size());
                     target = pileStorage.getCard(c);
                 }
-
-                die.use();
 
                 int index = 0;
                 for (int i = 0; i < pile.size(); i++) {
@@ -251,39 +243,44 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
 
             }
             
-        } else if(card instanceof Gladiator || card instanceof Sicarius 
-                || card instanceof Onager || card instanceof Velites || card instanceof Nero) {
+        } else if (card == Card.GLADIATOR || card == Card.SICARIUS 
+                    || card == Card.ONAGER || card == Card.VELITES
+                    || card == Card.NERO || card == Card.PRAETORIANUS
+                    || card == Card.SCAENICUS) {
             
             view.showTargetInputDialog();
-            die.use();
         
-        } else if(card instanceof Legionarius || card instanceof Centurio) {
-            die.use();
-            g.getDiceManager().rollBattleDice();
-            manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
+        } else if (card == Card.LEGAT || card == Card.TRIBUNUSPLEBIS || card == Card.MERCATUS) {
             
-            boolean addDie = false;
-            g.getNotifier().notifyListeners();
-            
-            if(card instanceof Centurio) {
-                
-                if(g.getActionDice().length != 0) {
-                    addDie = view.centurioAddDieDialog();
-                    manager.chooseCenturioAddActionDie(addDie);
-                    if(addDie) {
-                        view.enableActionDiceAdapter(false);
-                    }
-                }
-            }
-            
-            if(!addDie || !(card instanceof Centurio)) {
-                manager.complete();
-            }
-            
-        } else if(card instanceof Legat || card instanceof TribunusPlebis|| card instanceof Mercatus) {
-            die.use();
             manager.complete();
-        } else if(card instanceof Mercator) {
+            
+        } else if (card == Card.CONSUL) {
+            
+            if(g.getActionDice().length > 1) {
+                view.showDieInputDialog();
+                view.enableActionDiceAdapter(false);
+            }
+
+        } else if (card == Card.ARCHITECTUS || card == Card.SENATOR) {
+            
+            view.layCardForFreeDialog();
+            view.enableStopButton(true);
+        
+        } else if (card == Card.FORUM) {
+            
+            view.showDieInputDialog();
+            view.enableActionDiceAdapter(false);
+        } else if (card == Card.TELEPHONEBOX) {
+            
+            if(g.getActionDice().length >= 2) {
+                if(view.showTelephoneBoxConfirmDialog()) {
+                    manager.shouldMoveForwardInTime(true);
+                } else {
+                    manager.shouldMoveForwardInTime(false);
+                }
+                view.showTargetInputDialog();
+            }
+        } else if (card == Card.MERCATOR) {
             
             int maxCanBuy = g.getCurrentPlayer().getMoney() / 2;
             int maxVP = g.getCurrentPlayer().getOpponent().getVP();
@@ -296,57 +293,45 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                     amount = view.showMercatorBuyingDialog(min);
                 }
                 manager.chooseMercatorBuyNum(amount);
-                die.use();
                 manager.complete();
             }
-        } else if(card instanceof Praetorianus) {
-            view.showTargetInputDialog();
-            die.use();
-        } else if(card instanceof Consul) {
-            if(g.getActionDice().length > 1) {
-                die.use();
-                view.showDieInputDialog();
-                view.enableActionDiceAdapter(false);
+        } else if (card == Card.LEGIONARIUS || card == Card.CENTURIO) {
+            
+            g.getDiceManager().rollBattleDice();
+            manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
+            
+            boolean addDie = false;
+            g.getNotifier().notifyListeners();
+            
+            if(card == Card.CENTURIO) {
+                
+                if(g.getActionDice().length != 0) {
+                    addDie = view.centurioAddDieDialog();
+                    manager.chooseCenturioAddActionDie(addDie);
+                    if(addDie) {
+                        view.enableActionDiceAdapter(false);
+                    }
+                }
             }
-        } else if(card instanceof Architectus || card instanceof Senator) {
-            die.use();
-            view.layCardForFreeDialog();
-            view.enableStopButton(true);
-        } else if(card instanceof Machina || card instanceof Consiliarius) {
-            die.use();
-            ICardStorage list = g.getInputHandler().getList();
-            List<Card> displayList = new ArrayList<Card>();
-            for(int i = 0; i < list.size(); i++) {
-                displayList.add(list.getCard(i).getName());
-                System.out.println("added " + list.getCard(i).getName());
+            
+            if(!addDie || !(card == Card.CENTURIO)) {
+                manager.complete();
             }
-            view.getHand().setHand(displayList);
+            
         }
         
         g.getNotifier().notifyListeners();
-    }
-    
-    private boolean hasCardTypeOf(ICardStorage list, CardType type) {
-        
-        boolean hasCard = false;
-        
-        for(int i = 0; i < list.size() && list.size() != 0; i++) {
-            if(type == null || list.getCard(i).getType() == type) {
-                hasCard = true;
-            }
-        }
-        
-        return hasCard;
-        
     }
 
     public void discInput(int discIndex) {
         
         CardActivateManager manager = g.getCardActivateManager();
         AbstractCard card = manager.getActivatedCard();
+        Behaviour behaviour = manager.getActivatedCard().getBehaviour();
         
-        if(card instanceof Gladiator || card instanceof Sicarius 
-                || card instanceof Onager || card instanceof Velites || card instanceof Nero) {
+        if(behaviour instanceof GladiatorBehaviour || behaviour instanceof SicariusBehaviour 
+                || behaviour instanceof OnagerBehaviour || behaviour instanceof VelitesBehaviour 
+                || behaviour instanceof NeroBehaviour) {
             
             IField field = g.getCurrentPlayer().getOpponent().getField();
             IDisc disc = field.getDisc(discIndex);
@@ -354,16 +339,16 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             if(!disc.isEmpty()) {
                 boolean confirm = view.showTargetConfirmDialog(disc.getCard().getName());
                 if(confirm) {
-                    ICardChecker checker = (ICardChecker) card.getBehaviour();
+                    ICardChecker checker = (ICardChecker) behaviour;
                     
                     if(checker.isValidCard(disc.getCard())) {
                         
-                        if(!(card instanceof Nero && card instanceof Sicarius) 
-                           || (card instanceof Nero && disc.getCard().getType() == CardType.BUILDING) 
-                           || (card instanceof Sicarius && disc.getCard().getType() == CardType.CHARACTER)) {
+                        if(!(behaviour instanceof NeroBehaviour && behaviour instanceof SicariusBehaviour) 
+                           || (behaviour instanceof NeroBehaviour && disc.getCard().getType() == CardType.BUILDING) 
+                           || (behaviour instanceof SicariusBehaviour && disc.getCard().getType() == CardType.CHARACTER)) {
                              
                             manager.chooseDiceDisc(discIndex + 1);
-                            if(card instanceof Onager || card instanceof Velites) {
+                            if(card instanceof Onager || behaviour instanceof VelitesBehaviour) {
                                 g.getDiceManager().rollBattleDice();
                                 manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
                             }
@@ -376,24 +361,28 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                 }
             }
             
-        } else if(card instanceof Praetorianus) {
+        } else if(behaviour instanceof PraetorianusBehaviour) {
             manager.chooseDiceDisc(discIndex + 1);
             manager.complete();
+        } else if(card instanceof TelephoneBox) {
+            manager.chooseDiceDisc(discIndex + 1);
+            view.enableActionDiceAdapter(false);
+            view.showDieInputDialog();
+        } else if (behaviour instanceof ScaenicusBehaviour) {
+            manager.getScaenicusMimicTarget(discIndex + 1);
+            activation(g.getCurrentPlayer().getField().getDisc(discIndex).getCard().getName());
         }
         
         g.getNotifier().notifyListeners();
-    }
-
-    public void cardInput(Card card) {
-        
     }
 
     public void dieInput(int dieValue) {
         
         CardActivateManager manager = g.getCardActivateManager();
         AbstractCard card = manager.getActivatedCard();
+        Behaviour behaviour = manager.getActivatedCard().getBehaviour();
         
-        if(card instanceof Consul) {
+        if(behaviour instanceof ConsulBehaviour) {
 
             manager.chooseWhichDiceChanges(dieValue);
             
@@ -413,24 +402,55 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             
             view.enableActionDiceAdapter(true);
         
-        } else if(card instanceof Centurio) {
+        } else if(behaviour instanceof CenturioBehaviour) {
 
-            g.getDiceManager().getActionDie(dieValue).use();
+            manager.chooseActionDice(dieValue);
+            manager.complete();
+            view.enableActionDiceAdapter(true);
+        } else if(activateTemplum) {
+        
+            manager.chooseActivateTemplum(dieValue);
+            manager.complete();
+            activateTemplum = false;
+            view.enableActionDiceAdapter(true);
+            g.getNotifier().notifyListeners();
+            
+        } else if (card instanceof Forum) {
+            
+            manager.chooseActionDice(dieValue);
+            IDisc disc = card.getDisc();
+            if((disc.getNext() != null && disc.getNext().getCard() instanceof Templum) 
+                 || (disc.getPrev() != null && disc.getPrev().getCard() instanceof Templum) 
+                  && g.getActionDice().length >= 1) {
+                if(view.showTemplumConfirmDialog()) {
+                    manager.chooseActivateTemplum(true);
+                    this.activateTemplum = true;
+                    view.showDieInputDialog();
+                }
+            } else {
+                view.enableActionDiceAdapter(true);
+                manager.complete();
+                g.getNotifier().notifyListeners();
+            }
+        } else if(card instanceof TelephoneBox) {
             manager.chooseActionDice(dieValue);
             manager.complete();
             view.enableActionDiceAdapter(true);
         }
         
-        g.getNotifier().notifyListeners();
+        if(!(card instanceof Forum)) {
+            g.getNotifier().notifyListeners();
+        }
+
     }
 
     public void stopEffect() {
         
         CardActivateManager manager = g.getCardActivateManager();
-        AbstractCard card = manager.getActivatedCard();
+        Behaviour behaviour = manager.getActivatedCard().getBehaviour();
         
         view.enableStopButton(false);
-        if(card instanceof Architectus || card instanceof Senator) {
+        if(behaviour instanceof ArchitectusBehaviour || behaviour instanceof SenatorBehaviour) {
             manager.complete();
         }
         

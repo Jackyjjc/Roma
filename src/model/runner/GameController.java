@@ -54,25 +54,29 @@ public class GameController implements MoveMaker {
         ICardStorage deck = g.getDeckStorage();
         ICardStorage discard = g.getDiscardStorage();
         IPlayer player = g.getCurrentPlayer();
-        
+
         diceManager.getActionDie(diceToUse).use();
-        
+
         AbstractCard card = null;
-        
-        for(int i = 0; i < diceToUse; i++) {
-            
+
+        boolean found = false;
+
+        for (int i = 0; i < diceToUse; i++) {
+
             card = deck.popCard();
-            
-            if(card.getName() == chosen) {
+
+            if (!found && card.getName() == chosen) {
                 card.setOwner(player);
                 player.getHand().appendCard(card);
+                found = true;
             } else {
                 discard.pushCard(card);
-            }            
+            }
         }
-        
+
         g.getTurnMover().getCurrentTurn().addAction(new DrawCardsAction(g, this, diceToUse, chosen));
     }
+
 
     public void activateMoneyDisc(int diceToUse)
             throws UnsupportedOperationException {
