@@ -5,9 +5,9 @@ import model.card.AbstractCard;
 public class KatBehaviour extends Behaviour {
 
     private static final int LIVES = 9;
-    
+
     private int livesLeft;
-    
+
     public KatBehaviour(AbstractCard host) {
         super(host);
         reset();
@@ -29,9 +29,17 @@ public class KatBehaviour extends Behaviour {
             reset();
         }
     }
-    
+
     public void complete() {
-    	System.out.println("http://www.youtube.com/watch?v=QH2-TGUlwu4");
+        System.out.println("http://www.youtube.com/watch?v=QH2-TGUlwu4");
+    }
+
+    public int getLives() {
+        return livesLeft;
+    }
+
+    public void setLives(int newLives) {
+        this.livesLeft = newLives;
     }
 
     private void reset() {

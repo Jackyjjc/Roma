@@ -26,16 +26,16 @@ public class OnagerBehaviour extends Behaviour implements ICardChecker {
 
         AbstractCard target = handler.getDiscInput().getCard();
 
-        if(target != null && isValidCard(target)) {
+        if (target != null && isValidCard(target)) {
             int value = handler.getBattleDieInput();
             Action.attack(target, value);
         }
     }
 
     public boolean isValidCard(AbstractCard target) {
-        
+
         boolean isValid = false;
-        if(target != null && target.getOwner() != null 
+        if (target != null && target.getOwner() != null
                 && target.getOwner() != getHost().getOwner()
                 && target.getType() == CardType.BUILDING) {
             isValid = true;

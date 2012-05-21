@@ -17,7 +17,7 @@ public class HaruspexBehaviour extends Behaviour implements ICardChecker {
         ICardStorage deck = getHost().getCardResources().getDeckStorage();
         handler.setList(deck);
     }
-    
+
     public void complete() {
 
         InputHandler handler = getHost().getCardResources().getInputHandler();
@@ -36,13 +36,13 @@ public class HaruspexBehaviour extends Behaviour implements ICardChecker {
     }
 
     public boolean isValidCard(AbstractCard card) {
-        
+
         boolean isValid = false;
-        
-        if(card != null) {
+
+        if (card != null) {
             isValid = true;
         }
-        
+
         return isValid;
     }
 }

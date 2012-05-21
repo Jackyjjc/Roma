@@ -14,9 +14,9 @@ import model.card.ICardChecker;
  * Time: 10:28 PM
  * To change this template use File | Settings | File Templates.
  */
-public class VelitesBehaviour extends Behaviour implements ICardChecker{
+public class VelitesBehaviour extends Behaviour implements ICardChecker {
 
-    public VelitesBehaviour (AbstractCard host) {
+    public VelitesBehaviour(AbstractCard host) {
         super(host);
     }
 
@@ -34,7 +34,7 @@ public class VelitesBehaviour extends Behaviour implements ICardChecker{
 
             AbstractCard targetCard = targetDisc.getCard();
 
-            if(targetCard != null && isValidCard(targetCard)) {
+            if (targetCard != null && isValidCard(targetCard)) {
                 int value = handler.getBattleDieInput();
                 Action.attack(targetCard, value);
             }
@@ -46,7 +46,7 @@ public class VelitesBehaviour extends Behaviour implements ICardChecker{
     public boolean isValidCard(AbstractCard c) {
         boolean isValid = false;
 
-        if(c.getOwner() != null && c.getOwner() != getHost().getOwner()
+        if (c.getOwner() != null && c.getOwner() != getHost().getOwner()
                 && c.getType() == CardType.CHARACTER) {
             isValid = true;
         }

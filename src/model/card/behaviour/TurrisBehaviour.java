@@ -1,12 +1,12 @@
 package model.card.behaviour;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import model.IDisc;
 import model.IDiscListener;
 import model.IField;
 import model.card.AbstractCard;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -39,7 +39,7 @@ public class TurrisBehaviour extends Behaviour implements IDiscListener {
 
         IField discs = getHost().getOwner().getField();
 
-        for(IDisc d : discs) {
+        for (IDisc d : discs) {
             addEffects(d.getCard());
         }
 
@@ -49,24 +49,24 @@ public class TurrisBehaviour extends Behaviour implements IDiscListener {
     @Override
     public void disCard() {
 
-        for(AbstractCard card : affectedCards) {
+        for (AbstractCard card : affectedCards) {
             card.setDefence(card.getDefence() - 1);
         }
 
         affectedCards.clear();
 
         IField discs = getHost().getOwner().getField();
-        
-        for(IDisc disc : discs) {
-            disc.removeLayCardListener((IDiscListener)getHost());
+
+        for (IDisc disc : discs) {
+            disc.removeLayCardListener((IDiscListener) getHost());
         }
-        
+
         super.disCard();
     }
 
     public void update(IDisc disc) {
 
-        if(affectedCards.contains(disc.getCard())) {
+        if (affectedCards.contains(disc.getCard())) {
             affectedCards.remove(disc.getCard());
         } else {
             addEffects(disc.getCard());
@@ -85,8 +85,8 @@ public class TurrisBehaviour extends Behaviour implements IDiscListener {
 
         IField discs = getHost().getOwner().getField();
 
-        for(IDisc disc : discs) {
-            disc.addLayCardListener((IDiscListener)getHost());
+        for (IDisc disc : discs) {
+            disc.addLayCardListener((IDiscListener) getHost());
         }
     }
 }

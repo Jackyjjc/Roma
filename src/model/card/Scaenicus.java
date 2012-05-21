@@ -1,9 +1,9 @@
 package model.card;
 
+import framework.cards.Card;
 import model.ICardResources;
 import model.card.behaviour.Behaviour;
 import model.card.behaviour.ScaenicusBehaviour;
-import framework.cards.Card;
 
 public class Scaenicus extends AbstractCard {
 
@@ -12,11 +12,11 @@ public class Scaenicus extends AbstractCard {
 
     private Scaenicus(ICardResources cardResources) {
 
-        super(Card.SCAENICUS, 
-              CardType.CHARACTER,
-              COST, 
-              DEFENCE, 
-              cardResources);
+        super(Card.SCAENICUS,
+                CardType.CHARACTER,
+                COST,
+                DEFENCE,
+                cardResources);
 
     }
 
@@ -25,12 +25,12 @@ public class Scaenicus extends AbstractCard {
         ScaenicusBehaviour behaviour = (ScaenicusBehaviour) super.getBehaviour();
         return behaviour.getMimicBehaviour();
     }
-    
+
     static AbstractCard create(ICardResources cardResources, CardFactory factory) {
-        
+
         AbstractCard card = new Scaenicus(cardResources);
         card.setBehaviour(new ScaenicusBehaviour(card, factory));
-    
+
         return card;
     }
 }

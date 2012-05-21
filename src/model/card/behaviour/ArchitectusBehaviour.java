@@ -1,9 +1,7 @@
 package model.card.behaviour;
+
 import java.util.List;
 
-import model.IDisc;
-import model.IPlayer;
-import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.CardType;
 import model.card.ICardChecker;
@@ -26,15 +24,15 @@ public class ArchitectusBehaviour extends Behaviour implements ICardChecker {
     public void initialise() {
 
         buildingCards = getHost().getOwner().getHand().getCardsOf(CardType.BUILDING);
-        
-        for(AbstractCard card : buildingCards) {
+
+        for (AbstractCard card : buildingCards) {
             card.setCost(0);
         }
 
     }
-    
+
     public void complete() {
-        
+
         for (AbstractCard card : buildingCards) {
             card.setCost(card.getDefaultCost());
         }
@@ -43,14 +41,14 @@ public class ArchitectusBehaviour extends Behaviour implements ICardChecker {
     }
 
     public boolean isValidCard(AbstractCard card) {
-        
+
         boolean isValid = false;
-        
-        if(card.getType() == CardType.BUILDING 
-           && card.getOwner() != getHost().getOwner()) {
+
+        if (card.getType() == CardType.BUILDING
+                && card.getOwner() != getHost().getOwner()) {
             isValid = true;
         }
-        
+
         return isValid;
     }
 }

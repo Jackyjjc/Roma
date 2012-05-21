@@ -1,19 +1,19 @@
 package model.card.behaviour;
 
+import model.IDisc;
+import model.IField;
+import model.ITurnListener;
+import model.ITurnMover;
+import model.card.AbstractCard;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import model.IDisc;
-import model.IField;
-import model.ITurnMover;
-import model.card.AbstractCard;
-import model.ITurnListener;
-
 public class EssedumBehaviour extends Behaviour implements ITurnListener {
 
-	private List<AbstractCard> affectedCards;
-	private ITurnMover turnMover;
-	
+    private List<AbstractCard> affectedCards;
+    private ITurnMover turnMover;
+
     public EssedumBehaviour(AbstractCard host, ITurnMover turnMover) {
         super(host);
         affectedCards = new ArrayList<AbstractCard>();

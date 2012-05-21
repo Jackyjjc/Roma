@@ -11,7 +11,7 @@ public class LegatBehaviour extends Behaviour {
         super(host);
         // TODO Auto-generated constructor stub
     }
-    
+
     public void complete() {
 
 

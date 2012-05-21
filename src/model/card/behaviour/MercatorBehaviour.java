@@ -8,13 +8,13 @@ public class MercatorBehaviour extends Behaviour {
 
     private static final int TRADING_PRICE = 2;
     private static final int TRADING_REWARD = 1;
-    
+
     public MercatorBehaviour(AbstractCard host) {
         super(host);
         // TODO Auto-generated constructor stub
     }
 
-    
+
     public void complete() {
 
         IPlayer owner = getHost().getOwner();

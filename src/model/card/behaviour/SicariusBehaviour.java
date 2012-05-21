@@ -27,7 +27,7 @@ public class SicariusBehaviour extends Behaviour implements ICardChecker {
         if (target != null && isValidCard(target)) {
             target.disCard();
         }
-        
+
         getHost().disCard();
     }
 
@@ -35,7 +35,7 @@ public class SicariusBehaviour extends Behaviour implements ICardChecker {
 
         boolean isValid = false;
 
-        if(c.getOwner() != null && c.getOwner() != getHost().getOwner()) {
+        if (c.getOwner() != null && c.getOwner() != getHost().getOwner()) {
             isValid = true;
         }
 

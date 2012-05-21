@@ -1,15 +1,15 @@
 package model.action;
 
+import framework.interfaces.GameState;
 import model.InputHandler;
 import model.runner.CardActivateManager;
-import framework.interfaces.GameState;
 
 public class CompleteAction extends InputAction {
 
     public CompleteAction(GameState g, CardActivateManager manager,
-            InputHandler handler) {
+                          InputHandler handler) {
         super(g, manager, handler);
-        
+
     }
 
     public void run() {

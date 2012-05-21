@@ -3,30 +3,28 @@ package model.card.behaviour;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.IDisc;
 import model.IPlayer;
-import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.CardType;
 import model.card.ICardChecker;
 
 public class SenatorBehaviour extends Behaviour implements ICardChecker {
-	
-	private List<AbstractCard> charCards;
-	
-	public SenatorBehaviour(AbstractCard host) {
-		super(host);
-		charCards = new ArrayList<AbstractCard>();
-	}
 
-	public void complete() {
-	    
+    private List<AbstractCard> charCards;
+
+    public SenatorBehaviour(AbstractCard host) {
+        super(host);
+        charCards = new ArrayList<AbstractCard>();
+    }
+
+    public void complete() {
+
         for (AbstractCard c : charCards) {
             c.setCost(c.getDefaultCost());
         }
 
         charCards.clear();
-        
+
     }
 
     public void initialise() {
@@ -41,15 +39,15 @@ public class SenatorBehaviour extends Behaviour implements ICardChecker {
     }
 
     public boolean isValidCard(AbstractCard card) {
-        
+
         boolean isValid = false;
-        
-        if(card != null && card.getOwner() == getHost().getOwner() 
+
+        if (card != null && card.getOwner() == getHost().getOwner()
                 && card.getType() == CardType.CHARACTER) {
-            
+
             isValid = true;
         }
-        
+
         return isValid;
     }
 }

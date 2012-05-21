@@ -26,7 +26,7 @@ public class ConsulBehaviour extends Behaviour implements IDieChecker {
         Die input = handler.getDieInput();
         int valueChange = handler.getIntInput();
 
-        if(isValidDie(input, valueChange)) {
+        if (isValidDie(input, valueChange)) {
             input.setValue(input.getValue() + valueChange);
         }
     }
@@ -35,8 +35,8 @@ public class ConsulBehaviour extends Behaviour implements IDieChecker {
 
         boolean isValid = false;
 
-        if(!die.isUsed() && (die.getValue()+change) <= MAX_DIE_VALUE 
-              && (die.getValue()+change >= MIN_DIE_VALUE)) {
+        if (!die.isUsed() && (die.getValue() + change) <= MAX_DIE_VALUE
+                && (die.getValue() + change >= MIN_DIE_VALUE)) {
             isValid = true;
         }
 

@@ -1,19 +1,19 @@
 package model.action;
 
+import framework.interfaces.GameState;
 import model.Die;
 import model.InputHandler;
 import model.card.IDieChecker;
 import model.runner.CardActivateManager;
-import framework.interfaces.GameState;
 
 public class AddDieInputAction extends InputAction {
 
     private int dieValue;
-    
-    public AddDieInputAction(GameState g, CardActivateManager manager, 
-                              InputHandler handler, int dieValue) {
+
+    public AddDieInputAction(GameState g, CardActivateManager manager,
+                             InputHandler handler, int dieValue) {
         super(g, manager, handler);
-        
+
         this.dieValue = dieValue;
     }
 
@@ -22,18 +22,18 @@ public class AddDieInputAction extends InputAction {
     }
 
     public boolean isValid() {
-        
+
         boolean isValid = false;
-        
+
         IDieChecker checker = (IDieChecker) getCardActivateManager().getActivatedCard().getBehaviour();
-        
+
         getInputHandler().addDieInput(dieValue);
         Die die = getInputHandler().getDieInput();
-        
-        if(checker.isValidDie(die)) {
+
+        if (checker.isValidDie(die)) {
             isValid = true;
         }
-        
+
         return isValid;
     }
 

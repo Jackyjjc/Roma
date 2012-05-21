@@ -1,16 +1,16 @@
 package model.action;
 
+import framework.interfaces.GameState;
 import model.InputHandler;
 import model.runner.CardActivateManager;
-import framework.interfaces.GameState;
 
 public class AddBattleDieInput extends InputAction {
 
     private int roll;
-    
+
     public AddBattleDieInput(GameState g, CardActivateManager manager,
                              InputHandler handler, int roll) {
-        
+
         super(g, manager, handler);
         this.roll = roll;
     }

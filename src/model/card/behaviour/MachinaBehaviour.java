@@ -1,9 +1,7 @@
 package model.card.behaviour;
 
 import model.ICardStorage;
-import model.IDisc;
 import model.IField;
-import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.CardType;
 import model.card.ICardChecker;
@@ -11,7 +9,7 @@ import model.card.ICardChecker;
 public class MachinaBehaviour extends Behaviour implements ICardChecker {
 
     private ICardStorage buildingCards;
-    
+
     public MachinaBehaviour(AbstractCard host) {
         super(host);
     }
@@ -28,26 +26,26 @@ public class MachinaBehaviour extends Behaviour implements ICardChecker {
 
         getHost().getCardResources().getInputHandler().setList(buildingCards);
     }
-    
+
     public void complete() {
-     
+
         ICardStorage hand = getHost().getOwner().getHand();
-        
+
         for (AbstractCard c : buildingCards) {
             c.setCost(c.getDefaultCost());
         }
-        
+
         getHost().getCardResources().getInputHandler().setList(hand);
     }
-    
+
     public boolean isValidCard(AbstractCard c) {
-        
+
         boolean isValid = false;
-        
-        if(c != null && c.getType() == CardType.BUILDING) {
+
+        if (c != null && c.getType() == CardType.BUILDING) {
             isValid = true;
         }
-        
+
         return isValid;
     }
 

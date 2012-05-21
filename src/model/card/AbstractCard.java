@@ -1,13 +1,13 @@
 package model.card;
 
+import framework.cards.Card;
 import model.ICardResources;
 import model.IDisc;
 import model.IPlayer;
 import model.card.behaviour.Behaviour;
-import framework.cards.Card;
 
 public class AbstractCard {
-    
+
     private final int defaultCost;
     private final int defaultDefence;
 
@@ -37,13 +37,13 @@ public class AbstractCard {
         this.cardResources = cardResources;
 
     }
-    
+
     public void disCard() {
-    	behaviour.disCard();
+        behaviour.disCard();
     }
-    
+
     public void lay(IDisc disc) {
-    	behaviour.lay(disc);
+        behaviour.lay(disc);
     }
 
 
@@ -55,10 +55,10 @@ public class AbstractCard {
         this.behaviour = behaviour;
     }
 
-    public ICardResources getCardResources () {
+    public ICardResources getCardResources() {
         return this.cardResources;
     }
-    
+
     public Card getName() {
         return name;
     }
@@ -74,8 +74,8 @@ public class AbstractCard {
     public void setCost(int cost) {
         this.cost = cost;
     }
-    
-    
+
+
     public int getDefaultCost() {
         return defaultCost;
     }
@@ -87,7 +87,7 @@ public class AbstractCard {
     public void setDefence(int defence) {
         this.defence = defence;
     }
-    
+
     public int getDefaultDefence() {
         return defaultDefence;
     }
@@ -97,23 +97,23 @@ public class AbstractCard {
     }
 
     public void setOwner(IPlayer owner) {
-    	this.owner = owner;
+        this.owner = owner;
     }
 
     public void setDisc(IDisc disc) {
         this.disc = disc;
     }
-    
+
     public IDisc getDisc() {
         return disc;
     }
 
-	public void initialise() {
-		behaviour.initialise();
-	}
-	
-	public void complete() {
-		behaviour.complete();
-	}
- 
+    public void initialise() {
+        behaviour.initialise();
+    }
+
+    public void complete() {
+        behaviour.complete();
+    }
+
 }

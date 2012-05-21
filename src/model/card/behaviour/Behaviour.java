@@ -7,13 +7,13 @@ import model.card.AbstractCard;
 public abstract class Behaviour {
 
     private AbstractCard host;
-    
+
     public Behaviour(AbstractCard host) {
-         this.host = host;
+        this.host = host;
     }
 
     public void initialise() {
-         //hook
+        //hook
     }
 
     public abstract void complete();
@@ -24,10 +24,10 @@ public abstract class Behaviour {
 
         AbstractCard host = getHost();
         IResourceStorage bank = getHost().getCardResources().getBank();
-        
-        if(host.getOwner() == null || host.getOwner().getMoney() >= host.getCost()) {
+
+        if (host.getOwner() == null || host.getOwner().getMoney() >= host.getCost()) {
             disc.layCard(host);
-            if(host.getOwner() != null) {
+            if (host.getOwner() != null) {
                 host.getOwner().transferMoney(bank, host.getCost());
             }
         }
@@ -37,18 +37,18 @@ public abstract class Behaviour {
 
     public void disCard() {
 
-    	AbstractCard host = getHost();
-    	
-    	if(host.getDisc() != null) {
-    		
-    		host.getDisc().removeCard();
-    		
-    	}
+        AbstractCard host = getHost();
 
-    	host.setCost(host.getDefaultCost());
-    	host.setDefence(host.getDefaultDefence());
+        if (host.getDisc() != null) {
 
-    	host.getCardResources().getDiscardStorage().pushCard(host);
+            host.getDisc().removeCard();
+
+        }
+
+        host.setCost(host.getDefaultCost());
+        host.setDefence(host.getDefaultDefence());
+
+        host.getCardResources().getDiscardStorage().pushCard(host);
 
     }
 
@@ -59,5 +59,5 @@ public abstract class Behaviour {
     public AbstractCard getHost() {
         return host;
     }
-    
+
 }

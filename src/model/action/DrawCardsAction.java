@@ -1,18 +1,18 @@
 package model.action;
 
-import java.util.List;
-
 import framework.cards.Card;
 import framework.interfaces.GameState;
 import framework.interfaces.MoveMaker;
+
+import java.util.List;
 
 public class DrawCardsAction extends MoveMakingAction {
 
     private int diceToUse;
     private Card name;
-    
-    public DrawCardsAction(GameState g, MoveMaker moveMaker, 
-                          int dice, Card name) {
+
+    public DrawCardsAction(GameState g, MoveMaker moveMaker,
+                           int dice, Card name) {
         super(g, moveMaker);
         this.diceToUse = dice;
         this.name = name;
@@ -23,19 +23,19 @@ public class DrawCardsAction extends MoveMakingAction {
     }
 
     public boolean isValid() {
-        
+
         boolean isValid = false;
-        
+
         List<Card> deck = getGameState().getDeck();
-        
-        if(deck.size() >= diceToUse) {
-            for(int i = 0; i < diceToUse; i++) {
-                if(deck.get(i) == name) {
+
+        if (deck.size() >= diceToUse) {
+            for (int i = 0; i < diceToUse; i++) {
+                if (deck.get(i) == name) {
                     isValid = true;
                 }
             }
         }
-        
+
         return isValid;
     }
 }

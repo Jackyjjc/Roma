@@ -14,13 +14,13 @@ public class EndTurnAction extends MoveMakingAction {
     }
 
     public boolean isValid() {
-        
+
         boolean isValid = false;
-        
-        if(!getGameState().isGameCompleted()) {
+
+        if (!getGameState().isGameCompleted()) {
             isValid = true;
         }
-        
+
         return isValid;
     }
 

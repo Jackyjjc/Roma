@@ -15,10 +15,10 @@ import model.card.ICardChecker;
 public class NeroBehaviour extends Behaviour implements ICardChecker {
 
     public NeroBehaviour(AbstractCard host) {
-		super(host);
-	}
+        super(host);
+    }
 
-	public void complete() {
+    public void complete() {
 
         InputHandler handler = getHost().getCardResources().getInputHandler();
         IDisc disc = handler.getDiscInput();
@@ -34,7 +34,7 @@ public class NeroBehaviour extends Behaviour implements ICardChecker {
     public boolean isValidCard(AbstractCard c) {
         boolean isValid = false;
 
-        if(c.getOwner() != null && c.getOwner() != getHost().getOwner()) {
+        if (c.getOwner() != null && c.getOwner() != getHost().getOwner()) {
             isValid = true;
         }
 

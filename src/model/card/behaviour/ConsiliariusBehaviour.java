@@ -1,9 +1,8 @@
 package model.card.behaviour;
 
-import model.IDisc;
-import model.InputHandler;
 import model.ICardStorage;
 import model.IField;
+import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.CardType;
 import model.card.ICardChecker;
@@ -39,7 +38,7 @@ public class ConsiliariusBehaviour extends Behaviour implements ICardChecker {
     public void complete() {
 
         ICardStorage hand = getHost().getOwner().getHand();
-        
+
         for (AbstractCard c : charCards) {
             c.setCost(c.getDefaultCost());
         }
@@ -47,12 +46,12 @@ public class ConsiliariusBehaviour extends Behaviour implements ICardChecker {
         InputHandler handler = getHost().getCardResources().getInputHandler();
         handler.setList(hand);
     }
-    
-    public boolean isValidCard (AbstractCard c) {
+
+    public boolean isValidCard(AbstractCard c) {
 
         boolean isValid = false;
 
-        if(c != null && c.getType() == CardType.CHARACTER) {
+        if (c != null && c.getType() == CardType.CHARACTER) {
             isValid = true;
         }
 

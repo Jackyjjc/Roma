@@ -12,17 +12,17 @@ public class MercatusBehaviour extends Behaviour {
         super(host);
     }
 
-   public void complete() {
-        
+    public void complete() {
+
         IPlayer opponent = getHost().getOwner().getOpponent();
         IField discs = opponent.getField();
         AbstractCard c = null;
-        
+
         int numOfForum = 0;
-        
-        for(int i = 0; i < discs.getNumDiscs(); i++) {
+
+        for (int i = 0; i < discs.getNumDiscs(); i++) {
             c = discs.getDisc(i).getCard();
-            if(c != null && c instanceof Forum) {
+            if (c != null && c instanceof Forum) {
                 numOfForum++;
             }
         }

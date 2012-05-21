@@ -17,7 +17,7 @@ public class LegionariusBehaviour extends Behaviour implements ICardChecker {
 
         AbstractCard target = getOppositeCard();
 
-        if(target != null && isValidCard(target)) {
+        if (target != null && isValidCard(target)) {
 
             int value = getHost().getCardResources().getInputHandler().getBattleDieInput();
             Action.attack(target, value);
@@ -28,12 +28,12 @@ public class LegionariusBehaviour extends Behaviour implements ICardChecker {
 
     public boolean isValidCard(AbstractCard target) {
         boolean isValid = false;
-        
-        if(target.getOwner() != null 
-           && target.getOwner() != this.getHost().getOwner()) {
+
+        if (target.getOwner() != null
+                && target.getOwner() != this.getHost().getOwner()) {
             isValid = true;
         }
-        
+
         return isValid;
     }
 
@@ -50,5 +50,5 @@ public class LegionariusBehaviour extends Behaviour implements ICardChecker {
         return target;
 
     }
-    
+
 }

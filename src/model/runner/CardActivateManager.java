@@ -50,17 +50,17 @@ import framework.interfaces.activators.TribunusPlebisActivator;
 import framework.interfaces.activators.VelitesActivator;
 
 public class CardActivateManager implements AesculapinumActivator, ArchitectusActivator,
-CenturioActivator, ConsiliariusActivator, ConsulActivator, EssedumActivator, ForumActivator, GladiatorActivator,
-HaruspexActivator, LegatActivator, LegionariusActivator, MachinaActivator, MercatorActivator, MercatusActivator,
-NeroActivator, OnagerActivator, PraetorianusActivator, ScaenicusActivator, SenatorActivator, SicariusActivator,
-TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
+        CenturioActivator, ConsiliariusActivator, ConsulActivator, EssedumActivator, ForumActivator, GladiatorActivator,
+        HaruspexActivator, LegatActivator, LegionariusActivator, MachinaActivator, MercatorActivator, MercatusActivator,
+        NeroActivator, OnagerActivator, PraetorianusActivator, ScaenicusActivator, SenatorActivator, SicariusActivator,
+        TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
 
     private IPlayerManager manager;
     private InputHandler handler;
     private AbstractCard activatedCard;
     private GameState g;
     private TurnMover turnMover;
-    
+
     public CardActivateManager(GameState g, IGameIO gameIO, IPlayerManager manager, TurnMover turnMover) {
         this.handler = gameIO.getInputHandler();
         this.manager = manager;
@@ -71,17 +71,17 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
     public void chooseCardFromPile(int indexOfCard) {
         chooseCardFromPile(findCardFromPile(indexOfCard));
     }
-    
+
     public void chooseCardFromPile(Card card) {
         turnMover.getCurrentTurn().addAction(new ChooseCardFromPileAction(g, this, handler, card));
         handler.addCardInput(manager.getCurrentPlayer().getId(), card);
     }
-    
+
     public void complete() {
         turnMover.getCurrentTurn().addAction(new CompleteAction(g, this, handler));
-        if(activatedCard != null) {
+        if (activatedCard != null) {
             activatedCard.complete();
-            activatedCard = null;  
+            activatedCard = null;
         }
     }
 
@@ -126,10 +126,10 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
     }
 
     public void chooseDiceDisc(int diceDisc) {
-        
+
         IPlayer player = null;
 
-        if(activatedCard instanceof TelephoneBox) {
+        if (activatedCard instanceof TelephoneBox) {
             player = manager.getCurrentPlayer();
         } else {
             player = manager.getCurrentPlayer().getOpponent();
@@ -149,64 +149,64 @@ TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
     }
 
     public void chooseMercatorBuyNum(int VPToBuy) {
-        
-        for(int i = 0; i < VPToBuy; i++) {
+
+        for (int i = 0; i < VPToBuy; i++) {
             handler.addBooleanInput(true);
             turnMover.getCurrentTurn().addAction(new AddBooleanInputAction(g, this, handler, true));
         }
     }
 
     public CardActivator getScaenicusMimicTarget(int diceDisc) {
-        
+
         turnMover.getCurrentTurn().addAction(new MimicAction(g, this, handler, diceDisc));
-        
+
         IPlayer player = manager.getCurrentPlayer();
-        
+
         handler.addDiscInput(player.getId(), diceDisc - 1);
-        
-        ScaenicusBehaviour behaviour = (ScaenicusBehaviour) ((ScaenicusBehaviour)activatedCard.getBehaviour()).getMimicBehaviour();
+
+        ScaenicusBehaviour behaviour = (ScaenicusBehaviour) ((ScaenicusBehaviour) activatedCard.getBehaviour()).getMimicBehaviour();
         behaviour.mimic();
         return this;
     }
-    
+
     public void activate(IDisc disc) {
-        
+
         this.activatedCard = disc.getCard();
         disc.activateCard();
-        
-    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+
+    }
 
     public void layCard(Card name, int whichDiceDisc) {
         placeCard(name, whichDiceDisc);
     }
-    
+
     public AbstractCard getActivatedCard() {
         return activatedCard;
     }
-    
+
     private Card findCardFromPile(int index) {
-        
+
         Card c = null;
-        
-        if(activatedCard instanceof Aesculapinum) {
-            
+
+        if (activatedCard instanceof Aesculapinum) {
+
             c = g.getDiscard().get(index);
-            
-        } else if(activatedCard instanceof Haruspex) {
-            
+
+        } else if (activatedCard instanceof Haruspex) {
+
             c = g.getDeck().get(index);
         }
-        
+
         return c;
     }
 
     public void shouldMoveForwardInTime(boolean isForward) {
-        turnMover.getCurrentTurn().addAction(new AddBooleanInputAction(g,this,handler,isForward));
+        turnMover.getCurrentTurn().addAction(new AddBooleanInputAction(g, this, handler, isForward));
         handler.addBooleanInput(isForward);
     }
 
     public void setSecondDiceUsed(int diceValue) {
-        turnMover.getCurrentTurn().addAction(new AddDieInputAction(g,this,handler,diceValue));
+        turnMover.getCurrentTurn().addAction(new AddDieInputAction(g, this, handler, diceValue));
         handler.addDieInput(diceValue);
     }
 }

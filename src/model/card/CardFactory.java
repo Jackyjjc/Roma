@@ -1,15 +1,13 @@
 package model.card;
 
-import model.ICardResources;
 import framework.cards.Card;
+import model.ICardResources;
 
 /**
- * 
  * Reviewed at 20/05/2012
- * 
+ *
  * @author Chris Fong
  * @author Junjie CHEN
- *
  */
 
 public class CardFactory {
@@ -24,8 +22,8 @@ public class CardFactory {
     public AbstractCard create(Card name) {
 
         AbstractCard card = null;
-        
-        switch(name) {
+
+        switch (name) {
             case AESCULAPINUM:
                 card = Aesculapinum.create(cardResources);
                 break;

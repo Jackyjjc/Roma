@@ -8,10 +8,8 @@ import model.card.ICardChecker;
 import model.card.IIntegerChecker;
 
 /**
- * 
  * @author Chris Fong
  * @author Jacky CHEN
- *
  */
 
 public class AesculapinumBehaviour extends Behaviour implements ICardChecker, IIntegerChecker {
@@ -26,7 +24,7 @@ public class AesculapinumBehaviour extends Behaviour implements ICardChecker, II
         ICardStorage discard = getHost().getCardResources().getDiscardStorage();
         handler.setList(discard);
     }
-    
+
     public void complete() {
 
         InputHandler handler = getHost().getCardResources().getInputHandler();
@@ -38,31 +36,31 @@ public class AesculapinumBehaviour extends Behaviour implements ICardChecker, II
             discard.removeCard(card);
             hand.pushCard(card);
         }
-        
+
         handler.setList(hand);
     }
 
     public boolean isValidInt(int index) {
-        
+
         boolean isValid = false;
-        
+
         ICardStorage discard = getHost().getCardResources().getDiscardStorage();
         AbstractCard card = discard.getCard(index);
-        
-        if(discard.size() > index) {
-            if(isValidCard(card)) {
+
+        if (discard.size() > index) {
+            if (isValidCard(card)) {
                 isValid = true;
             }
         }
-        
+
         return isValid;
     }
-    
+
     public boolean isValidCard(AbstractCard c) {
 
         boolean isValid = false;
 
-        if(c != null && c.getType() == CardType.CHARACTER) {
+        if (c != null && c.getType() == CardType.CHARACTER) {
             isValid = true;
         }
 

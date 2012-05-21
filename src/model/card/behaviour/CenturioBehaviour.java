@@ -29,17 +29,19 @@ public class CenturioBehaviour extends Behaviour implements ICardChecker, IDieCh
         InputHandler handler = getHost().getCardResources().getInputHandler();
         int dieValue;
 
-        if(card != null && isValidCard(card)) {
+        if (card != null && isValidCard(card)) {
             dieValue = handler.getBattleDieInput();
 
             boolean isAddDie = handler.getBooleanInput();
-            if(isAddDie) {
+
+            if (isAddDie) {
                 Die die = handler.getDieInput();
-                if(isValidDie(die)) {
+                if (isValidDie(die)) {
                     die.use();
                     dieValue += die.getValue();
                 }
             }
+
             Action.attack(card, dieValue);
         }
 
@@ -48,8 +50,8 @@ public class CenturioBehaviour extends Behaviour implements ICardChecker, IDieCh
     public boolean isValidCard(AbstractCard target) {
         boolean isValid = false;
 
-        if(target.getOwner() != null 
-             && target.getOwner() != getHost().getOwner()) {
+        if (target.getOwner() != null
+                && target.getOwner() != getHost().getOwner()) {
             isValid = true;
         }
 
