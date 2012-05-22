@@ -12,8 +12,7 @@ import framework.Rules;
 import framework.cards.Card;
 import framework.interfaces.GameState;
 
-public class Game implements GameState, IGameDisplayState, ICardResources,
-        IGameIO, IPlayerManager {
+public class Game implements GameState, IGameDisplayState, ICardResources, IGameIO {
 
     private static final int TOTAL_MONEY = 100000;
     private static final int TOTAL_VP = 36;
@@ -274,14 +273,6 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
 
     }
 
-    public void setFinish(boolean isFinished) {
-        this.isFinished = isFinished;
-    }
-
-    public boolean isGameCompleted() {
-        return isFinished;
-    }
-
     public int getBattleDiceValue() {
         return diceManager.getBattleDie().getValue();
     }
@@ -314,5 +305,12 @@ public class Game implements GameState, IGameDisplayState, ICardResources,
 
         return list;
     }
-    
+
+    public void setFinish(boolean isFinished) {
+        this.isFinished = isFinished;
+    }
+
+    public boolean isGameCompleted() {
+        return isFinished;
+    }
 }

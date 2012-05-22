@@ -52,6 +52,11 @@ public class Disc implements IDisc, ITurnListener {
         isBlocked = true;
     }
 
+    private void unBlock() {
+        blockTurnCounter = 0;
+        isBlocked = false;
+    }
+
     public boolean isBlocked() {
         return isBlocked;
     }
@@ -84,15 +89,6 @@ public class Disc implements IDisc, ITurnListener {
         return succeed;
     }
 
-    public void addTimeTraveller(int travelTime) {
-        timeTravellers.put(getCard(), travelTime);
-        this.card = null;
-    }
-
-    public boolean isEmpty() {
-        return (card == null);
-    }
-
     public AbstractCard getCard() {
 
         AbstractCard returnCard = null;
@@ -112,14 +108,33 @@ public class Disc implements IDisc, ITurnListener {
         }
     }
 
-    public void addLayCardListener(IDiscListener listener) {
-        discListeners.add(listener);
+    public void addTimeTraveller(int travelTime) {
+        timeTravellers.put(getCard(), travelTime);
+        this.card = null;
     }
 
-    public void removeLayCardListener(IDiscListener listener) {
-        discListeners.remove(listener);
-    }
+    public void endTurn() {
 
+        for (Map.Entry<AbstractCard, Integer> timeTraveller : timeTravellers.entrySet()) {
+            if (timeTraveller.getValue() == 1) {
+                this.layCard(timeTraveller.getKey());
+                timeTravellers.remove(timeTraveller.getKey());
+            } else {
+                timeTraveller.setValue(timeTraveller.getValue() - 1);
+            }
+        }
+
+        if (blockTurnCounter == 1) {
+            unBlock();
+        } else {
+            blockTurnCounter++;
+        }
+    }
+    
+    public boolean isEmpty() {
+        return (card == null);
+    }
+    
     public IPlayer getOwner() {
         return owner;
     }
@@ -140,32 +155,18 @@ public class Disc implements IDisc, ITurnListener {
         this.next = next;
     }
 
+    public void addLayCardListener(IDiscListener listener) {
+        discListeners.add(listener);
+    }
+
+    public void removeLayCardListener(IDiscListener listener) {
+        discListeners.remove(listener);
+    }
+
     private void notifyLayCardListeners() {
         for (IDiscListener l : discListeners) {
             l.update(this);
         }
     }
-
-    public void endTurn() {
-
-        for (Map.Entry<AbstractCard, Integer> timeTraveller : timeTravellers.entrySet()) {
-            if (timeTraveller.getValue() == 1) {
-                this.layCard(timeTraveller.getKey());
-                timeTravellers.remove(timeTraveller.getKey());
-            } else {
-                timeTraveller.setValue(timeTraveller.getValue() - 1);
-            }
-        }
-
-        if (blockTurnCounter == 1) {
-            unBlock();
-        } else {
-            blockTurnCounter++;
-        }
-    }
-
-    private void unBlock() {
-        blockTurnCounter = 0;
-        isBlocked = false;
-    }
+    
 }

@@ -22,16 +22,6 @@ public class TurnMover implements ITurnMover {
         turns = new ArrayList<Turn>();
     }
 
-    public void addTurnListener(ITurnListener listener) {
-        if (!turnListeners.contains(listener)) {
-            turnListeners.add(listener);
-        }
-    }
-
-    public void removeTurnListener(ITurnListener listener) {
-        turnListeners.remove(listener);
-    }
-
     public void startGame() {
         currentTurn = new Turn(g);
         turns.add(currentTurn);
@@ -45,6 +35,17 @@ public class TurnMover implements ITurnMover {
         currentTurn = new Turn(g);
         turns.add(currentTurn);
 
+        meow();
+
+        for (ITurnListener l : turnListeners) {
+            l.endTurn();
+        }
+    }
+
+    /**
+     * The cats meow at the beginning of each turn
+     */
+    private void meow() {
         Card[] field = g.getPlayerCardsOnDiscs(g.getWhoseTurn());
 
         for (int diceDisc = 0; diceDisc < field.length; diceDisc++) {
@@ -52,15 +53,11 @@ public class TurnMover implements ITurnMover {
                 currentTurn.addAction(new MeowAction(g, diceDisc));
             }
         }
-
-        for (ITurnListener l : turnListeners) {
-            l.endTurn();
-        }
     }
 
     public Turn getTurn(int numTurnsAgo) {
 
-        int FIRST_TURN = 0;
+        final int FIRST_TURN = 0;
 
         Turn pastTurn = null;
 
@@ -76,14 +73,16 @@ public class TurnMover implements ITurnMover {
 
     public void replay(int numTurnsAgo) {
 
+        final int FIRST_TURN = 0;
+        
         List<Turn> turnsToReplay = new ArrayList<Turn>();
 
         int currentPlayer = g.getCurrentPlayer().getId();
         int currentTurn = turns.size() - 1;
         numTurnsAgo = turns.size() - 1 - numTurnsAgo;
 
-        if (numTurnsAgo < 0) {
-            numTurnsAgo = 0;
+        if (numTurnsAgo < FIRST_TURN) {
+            numTurnsAgo = FIRST_TURN;
         }
 
         for (int i = numTurnsAgo; i <= currentTurn; i++) {
@@ -106,6 +105,16 @@ public class TurnMover implements ITurnMover {
 
     }
 
+    public void addTurnListener(ITurnListener listener) {
+        if (!turnListeners.contains(listener)) {
+            turnListeners.add(listener);
+        }
+    }
+
+    public void removeTurnListener(ITurnListener listener) {
+        turnListeners.remove(listener);
+    }
+    
     @Override
     public void gameOver() {
         g.setFinish(true);

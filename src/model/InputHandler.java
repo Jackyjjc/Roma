@@ -10,13 +10,12 @@ import java.util.List;
 public class InputHandler {
 
     private Game g;
-    private List<IListener> inputListeners;
 
     private List<AbstractCard> cardInputQueue;
     private List<IDisc> discInputQueue;
     private List<Die> dieInputQueue;
     private List<Boolean> boolInputQueue;
-
+    
     private int intInput;
     private int battleDieInput;
 
@@ -28,7 +27,6 @@ public class InputHandler {
         discInputQueue = new ArrayList<IDisc>();
         dieInputQueue = new ArrayList<Die>();
         boolInputQueue = new ArrayList<Boolean>();
-        this.inputListeners = new ArrayList<IListener>();
         intInput = 0;
         battleDieInput = 0;
     }
@@ -103,7 +101,6 @@ public class InputHandler {
 
     public void addIntInput(int amount) {
         this.intInput = amount;
-        notifyInputListener();
     }
 
     public int getIntInput() {
@@ -112,7 +109,6 @@ public class InputHandler {
 
     public void addBooleanInput(boolean value) {
         this.boolInputQueue.add(value);
-        notifyInputListener();
     }
 
     public boolean getBooleanInput() {
@@ -129,7 +125,6 @@ public class InputHandler {
 
     public void addBattleDieInput(int roll) {
         this.battleDieInput = roll;
-        notifyInputListener();
     }
 
     public int getBattleDieInput() {
@@ -143,18 +138,5 @@ public class InputHandler {
     public ICardStorage getList() {
         return list;
     }
-
-    public void addInputListener(IListener l) {
-        inputListeners.add(l);
-    }
-
-    public void removeInputListener(IListener l) {
-        inputListeners.remove(l);
-    }
-
-    private void notifyInputListener() {
-        for (IListener l : inputListeners) {
-            l.update();
-        }
-    }
+    
 }

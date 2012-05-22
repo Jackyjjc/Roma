@@ -26,7 +26,6 @@ public class BribeDisc extends Disc implements IDisc {
             super.activateCard();
             bribe = 0;
         }
-
     }
 
     public void giveBribe(int diceToUse) {

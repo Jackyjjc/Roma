@@ -1,10 +1,10 @@
 package model.runner;
 
+import model.ICardResources;
 import model.ICardStorage;
 import model.IDisc;
 import model.IGameIO;
 import model.IPlayer;
-import model.IPlayerManager;
 import model.InputHandler;
 import model.TurnMover;
 import model.action.AddBattleDieInput;
@@ -53,13 +53,13 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
         NeroActivator, OnagerActivator, PraetorianusActivator, ScaenicusActivator, SenatorActivator, SicariusActivator,
         TribunusPlebisActivator, TelephoneBoxActivator, VelitesActivator {
 
-    private IPlayerManager manager;
+    private ICardResources manager;
     private InputHandler handler;
     private AbstractCard activatedCard;
     private GameState g;
     private TurnMover turnMover;
 
-    public CardActivateManager(GameState g, IGameIO gameIO, IPlayerManager manager, TurnMover turnMover) {
+    public CardActivateManager(GameState g, IGameIO gameIO, ICardResources manager, TurnMover turnMover) {
         this.handler = gameIO.getInputHandler();
         this.manager = manager;
         this.g = g;
