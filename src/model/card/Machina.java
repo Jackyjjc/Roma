@@ -11,7 +11,7 @@ import framework.cards.Card;
  * @author Junjie CHEN
  */
 
-public class Machina extends AbstractCard implements ICardChecker {
+public class Machina extends AbstractCard {
 
     private static final int COST = 4;
     private static final int DEFENCE = 4;
@@ -25,17 +25,6 @@ public class Machina extends AbstractCard implements ICardChecker {
 
     }
 
-    public boolean isValidCard(AbstractCard c) {
-
-        boolean isValid = false;
-
-        if (c != null && c.getType() == CardType.BUILDING) {
-            isValid = true;
-        }
-
-        return isValid;
-    }
-    
     static AbstractCard create(ICardResources cardResources) {
 
         AbstractCard card = new Machina();

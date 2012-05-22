@@ -5,8 +5,9 @@ import java.util.List;
 import model.ICardResources;
 import model.card.AbstractCard;
 import model.card.CardType;
+import model.card.ICardChecker;
 
-public class LayForFreeBehaviour extends Behaviour {
+public class LayForFreeBehaviour extends Behaviour implements ICardChecker {
 
     private List<AbstractCard> affectedCards;
     private CardType type;
@@ -20,7 +21,7 @@ public class LayForFreeBehaviour extends Behaviour {
     @Override
     public void initialise() {
 
-        affectedCards = getHost().getOwner().getHand().getCardsOf(type);
+        affectedCards = getOwner().getHand().getCardsOf(type);
 
         for (AbstractCard card : affectedCards) {
             card.setCost(0);
@@ -35,6 +36,18 @@ public class LayForFreeBehaviour extends Behaviour {
         }
 
         affectedCards.clear();
+    }
+    
+    public boolean isValidCard(AbstractCard card) {
+
+        boolean isValid = false;
+
+        if (card.getType() == type
+                && card.getOwner() != getOwner()) {
+            isValid = true;
+        }
+
+        return isValid;
     }
     
     public CardType getType() {

@@ -6,11 +6,10 @@ import model.IPlayer;
 import model.card.AbstractCard;
 import model.card.ICardChecker;
 
-public class AttackOppositeBehaviour extends AttackBehaviour {
+public class AttackOppositeBehaviour extends AttackBehaviour implements ICardChecker {
 
-    public AttackOppositeBehaviour(AbstractCard host,
-            ICardResources cardResources, ICardChecker checker) {
-        super(host, cardResources, checker);
+    public AttackOppositeBehaviour(AbstractCard host, ICardResources cardResources) {
+        super(host, cardResources);
     }
 
     public AbstractCard getTarget() {

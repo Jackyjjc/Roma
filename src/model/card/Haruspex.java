@@ -12,7 +12,7 @@ import framework.cards.Card;
  * @author Junjie CHEN
  */
 
-public class Haruspex extends AbstractCard implements ICardChecker {
+public class Haruspex extends AbstractCard {
 
     private static final int COST = 4;
     private static final int DEFENCE = 3;
@@ -20,29 +20,17 @@ public class Haruspex extends AbstractCard implements ICardChecker {
     private Haruspex() {
 
         super(Card.HARUSPEX,
-                CardType.CHARACTER,
-                COST,
-                DEFENCE);
+              CardType.CHARACTER,
+              COST,
+              DEFENCE);
 
     }
 
     static AbstractCard create(ICardResources cardResources, ICardStorage deck) {
 
         Haruspex card = new Haruspex();
-        
-        card.setBehaviour(new RetrieveCardFromPileBehaviour(card, cardResources, deck, card));
+        card.setBehaviour(new RetrieveCardFromPileBehaviour(card, cardResources, deck, null));
 
         return card;
-    }
-    
-    public boolean isValidCard(AbstractCard card) {
-
-        boolean isValid = false;
-
-        if (card != null) {
-            isValid = true;
-        }
-
-        return isValid;
     }
 }

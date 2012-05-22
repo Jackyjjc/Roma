@@ -6,8 +6,9 @@ import model.IField;
 import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.CardType;
+import model.card.ICardChecker;
 
-public class RearrangerBehaviour extends Behaviour {
+public class RearrangerBehaviour extends Behaviour implements ICardChecker {
 
     private ICardStorage affectedCards;
     private CardType pickupType;
@@ -43,5 +44,17 @@ public class RearrangerBehaviour extends Behaviour {
         }
 
         handler.setList(hand);
+    }
+    
+    public boolean isValidCard(AbstractCard c) {
+
+        boolean isValid = false;
+
+        if (c != null && c.getType() == pickupType) {
+            isValid = true;
+        }
+
+        return isValid;
+
     }
 }

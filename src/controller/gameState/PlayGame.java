@@ -103,7 +103,9 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                 } else {
                     if (g.getCurrentPlayer().getMoney() >= dieValue) {
                         moveMaker.activateBribeDisc(dieValue);
-                        activation(g.getCardActivateManager().getActivatedCard().getName());
+                        if(g.getCardActivateManager().getActivatedCard() != null) {
+                            activation(g.getCardActivateManager().getActivatedCard().getName());  
+                        }
                     }
                 }
             }
@@ -206,16 +208,18 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                 Card c = selectCard(pile, pile.size());
                 target = pileStorage.getCard(c);
 
-                ICardChecker checker = (ICardChecker) g.getCardActivateManager().getActivatedCard();
+                ICardChecker checker = (ICardChecker) g.getCardActivateManager().getActivatedCard().getBehaviour();
                 while (!checker.isValidCard(target)) {
                     c = selectCard(pile, pile.size());
                     target = pileStorage.getCard(c);
                 }
 
                 int index = 0;
-                for (int i = 0; i < pile.size(); i++) {
+                boolean found = false;
+                for (int i = 0; !found && i < pile.size(); i++) {
                     if (pile.get(i) == c) {
                         index = i;
+                        found = true;
                     }
                 }
 
@@ -237,7 +241,7 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             
         } else if (card == Card.CONSUL) {
             
-            if(g.getActionDice().length > 1) {
+            if(g.getActionDice().length >= 1) {
                 view.showDieInputDialog();
                 view.enableActionDiceAdapter(false);
             }
@@ -320,18 +324,21 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             if(!disc.isEmpty()) {
                 boolean confirm = view.showTargetConfirmDialog(disc.getCard().getName());
                 if(confirm) {
-                    ICardChecker checker = (ICardChecker) card;
+                    ICardChecker checker = (ICardChecker) behaviour;
                     
                     if(checker.isValidCard(disc.getCard())) {
                         
-                        if(!(behaviour instanceof KamikazeBehaviour 
-                             && disc.getCard().getType() == ((KamikazeBehaviour)behaviour).getType())) {
-                             
+                        if(behaviour instanceof KamikazeBehaviour 
+                             && disc.getCard().getType() == ((KamikazeBehaviour)behaviour).getType()) {
                             manager.chooseDiceDisc(discIndex + 1);
-                            if(behaviour instanceof AttackSelectedTargetBehaviour) {
-                                g.getDiceManager().rollBattleDice();
-                                manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
-                            }
+                            manager.complete();
+                            
+                        } else if(behaviour instanceof AttackSelectedTargetBehaviour) {
+                            g.getDiceManager().rollBattleDice();
+                            manager.chooseDiceDisc(discIndex + 1);
+                            manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
+                            manager.complete();
+                        } else if(behaviour instanceof GladiatorBehaviour) {
                             manager.complete();
                         }
                         

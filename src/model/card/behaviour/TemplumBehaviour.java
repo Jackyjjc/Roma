@@ -6,6 +6,7 @@ import model.IPlayer;
 import model.IResourceStorage;
 import model.InputHandler;
 import model.card.AbstractCard;
+import model.card.IDieChecker;
 import model.card.IForumListener;
 
 /**
@@ -14,7 +15,7 @@ import model.card.IForumListener;
  *@author Junjie CHEN
  *
  */
-public class TemplumBehaviour extends Behaviour implements IForumListener {
+public class TemplumBehaviour extends Behaviour implements IForumListener, IDieChecker {
 
     public TemplumBehaviour(AbstractCard host, ICardResources cardResources) {
         super(host, cardResources);
@@ -37,6 +38,16 @@ public class TemplumBehaviour extends Behaviour implements IForumListener {
         if (dieInput != null) {
             bank.transferVP(player, dieInput.getValue());
         }
+    }
+    
+    public boolean isValidDie(Die die) {
 
+        boolean isValid = false;
+
+        if (die != null && !die.isUsed()) {
+            isValid = true;
+        }
+
+        return isValid;
     }
 }

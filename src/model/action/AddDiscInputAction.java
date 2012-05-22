@@ -33,7 +33,7 @@ public class AddDiscInputAction extends InputAction {
         AbstractCard card = disc.getCard();
 
         if (getCardActivateManager().getActivatedCard() instanceof ICardChecker) {
-            ICardChecker checker = (ICardChecker) getCardActivateManager().getActivatedCard();
+            ICardChecker checker = (ICardChecker) getCardActivateManager().getActivatedCard().getBehaviour();
             if ((card == null || checker.isValidCard(card))) {
                 isValid = true;
             }

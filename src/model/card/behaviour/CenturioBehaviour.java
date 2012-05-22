@@ -7,16 +7,11 @@ import model.card.AbstractCard;
 import model.card.ICardChecker;
 import model.card.IDieChecker;
 
-public class CenturioBehaviour extends AttackOppositeBehaviour{
+public class CenturioBehaviour extends AttackOppositeBehaviour implements ICardChecker, IDieChecker {
 
-    private IDieChecker dieChecker;
-    
-    public CenturioBehaviour(AbstractCard host, ICardResources cardResources, 
-                             ICardChecker cardChecker, IDieChecker dieChecker) {
+    public CenturioBehaviour(AbstractCard host, ICardResources cardResources) {
         
-        super(host, cardResources, cardChecker);
-        this.dieChecker = dieChecker;
-        
+        super(host, cardResources);
     }
 
     @Override
@@ -31,7 +26,7 @@ public class CenturioBehaviour extends AttackOppositeBehaviour{
 
         if (isAddDie) {
             Die die = handler.getDieInput();
-            if (dieChecker.isValidDie(die)) {
+            if (isValidDie(die)) {
                 die.use();
                 dieValue += die.getValue();
             }
@@ -39,5 +34,6 @@ public class CenturioBehaviour extends AttackOppositeBehaviour{
             
         return dieValue;
     }
+
 
 }

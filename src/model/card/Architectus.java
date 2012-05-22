@@ -11,7 +11,7 @@ import framework.cards.Card;
  * @author Junjie CHEN
  */
 
-public class Architectus extends AbstractCard implements ICardChecker {
+public class Architectus extends AbstractCard {
 
     private static final int COST = 3;
     private static final int DEFENCE = 4;
@@ -23,18 +23,6 @@ public class Architectus extends AbstractCard implements ICardChecker {
                 COST,
                 DEFENCE);
 
-    }
-
-    public boolean isValidCard(AbstractCard card) {
-
-        boolean isValid = false;
-
-        if (card.getType() == CardType.BUILDING
-                && card.getOwner() != getOwner()) {
-            isValid = true;
-        }
-
-        return isValid;
     }
     
     static AbstractCard create(ICardResources cardResources) {

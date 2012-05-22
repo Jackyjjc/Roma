@@ -11,7 +11,7 @@ import framework.cards.Card;
  * @author Junjie CHEN
  */
 
-public class Nero extends AbstractCard implements ICardChecker {
+public class Nero extends AbstractCard {
 
     private static final int COST = 8;
     private static final int DEFENCE = 9;
@@ -24,21 +24,11 @@ public class Nero extends AbstractCard implements ICardChecker {
                 DEFENCE);
 
     }
-
-    public boolean isValidCard(AbstractCard c) {
-        boolean isValid = false;
-
-        if (c.getOwner() != null && c.getOwner() != getOwner()) {
-            isValid = true;
-        }
-
-        return isValid;
-    }
     
     static AbstractCard create(ICardResources cardResources) {
 
         Nero card = new Nero();
-        card.setBehaviour(new KamikazeBehaviour(card, CardType.BUILDING, cardResources, card));
+        card.setBehaviour(new KamikazeBehaviour(card, CardType.BUILDING, cardResources));
 
         return card;
     }

@@ -5,7 +5,7 @@ import model.ICardResources;
 import model.card.behaviour.Behaviour;
 import model.card.behaviour.ScaenicusBehaviour;
 
-public class Scaenicus extends AbstractCard implements ICardChecker {
+public class Scaenicus extends AbstractCard {
 
     private static final int COST = 8;
     private static final int DEFENCE = 3;
@@ -17,20 +17,6 @@ public class Scaenicus extends AbstractCard implements ICardChecker {
                 COST,
                 DEFENCE);
 
-    }
-
-    public boolean isValidCard(AbstractCard card) {
-
-        boolean isValid = false;
-
-        if (card != null && card.getOwner() == getOwner()
-                && card.getType() == CardType.CHARACTER) {
-
-            isValid = true;
-        }
-
-
-        return isValid;
     }
     
     @Override

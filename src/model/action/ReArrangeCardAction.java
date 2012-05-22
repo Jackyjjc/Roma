@@ -27,7 +27,7 @@ public class ReArrangeCardAction extends InputAction {
         
         boolean isValid = false;
         
-        ICardChecker checker = (ICardChecker) getCardActivateManager().getActivatedCard();
+        ICardChecker checker = (ICardChecker) getCardActivateManager().getActivatedCard().getBehaviour();
         getInputHandler().addCardInput(getGameState().getWhoseTurn(), name);
         AbstractCard card = getInputHandler().getCardInput();
         

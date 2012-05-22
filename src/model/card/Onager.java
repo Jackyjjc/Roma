@@ -11,7 +11,7 @@ import framework.cards.Card;
  * @author Junjie CHEN
  */
 
-public class Onager extends AbstractCard implements ICardChecker {
+public class Onager extends AbstractCard {
 
     private static final int COST = 5;
     private static final int DEFENCE = 4;
@@ -24,23 +24,11 @@ public class Onager extends AbstractCard implements ICardChecker {
                 DEFENCE);
 
     }
-
-    public boolean isValidCard(AbstractCard target) {
-
-        boolean isValid = false;
-        if (target != null && target.getOwner() != null
-                && target.getOwner() != getOwner()
-                && target.getType() == CardType.BUILDING) {
-            isValid = true;
-        }
-
-        return isValid;
-    }
     
     static AbstractCard create(ICardResources cardResources) {
 
         Onager card = new Onager();
-        card.setBehaviour(new AttackSelectedTargetBehaviour(card, cardResources, card));
+        card.setBehaviour(new AttackSelectedTargetBehaviour(card, cardResources, CardType.BUILDING));
 
         return card;
     }

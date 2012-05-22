@@ -6,15 +6,11 @@ import model.card.IDieChecker;
 import model.card.IForumListener;
 import model.card.Templum;
 
-public class ForumBehaviour extends Behaviour {
-
-    private IDieChecker checker;
+public class ForumBehaviour extends Behaviour implements IDieChecker {
     
-    public ForumBehaviour(AbstractCard host, 
-                          ICardResources cardResources, IDieChecker dieChecker) {
+    public ForumBehaviour(AbstractCard host, ICardResources cardResources) {
         
         super(host, cardResources);
-        this.checker = dieChecker;
     }
 
 
@@ -29,7 +25,7 @@ public class ForumBehaviour extends Behaviour {
         Die toUse = handler.getDieInput();
         Boolean useTemplum = handler.getBooleanInput();
 
-        if (checker.isValidDie(toUse)) {
+        if (isValidDie(toUse)) {
             bank.transferVP(player, toUse.getValue());
             toUse.use();
         }
@@ -46,5 +42,17 @@ public class ForumBehaviour extends Behaviour {
             }
         }
 
+    }
+    
+
+    public boolean isValidDie(Die die) {
+
+        boolean isValid = false;
+
+        if (die != null && !die.isUsed()) {
+            isValid = true;
+        }
+
+        return isValid;
     }
 }

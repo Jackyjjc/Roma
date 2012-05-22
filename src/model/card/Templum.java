@@ -1,11 +1,10 @@
 package model.card;
 
-import framework.cards.Card;
-import model.Die;
 import model.ICardResources;
 import model.card.behaviour.TemplumBehaviour;
+import framework.cards.Card;
 
-public class Templum extends AbstractCard implements IForumListener, IDieChecker {
+public class Templum extends AbstractCard implements IForumListener {
 
     private static final int COST = 2;
     private static final int DEFENCE = 2;
@@ -29,16 +28,5 @@ public class Templum extends AbstractCard implements IForumListener, IDieChecker
 
     public void alert() {
         ((IForumListener) getBehaviour()).alert();
-    }
-
-    public boolean isValidDie(Die die) {
-
-        boolean isValid = false;
-
-        if (die != null && !die.isUsed()) {
-            isValid = true;
-        }
-
-        return isValid;
     }
 }

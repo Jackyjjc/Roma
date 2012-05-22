@@ -11,7 +11,7 @@ import model.card.behaviour.GladiatorBehaviour;
  * @author Junjie CHEN
  */
 
-public class Gladiator extends AbstractCard implements ICardChecker {
+public class Gladiator extends AbstractCard {
 
     private static final int COST = 6;
     private static final int DEFENCE = 5;
@@ -24,22 +24,11 @@ public class Gladiator extends AbstractCard implements ICardChecker {
                 DEFENCE);
 
     }
-
-    public boolean isValidCard(AbstractCard target) {
-        boolean isValid = false;
-
-        if (target != null && target.getOwner() != getOwner()
-                && target.getType() == CardType.CHARACTER) {
-            isValid = true;
-        }
-
-        return isValid;
-    }
     
     static AbstractCard create(ICardResources cardResources) {
 
         Gladiator card = new Gladiator();
-        card.setBehaviour(new GladiatorBehaviour(card, cardResources, card));
+        card.setBehaviour(new GladiatorBehaviour(card, cardResources));
 
         return card;
     }

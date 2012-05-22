@@ -11,7 +11,7 @@ import framework.cards.Card;
  * @author Junjie CHEN
  */
 
-public class Consiliarius extends AbstractCard implements ICardChecker {
+public class Consiliarius extends AbstractCard {
 
     private static final int COST = 4;
     private static final int DEFENCE = 4;
@@ -23,18 +23,6 @@ public class Consiliarius extends AbstractCard implements ICardChecker {
                 CardType.CHARACTER,
                 COST,
                 DEFENCE);
-
-    }
-
-    public boolean isValidCard(AbstractCard c) {
-
-        boolean isValid = false;
-
-        if (c != null && c.getType() == CardType.CHARACTER) {
-            isValid = true;
-        }
-
-        return isValid;
 
     }
     

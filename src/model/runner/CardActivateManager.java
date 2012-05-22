@@ -9,7 +9,6 @@ import model.InputHandler;
 import model.TurnMover;
 import model.action.AddBattleDieInput;
 import model.action.AddBooleanInputAction;
-import model.action.AddCardInputAction;
 import model.action.AddDieInputAction;
 import model.action.AddDiscInputAction;
 import model.action.AddIntInputAction;
@@ -19,7 +18,6 @@ import model.action.MimicAction;
 import model.action.ReArrangeCardAction;
 import model.card.AbstractCard;
 import model.card.Aesculapinum;
-import model.card.Haruspex;
 import model.card.TelephoneBox;
 import model.card.behaviour.ScaenicusBehaviour;
 import framework.cards.Card;
@@ -192,7 +190,7 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
 
             c = g.getDiscard().get(index);
 
-        } else if (activatedCard instanceof Haruspex) {
+        } else {
 
             c = g.getDeck().get(index);
         }

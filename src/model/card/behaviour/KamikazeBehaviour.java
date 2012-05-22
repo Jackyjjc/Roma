@@ -7,15 +7,13 @@ import model.card.AbstractCard;
 import model.card.CardType;
 import model.card.ICardChecker;
 
-public class KamikazeBehaviour extends Behaviour {
+public class KamikazeBehaviour extends Behaviour implements ICardChecker {
     
-    private ICardChecker checker;
     private CardType type;
     
     public KamikazeBehaviour(AbstractCard host, CardType type,
-                             ICardResources cardResources, ICardChecker checker) {
+                             ICardResources cardResources) {
         super(host, cardResources);
-        this.checker = checker;
         this.type = type;
     }
 
@@ -24,11 +22,21 @@ public class KamikazeBehaviour extends Behaviour {
         IDisc disc = handler.getDiscInput();
         AbstractCard target = disc.getCard();
 
-        if (target != null && checker.isValidCard(target)) {
+        if (target != null && isValidCard(target)) {
             target.disCard();
         }
 
         getHost().disCard();
+    }
+    
+    public boolean isValidCard(AbstractCard c) {
+        boolean isValid = false;
+
+        if (c.getOwner() != null && c.getOwner() != getOwner()) {
+            isValid = true;
+        }
+
+        return isValid;
     }
     
     public CardType getType() {

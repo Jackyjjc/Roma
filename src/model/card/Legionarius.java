@@ -11,7 +11,7 @@ import framework.cards.Card;
  * @author Junjie CHEN
  */
 
-public class Legionarius extends AbstractCard implements ICardChecker {
+public class Legionarius extends AbstractCard {
 
     private static final int COST = 4;
     private static final int DEFENCE = 5;
@@ -24,23 +24,11 @@ public class Legionarius extends AbstractCard implements ICardChecker {
                 DEFENCE);
 
     }
-
-    public boolean isValidCard(AbstractCard target) {
-        boolean isValid = false;
-
-        if (target.getOwner() != null
-                && target.getOwner() != getOwner()) {
-            isValid = true;
-        }
-
-        return isValid;
-    }
-
-    
+   
     static AbstractCard create(ICardResources cardResources) {
 
         Legionarius card = new Legionarius();
-        card.setBehaviour(new AttackOppositeBehaviour(card, cardResources, card));
+        card.setBehaviour(new AttackOppositeBehaviour(card, cardResources));
 
         return card;
     }
