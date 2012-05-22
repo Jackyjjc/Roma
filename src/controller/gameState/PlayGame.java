@@ -26,6 +26,7 @@ import model.card.behaviour.GladiatorBehaviour;
 import model.card.behaviour.KamikazeBehaviour;
 import model.card.behaviour.LayForFreeBehaviour;
 import model.card.behaviour.PraetorianusBehaviour;
+import model.card.behaviour.RearrangerBehaviour;
 import model.card.behaviour.ScaenicusBehaviour;
 import model.runner.CardActivateManager;
 import model.runner.GameController;
@@ -121,9 +122,13 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
     public void layCard(int fromIndex, int toIndex) {
         
         AbstractCard activatedCard = g.getCardActivateManager().getActivatedCard();
+        Behaviour behaviour = null;
+        if(activatedCard != null) {
+            behaviour = activatedCard.getBehaviour();
+        }
         IPlayer currentPlayer = g.getCurrentPlayer();
         
-        if(activatedCard instanceof Machina || activatedCard instanceof Consiliarius) {
+        if(behaviour instanceof RearrangerBehaviour) {
             Card name = g.getInputHandler().getList().getCard(fromIndex).getName();
             g.getCardActivateManager().placeCard(name, toIndex + 1);
             if(g.getInputHandler().getList().size() == 0) {
@@ -133,7 +138,6 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         
         } else {
             AbstractCard card = currentPlayer.getHand().getCard(fromIndex);
-            Behaviour behaviour = card.getBehaviour();
             
             if(currentPlayer.getMoney() >= card.getCost()) {
                 moveMaker.placeCard(card.getName(), toIndex + 1);
@@ -364,8 +368,9 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             view.enableActionDiceAdapter(false);
             view.showDieInputDialog();
         } else if (behaviour instanceof ScaenicusBehaviour) {
+            Card mimicCard = g.getCurrentPlayer().getField().getDisc(discIndex).getCard().getName();
             manager.getScaenicusMimicTarget(discIndex + 1);
-            activation(g.getCurrentPlayer().getField().getDisc(discIndex).getCard().getName());
+            activation(mimicCard);
         }
         
         g.getNotifier().notifyListeners();

@@ -12,7 +12,7 @@ public class GameRunner {
         
         final Game g = new Game(Rules.NUM_PLAYERS);
         
-        GraphicalView graphicalView = new GraphicalView(g, gameController.getInputHandler());
+        GraphicalView graphicalView = new GraphicalView(g, gameController.getInputHandler(),g);
         g.getNotifier().addListener(graphicalView);
         graphicalView.pack();
         graphicalView.setVisible(true);

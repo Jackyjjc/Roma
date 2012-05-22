@@ -7,8 +7,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import model.ICardResources;
 import model.IGameDisplayState;
 import model.IGameIO;
+import model.IPlayer;
 import model.Notifier;
 import controller.GuiInputHandler;
 import framework.cards.Card;
@@ -32,11 +34,15 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
     private Notifier notifier;
     private GuiInputHandler handler;
 
-    public GraphicalView(IGameIO gameIO, GuiInputHandler handler) {
+    private ICardResources cardResources;
+    
+    public GraphicalView(IGameIO gameIO, GuiInputHandler handler, 
+                         ICardResources cardResources) {
         
         super(NAME);
         
         this.handler = handler;
+        this.cardResources = cardResources;
         
         initElements(gameIO);
         initUI();
@@ -337,8 +343,19 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
     }
     
     public void gameOver() {
+        
+        int vpArray[] = new int[2];
+        IPlayer currentPlayer = cardResources.getCurrentPlayer();
+        
+        vpArray[currentPlayer.getId()] = currentPlayer.getVP();
+        vpArray[currentPlayer.getOpponent().getId()] = currentPlayer.getOpponent().getVP();
+        
+        if(vpArray[currentPlayer.getId()] < vpArray[currentPlayer.getOpponent().getId()]) {
+            currentPlayer = currentPlayer.getOpponent();
+        }
+        
         JOptionPane.showMessageDialog(this,
-                "Game Over!!!");
+                "Game Over!! Congratulations Player " + (currentPlayer.getId() + 1));
         System.exit(1);
     }
 }

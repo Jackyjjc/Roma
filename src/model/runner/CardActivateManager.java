@@ -137,7 +137,7 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
 
         handler.addDiscInput(player.getId(), diceDisc - 1);
 
-        ScaenicusBehaviour behaviour = (ScaenicusBehaviour) ((ScaenicusBehaviour) activatedCard.getBehaviour()).getMimicBehaviour();
+        ScaenicusBehaviour behaviour = (ScaenicusBehaviour) ((ScaenicusBehaviour) activatedCard.getBehaviour()).getScaenicusBehaviour();
         behaviour.mimic();
         return this;
     }
