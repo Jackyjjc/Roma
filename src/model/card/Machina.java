@@ -1,8 +1,8 @@
 package model.card;
 
-import framework.cards.Card;
 import model.ICardResources;
-import model.card.behaviour.MachinaBehaviour;
+import model.card.behaviour.RearrangerBehaviour;
+import framework.cards.Card;
 
 /**
  * Reviewed at 20/05/2012
@@ -16,20 +16,19 @@ public class Machina extends AbstractCard {
     private static final int COST = 4;
     private static final int DEFENCE = 4;
 
-    private Machina(ICardResources cardResources) {
+    private Machina() {
 
         super(Card.MACHINA,
                 CardType.BUILDING,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Machina(cardResources);
-        card.setBehaviour(new MachinaBehaviour(card));
+        AbstractCard card = new Machina();
+        card.setBehaviour(new RearrangerBehaviour(card, cardResources, CardType.BUILDING));
 
         return card;
     }

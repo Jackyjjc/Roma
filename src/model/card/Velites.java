@@ -1,28 +1,27 @@
 package model.card;
 
-import framework.cards.Card;
 import model.ICardResources;
-import model.card.behaviour.VelitesBehaviour;
+import model.card.behaviour.AttackSelectedTargetBehaviour;
+import framework.cards.Card;
 
 public class Velites extends AbstractCard {
 
     private static final int COST = 5;
     private static final int DEFENCE = 3;
 
-    private Velites(ICardResources cardResources) {
+    private Velites() {
 
         super(Card.VELITES,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
-
+    
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Velites(cardResources);
-        card.setBehaviour(new VelitesBehaviour(card));
+        Velites card = new Velites();
+        card.setBehaviour(new AttackSelectedTargetBehaviour(card, cardResources, CardType.CHARACTER));
 
         return card;
     }

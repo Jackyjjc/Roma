@@ -21,7 +21,8 @@ public class CardCollectionFactory {
     public static CardCollection create(CardFactory factory, ICardStorage discard) {
 
         CardCollection deck = new Deck(factory, discard);
-
+        factory.setDeck(deck);
+        
         buildDeck(deck, factory);
 
         deck.shuffle();

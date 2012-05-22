@@ -16,19 +16,18 @@ public class Mercatus extends AbstractCard {
     private static final int COST = 6;
     private static final int DEFENCE = 3;
 
-    private Mercatus(ICardResources cardResources) {
+    private Mercatus() {
 
         super(Card.MERCATUS,
                 CardType.BUILDING,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
     }
 
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Mercatus(cardResources);
-        card.setBehaviour(new MercatusBehaviour(card));
+        AbstractCard card = new Mercatus();
+        card.setBehaviour(new MercatusBehaviour(card, cardResources));
 
         return card;
     }

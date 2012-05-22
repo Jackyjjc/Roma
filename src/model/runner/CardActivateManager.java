@@ -9,17 +9,15 @@ import model.InputHandler;
 import model.TurnMover;
 import model.action.AddBattleDieInput;
 import model.action.AddBooleanInputAction;
-import model.action.AddCardInputAction;
 import model.action.AddDieInputAction;
 import model.action.AddDiscInputAction;
 import model.action.AddIntInputAction;
 import model.action.ChooseCardFromPileAction;
 import model.action.CompleteAction;
 import model.action.MimicAction;
-import model.action.ReLayCardAction;
+import model.action.ReArrangeCardAction;
 import model.card.AbstractCard;
 import model.card.Aesculapinum;
-import model.card.Haruspex;
 import model.card.TelephoneBox;
 import model.card.behaviour.ScaenicusBehaviour;
 import framework.cards.Card;
@@ -102,7 +100,7 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
 
     public void placeCard(Card name, int diceDisc) {
 
-        turnMover.getCurrentTurn().addAction(new ReLayCardAction(g, this, handler, name, diceDisc));
+        turnMover.getCurrentTurn().addAction(new ReArrangeCardAction(g, this, handler, name, diceDisc));
         
         IPlayer player = manager.getCurrentPlayer();
         ICardStorage listOfCards = handler.getList();

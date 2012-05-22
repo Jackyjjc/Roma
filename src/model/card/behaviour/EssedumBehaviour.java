@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.IDisc;
 import model.IField;
 import model.ITurnListener;
@@ -14,8 +15,8 @@ public class EssedumBehaviour extends Behaviour implements ITurnListener {
     private List<AbstractCard> affectedCards;
     private ITurnMover turnMover;
 
-    public EssedumBehaviour(AbstractCard host, ITurnMover turnMover) {
-        super(host);
+    public EssedumBehaviour(AbstractCard host, ICardResources cardResources, ITurnMover turnMover) {
+        super(host, cardResources);
         affectedCards = new ArrayList<AbstractCard>();
         this.turnMover = turnMover;
     }

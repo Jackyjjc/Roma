@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.IPlayer;
 import model.IResourceStorage;
 import model.card.AbstractCard;
@@ -7,9 +8,8 @@ import model.card.Action;
 
 public class LegatBehaviour extends Behaviour {
 
-    public LegatBehaviour(AbstractCard host) {
-        super(host);
-        // TODO Auto-generated constructor stub
+    public LegatBehaviour(AbstractCard host, ICardResources cardResources) {
+        super(host, cardResources);
     }
 
     public void complete() {
@@ -19,7 +19,7 @@ public class LegatBehaviour extends Behaviour {
         IPlayer opponent = owner.getOpponent();
         int amount = opponent.getField().countUnoccupiedDiscs();
 
-        IResourceStorage bank = getHost().getCardResources().getBank();
+        IResourceStorage bank = getCardResources().getBank();
 
         Action.attainVP(bank, owner, amount);
 

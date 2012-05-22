@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.ICardStorage;
 import model.IDisc;
 import model.IDiscardListener;
@@ -11,14 +12,14 @@ public class GrimReaperBehaviour extends Behaviour implements IDiscardListener {
 
     private ICardStorage discard;
 
-    public GrimReaperBehaviour(AbstractCard host) {
-        super(host);
+    public GrimReaperBehaviour(AbstractCard host, ICardResources cardResources) {
+        super(host, cardResources);
 
     }
 
     @Override
     public boolean lay(IDisc disc) {
-        this.discard = getHost().getCardResources().getDiscardStorage();
+        this.discard = getCardResources().getDiscardStorage();
         discard.addDiscardListener(this);
         return super.lay(disc);
 
@@ -34,7 +35,7 @@ public class GrimReaperBehaviour extends Behaviour implements IDiscardListener {
 
     public void alert() {
 
-        IPlayer current = getHost().getCardResources().getCurrentPlayer();
+        IPlayer current = getCardResources().getCurrentPlayer();
         AbstractCard toSave = discard.getCard(0);
 
         if (getHost().getOwner() == toSave.getOwner() &&

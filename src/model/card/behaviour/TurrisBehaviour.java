@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.IDisc;
 import model.IDiscListener;
 import model.IField;
@@ -19,8 +20,8 @@ public class TurrisBehaviour extends Behaviour implements IDiscListener {
 
     private List<AbstractCard> affectedCards;
 
-    public TurrisBehaviour(AbstractCard host) {
-        super(host);
+    public TurrisBehaviour(AbstractCard host, ICardResources cardResources) {
+        super(host, cardResources);
         affectedCards = new ArrayList<AbstractCard>();
     }
 

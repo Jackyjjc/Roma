@@ -1,8 +1,8 @@
 package model.card;
 
-import framework.cards.Card;
 import model.ICardResources;
-import model.card.behaviour.ConsiliariusBehaviour;
+import model.card.behaviour.RearrangerBehaviour;
+import framework.cards.Card;
 
 /**
  * Reviewed at 20/05/2012
@@ -17,20 +17,19 @@ public class Consiliarius extends AbstractCard {
     private static final int DEFENCE = 4;
 
 
-    private Consiliarius(ICardResources cardResources) {
+    private Consiliarius() {
 
         super(Card.CONSILIARIUS,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
-
+    
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Consiliarius(cardResources);
-        card.setBehaviour(new ConsiliariusBehaviour(card));
+        Consiliarius card = new Consiliarius();
+        card.setBehaviour(new RearrangerBehaviour(card, cardResources, CardType.CHARACTER));
 
         return card;
     }

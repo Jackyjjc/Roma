@@ -1,6 +1,7 @@
 package model.card.behaviour;
 
 import model.Die;
+import model.ICardResources;
 import model.InputHandler;
 import model.card.AbstractCard;
 import model.card.IDieChecker;
@@ -13,35 +14,21 @@ import model.card.IIntegerChecker;
 
 public class ConsulBehaviour extends Behaviour implements IDieChecker, IIntegerChecker {
 
-    private static final int MIN_DIE_VALUE = 1;
-    private static final int MAX_DIE_VALUE = 6;
-
-    public ConsulBehaviour(AbstractCard host) {
-        super(host);
+    public ConsulBehaviour(AbstractCard host, ICardResources cardResources) {
+        
+        super(host, cardResources);
     }
 
     public void complete() {
 
-        InputHandler handler = getHost().getCardResources().getInputHandler();
+        InputHandler handler = getCardResources().getInputHandler();
 
         Die input = handler.getDieInput();
         int valueChange = handler.getIntInput();
 
-        if (isValidDie(input, valueChange)) {
+        if (isValidDie(input)) {
             input.setValue(input.getValue() + valueChange);
         }
-    }
-
-    private boolean isValidDie(Die die, int change) {
-
-        boolean isValid = false;
-
-        if (!die.isUsed() && (die.getValue() + change) <= MAX_DIE_VALUE
-                && (die.getValue() + change >= MIN_DIE_VALUE)) {
-            isValid = true;
-        }
-
-        return isValid;
     }
 
     //the two function below are for time paradox checking
@@ -58,5 +45,4 @@ public class ConsulBehaviour extends Behaviour implements IDieChecker, IIntegerC
     public boolean isValidDie(Die die) {
         return !die.isUsed();
     }
-
 }

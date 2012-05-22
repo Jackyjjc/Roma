@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.IDisc;
 import model.InputHandler;
 import model.card.AbstractCard;
@@ -13,18 +14,16 @@ import model.card.AbstractCard;
  */
 public class PraetorianusBehaviour extends Behaviour {
 
-    public PraetorianusBehaviour(AbstractCard host) {
-        super(host);
+    public PraetorianusBehaviour(AbstractCard host, ICardResources cardResources) {
+        super(host, cardResources);
     }
 
     public void complete() {
 
-        InputHandler handler = getHost().getCardResources().getInputHandler();
+        InputHandler handler = getCardResources().getInputHandler();
         IDisc target = handler.getDiscInput();
 
         target.block();
 
     }
-
-
 }

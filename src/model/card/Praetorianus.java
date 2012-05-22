@@ -16,20 +16,19 @@ public class Praetorianus extends AbstractCard {
     private static final int COST = 4;
     private static final int DEFENCE = 4;
 
-    private Praetorianus(ICardResources cardResources) {
+    private Praetorianus() {
 
         super(Card.PRAETORIANUS,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Praetorianus(cardResources);
-        card.setBehaviour(new PraetorianusBehaviour(card));
+        AbstractCard card = new Praetorianus();
+        card.setBehaviour(new PraetorianusBehaviour(card, cardResources));
 
         return card;
     }

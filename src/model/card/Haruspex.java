@@ -1,8 +1,9 @@
 package model.card;
 
-import framework.cards.Card;
 import model.ICardResources;
-import model.card.behaviour.HaruspexBehaviour;
+import model.ICardStorage;
+import model.card.behaviour.RetrieveCardFromPileBehaviour;
+import framework.cards.Card;
 
 /**
  * Reviewed at 20/05/2012
@@ -16,20 +17,19 @@ public class Haruspex extends AbstractCard {
     private static final int COST = 4;
     private static final int DEFENCE = 3;
 
-    private Haruspex(ICardResources cardResources) {
+    private Haruspex() {
 
         super(Card.HARUSPEX,
-                CardType.CHARACTER,
-                COST,
-                DEFENCE,
-                cardResources);
+              CardType.CHARACTER,
+              COST,
+              DEFENCE);
 
     }
 
-    static AbstractCard create(ICardResources cardResources) {
+    static AbstractCard create(ICardResources cardResources, ICardStorage deck) {
 
-        AbstractCard card = new Haruspex(cardResources);
-        card.setBehaviour(new HaruspexBehaviour(card));
+        Haruspex card = new Haruspex();
+        card.setBehaviour(new RetrieveCardFromPileBehaviour(card, cardResources, deck, null));
 
         return card;
     }

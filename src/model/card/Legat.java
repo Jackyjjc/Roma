@@ -16,19 +16,18 @@ public class Legat extends AbstractCard {
     private static final int COST = 5;
     private static final int DEFENCE = 2;
 
-    private Legat(ICardResources cardResources) {
+    private Legat() {
 
         super(Card.LEGAT,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
     }
 
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Legat(cardResources);
-        card.setBehaviour(new LegatBehaviour(card));
+        AbstractCard card = new Legat();
+        card.setBehaviour(new LegatBehaviour(card, cardResources));
 
         return card;
     }

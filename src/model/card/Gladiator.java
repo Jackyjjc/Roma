@@ -16,20 +16,19 @@ public class Gladiator extends AbstractCard {
     private static final int COST = 6;
     private static final int DEFENCE = 5;
 
-    private Gladiator(ICardResources cardResources) {
+    private Gladiator() {
 
         super(Card.GLADIATOR,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
-
+    
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new Gladiator(cardResources);
-        card.setBehaviour(new GladiatorBehaviour(card));
+        Gladiator card = new Gladiator();
+        card.setBehaviour(new GladiatorBehaviour(card, cardResources));
 
         return card;
     }

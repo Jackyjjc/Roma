@@ -1,13 +1,14 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.card.AbstractCard;
 
 public class KatBehaviour extends Behaviour {
 
     private static final int DEFAULT_LIVES = 9;
 
-    public KatBehaviour(AbstractCard host) {
-        super(host);
+    public KatBehaviour(AbstractCard host, ICardResources cardResources) {
+        super(host, cardResources);
         reset();
     }
 

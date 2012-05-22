@@ -9,20 +9,19 @@ public class TribunusPlebis extends AbstractCard {
     private static final int COST = 5;
     private static final int DEFENCE = 5;
 
-    private TribunusPlebis(ICardResources cardResources) {
+    private TribunusPlebis() {
 
         super(Card.TRIBUNUSPLEBIS,
                 CardType.CHARACTER,
                 COST,
-                DEFENCE,
-                cardResources);
+                DEFENCE);
 
     }
 
     static AbstractCard create(ICardResources cardResources) {
 
-        AbstractCard card = new TribunusPlebis(cardResources);
-        card.setBehaviour(new TribunusPlebisBehaviour(card));
+        AbstractCard card = new TribunusPlebis();
+        card.setBehaviour(new TribunusPlebisBehaviour(card, cardResources));
 
         return card;
     }

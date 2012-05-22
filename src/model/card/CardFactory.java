@@ -2,6 +2,7 @@ package model.card;
 
 import framework.cards.Card;
 import model.ICardResources;
+import model.ICardStorage;
 
 /**
  * Reviewed at 20/05/2012
@@ -13,7 +14,8 @@ import model.ICardResources;
 public class CardFactory {
 
     private ICardResources cardResources;
-
+    private ICardStorage deck;
+    
     public CardFactory(ICardResources cardResources) {
 
         this.cardResources = cardResources;
@@ -55,7 +57,7 @@ public class CardFactory {
                 card = GrimReaper.create(cardResources);
                 break;
             case HARUSPEX:
-                card = Haruspex.create(cardResources);
+                card = Haruspex.create(cardResources, deck);
                 break;
             case KAT:
                 card = Kat.create(cardResources);
@@ -114,5 +116,9 @@ public class CardFactory {
         }
 
         return card;
+    }
+    
+    public void setDeck(ICardStorage deck) {
+        this.deck = deck;
     }
 }

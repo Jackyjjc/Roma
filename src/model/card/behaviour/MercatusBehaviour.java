@@ -1,5 +1,6 @@
 package model.card.behaviour;
 
+import model.ICardResources;
 import model.IField;
 import model.IPlayer;
 import model.card.AbstractCard;
@@ -8,8 +9,8 @@ import model.card.Forum;
 
 public class MercatusBehaviour extends Behaviour {
 
-    public MercatusBehaviour(AbstractCard host) {
-        super(host);
+    public MercatusBehaviour(AbstractCard host, ICardResources cardResources) {
+        super(host, cardResources);
     }
 
     public void complete() {

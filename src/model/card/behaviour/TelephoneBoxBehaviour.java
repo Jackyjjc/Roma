@@ -1,6 +1,7 @@
 package model.card.behaviour;
 
 import model.Die;
+import model.ICardResources;
 import model.IDisc;
 import model.ITurnMover;
 import model.InputHandler;
@@ -12,14 +13,14 @@ public class TelephoneBoxBehaviour extends Behaviour implements IDieChecker {
 
     private ITurnMover turnMover;
 
-    public TelephoneBoxBehaviour(AbstractCard host, ITurnMover turnMover) {
-        super(host);
+    public TelephoneBoxBehaviour(AbstractCard host, ICardResources cardResources, ITurnMover turnMover) {
+        super(host, cardResources);
         this.turnMover = turnMover;
     }
 
     public void complete() {
 
-        InputHandler handler = getHost().getCardResources().getInputHandler();
+        InputHandler handler = getCardResources().getInputHandler();
 
         boolean isForward = handler.getBooleanInput();
         Die die = handler.getDieInput();

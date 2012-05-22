@@ -7,9 +7,10 @@ import model.card.IForumListener;
 import model.card.Templum;
 
 public class ForumBehaviour extends Behaviour implements IDieChecker {
-
-    public ForumBehaviour(AbstractCard host) {
-        super(host);
+    
+    public ForumBehaviour(AbstractCard host, ICardResources cardResources) {
+        
+        super(host, cardResources);
     }
 
 
@@ -18,8 +19,8 @@ public class ForumBehaviour extends Behaviour implements IDieChecker {
         IDisc disc = getHost().getDisc();
         IPlayer player = getHost().getOwner();
 
-        InputHandler handler = getHost().getCardResources().getInputHandler();
-        IResourceStorage bank = getHost().getCardResources().getBank();
+        InputHandler handler = getCardResources().getInputHandler();
+        IResourceStorage bank = getCardResources().getBank();
 
         Die toUse = handler.getDieInput();
         Boolean useTemplum = handler.getBooleanInput();
@@ -42,7 +43,7 @@ public class ForumBehaviour extends Behaviour implements IDieChecker {
         }
 
     }
-
+    
 
     public boolean isValidDie(Die die) {
 
@@ -54,5 +55,4 @@ public class ForumBehaviour extends Behaviour implements IDieChecker {
 
         return isValid;
     }
-
 }

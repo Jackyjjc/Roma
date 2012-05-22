@@ -12,38 +12,21 @@ import model.IDisc;
 import model.IField;
 import model.IPlayer;
 import model.card.AbstractCard;
-import model.card.Architectus;
-import model.card.CardType;
-import model.card.Centurio;
 import model.card.Consiliarius;
-import model.card.Consul;
 import model.card.Forum;
-import model.card.Gladiator;
 import model.card.ICardChecker;
 import model.card.Machina;
-import model.card.Nero;
-import model.card.Onager;
-import model.card.Praetorianus;
-import model.card.Scaenicus;
-import model.card.Senator;
-import model.card.Sicarius;
 import model.card.TelephoneBox;
 import model.card.Templum;
-import model.card.Velites;
-import model.card.behaviour.ArchitectusBehaviour;
+import model.card.behaviour.AttackSelectedTargetBehaviour;
 import model.card.behaviour.Behaviour;
 import model.card.behaviour.CenturioBehaviour;
 import model.card.behaviour.ConsulBehaviour;
-import model.card.behaviour.ForumBehaviour;
 import model.card.behaviour.GladiatorBehaviour;
-import model.card.behaviour.NeroBehaviour;
-import model.card.behaviour.OnagerBehaviour;
+import model.card.behaviour.KamikazeBehaviour;
+import model.card.behaviour.LayForFreeBehaviour;
 import model.card.behaviour.PraetorianusBehaviour;
 import model.card.behaviour.ScaenicusBehaviour;
-import model.card.behaviour.SenatorBehaviour;
-import model.card.behaviour.SicariusBehaviour;
-import model.card.behaviour.TelephoneBoxBehaviour;
-import model.card.behaviour.VelitesBehaviour;
 import model.runner.CardActivateManager;
 import model.runner.GameController;
 import controller.GuiInputHandler;
@@ -120,7 +103,9 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                 } else {
                     if (g.getCurrentPlayer().getMoney() >= dieValue) {
                         moveMaker.activateBribeDisc(dieValue);
-                        activation(g.getCardActivateManager().getActivatedCard().getName());
+                        if(g.getCardActivateManager().getActivatedCard() != null) {
+                            activation(g.getCardActivateManager().getActivatedCard().getName());  
+                        }
                     }
                 }
             }
@@ -151,10 +136,8 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             g.getNotifier().notifyListeners();
             
             ICardStorage hand = g.getCurrentPlayer().getHand();
-            if ((behaviour instanceof ArchitectusBehaviour && hand.getCardsOf(
-                    CardType.BUILDING).size() == 0)
-                    || behaviour instanceof SenatorBehaviour
-                    && hand.getCardsOf(CardType.CHARACTER).size() == 0) {
+            if (behaviour instanceof LayForFreeBehaviour && 
+                 hand.getCardsOf(((LayForFreeBehaviour)behaviour).getType()).size() == 0) {
                 view.enableStopButton(false);
                 g.getCardActivateManager().complete();
             }
@@ -258,7 +241,7 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             
         } else if (card == Card.CONSUL) {
             
-            if(g.getActionDice().length > 1) {
+            if(g.getActionDice().length >= 1) {
                 view.showDieInputDialog();
                 view.enableActionDiceAdapter(false);
             }
@@ -332,9 +315,8 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         AbstractCard card = manager.getActivatedCard();
         Behaviour behaviour = manager.getActivatedCard().getBehaviour();
         
-        if(behaviour instanceof GladiatorBehaviour || behaviour instanceof SicariusBehaviour 
-                || behaviour instanceof OnagerBehaviour || behaviour instanceof VelitesBehaviour 
-                || behaviour instanceof NeroBehaviour) {
+        if(behaviour instanceof GladiatorBehaviour || behaviour instanceof KamikazeBehaviour 
+                || behaviour instanceof AttackSelectedTargetBehaviour) {
             
             IField field = g.getCurrentPlayer().getOpponent().getField();
             IDisc disc = field.getDisc(discIndex);
@@ -346,15 +328,17 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                     
                     if(checker.isValidCard(disc.getCard())) {
                         
-                        if(!(behaviour instanceof NeroBehaviour && behaviour instanceof SicariusBehaviour) 
-                           || (behaviour instanceof NeroBehaviour && disc.getCard().getType() == CardType.BUILDING) 
-                           || (behaviour instanceof SicariusBehaviour && disc.getCard().getType() == CardType.CHARACTER)) {
-                             
+                        if(behaviour instanceof KamikazeBehaviour 
+                             && disc.getCard().getType() == ((KamikazeBehaviour)behaviour).getType()) {
                             manager.chooseDiceDisc(discIndex + 1);
-                            if(card instanceof Onager || behaviour instanceof VelitesBehaviour) {
-                                g.getDiceManager().rollBattleDice();
-                                manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
-                            }
+                            manager.complete();
+                            
+                        } else if(behaviour instanceof AttackSelectedTargetBehaviour) {
+                            g.getDiceManager().rollBattleDice();
+                            manager.chooseDiceDisc(discIndex + 1);
+                            manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
+                            manager.complete();
+                        } else if(behaviour instanceof GladiatorBehaviour) {
                             manager.complete();
                         }
                         
@@ -453,7 +437,7 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         Behaviour behaviour = manager.getActivatedCard().getBehaviour();
         
         view.enableStopButton(false);
-        if(behaviour instanceof ArchitectusBehaviour || behaviour instanceof SenatorBehaviour) {
+        if(behaviour instanceof LayForFreeBehaviour) {
             manager.complete();
         }
         
