@@ -66,6 +66,7 @@ public class GameController implements MoveMaker {
             if (!found && card.getName() == chosen) {
                 card.setOwner(player);
                 player.getHand().appendCard(card);
+                found = true;
             } else {
                 discard.pushCard(card);
             }

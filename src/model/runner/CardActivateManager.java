@@ -7,6 +7,7 @@ import model.IGameIO;
 import model.IPlayer;
 import model.InputHandler;
 import model.TurnMover;
+import model.action.Action;
 import model.action.AddBattleDieInput;
 import model.action.AddBooleanInputAction;
 import model.action.AddDieInputAction;
@@ -71,12 +72,12 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
     }
 
     public void chooseCardFromPile(Card card) {
-        turnMover.getCurrentTurn().addAction(new ChooseCardFromPileAction(g, this, handler, card));
+        addAction(new ChooseCardFromPileAction(g, this, handler, card));
         handler.addCardInput(manager.getCurrentPlayer().getId(), card);
     }
 
     public void complete() {
-        turnMover.getCurrentTurn().addAction(new CompleteAction(g, this, handler));
+        addAction(new CompleteAction(g, this, handler));
         if (activatedCard != null) {
             activatedCard.complete();
             activatedCard = null;
@@ -84,23 +85,13 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
     }
 
     public void giveAttackDieRoll(int roll) {
-        turnMover.getCurrentTurn().addAction(new AddBattleDieInput(g, this, handler, roll));
+        addAction(new AddBattleDieInput(g, this, handler, roll));
         handler.addBattleDieInput(roll);
-    }
-
-    public void chooseActionDice(int actionDiceValue) {
-        turnMover.getCurrentTurn().addAction(new AddDieInputAction(g, this, handler, actionDiceValue));
-        handler.addDieInput(actionDiceValue);
-    }
-
-    public void chooseCenturioAddActionDie(boolean attackAgain) {
-        turnMover.getCurrentTurn().addAction(new AddBooleanInputAction(g, this, handler, attackAgain));
-        handler.addBooleanInput(attackAgain);
     }
 
     public void placeCard(Card name, int diceDisc) {
 
-        turnMover.getCurrentTurn().addAction(new ReArrangeCardAction(g, this, handler, name, diceDisc));
+        addAction(new ReArrangeCardAction(g, this, handler, name, diceDisc));
         
         IPlayer player = manager.getCurrentPlayer();
         ICardStorage listOfCards = handler.getList();
@@ -114,15 +105,10 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
     }
 
     public void chooseConsulChangeAmount(int amount) {
-        turnMover.getCurrentTurn().addAction(new AddIntInputAction(g, this, handler, amount));
+        addAction(new AddIntInputAction(g, this, handler, amount));
         handler.addIntInput(amount);
     }
-
-    public void chooseWhichDiceChanges(int originalRoll) {
-        turnMover.getCurrentTurn().addAction(new AddDieInputAction(g, this, handler, originalRoll));
-        handler.addDieInput(originalRoll);
-    }
-
+    
     public void chooseDiceDisc(int diceDisc) {
 
         IPlayer player = null;
@@ -132,31 +118,20 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
         } else {
             player = manager.getCurrentPlayer().getOpponent();
         }
-        turnMover.getCurrentTurn().addAction(new AddDiscInputAction(g, this, handler, player.getId(), diceDisc - 1));
+        addAction(new AddDiscInputAction(g, this, handler, player.getId(), diceDisc - 1));
         handler.addDiscInput(player.getId(), diceDisc - 1);
     }
-
-    public void chooseActivateTemplum(boolean activate) {
-        turnMover.getCurrentTurn().addAction(new AddBooleanInputAction(g, this, handler, activate));
-        handler.addBooleanInput(activate);
-    }
-
-    public void chooseActivateTemplum(int diceValue) {
-        turnMover.getCurrentTurn().addAction(new AddDieInputAction(g, this, handler, diceValue));
-        handler.addDieInput(diceValue);
-    }
-
+    
     public void chooseMercatorBuyNum(int VPToBuy) {
 
         for (int i = 0; i < VPToBuy; i++) {
-            handler.addBooleanInput(true);
-            turnMover.getCurrentTurn().addAction(new AddBooleanInputAction(g, this, handler, true));
+            addBooleanInput(true);
         }
     }
 
     public CardActivator getScaenicusMimicTarget(int diceDisc) {
 
-        turnMover.getCurrentTurn().addAction(new MimicAction(g, this, handler, diceDisc));
+        addAction(new MimicAction(g, this, handler, diceDisc));
 
         IPlayer player = manager.getCurrentPlayer();
 
@@ -167,6 +142,34 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
         return this;
     }
 
+    public void chooseActivateTemplum(boolean activate) {
+        addBooleanInput(activate);
+    }
+
+    public void chooseCenturioAddActionDie(boolean attackAgain) {
+        addBooleanInput(attackAgain);
+    }
+    
+    public void shouldMoveForwardInTime(boolean isForward) {
+        addBooleanInput(isForward);
+    }
+    
+    public void chooseWhichDiceChanges(int originalRoll) {
+        addActionDie(originalRoll);
+    }
+
+    public void chooseActionDice(int actionDiceValue) {
+        addActionDie(actionDiceValue);
+    }
+
+    public void setSecondDiceUsed(int diceValue) {
+        addActionDie(diceValue);
+    }
+
+    public void chooseActivateTemplum(int diceValue) {
+        addActionDie(diceValue);
+    }
+    
     public void activate(IDisc disc) {
 
         this.activatedCard = disc.getCard();
@@ -197,14 +200,18 @@ public class CardActivateManager implements AesculapinumActivator, ArchitectusAc
 
         return c;
     }
-
-    public void shouldMoveForwardInTime(boolean isForward) {
-        turnMover.getCurrentTurn().addAction(new AddBooleanInputAction(g, this, handler, isForward));
-        handler.addBooleanInput(isForward);
+    
+    private void addAction(Action action) {
+        turnMover.getCurrentTurn().addAction(action);
     }
-
-    public void setSecondDiceUsed(int diceValue) {
-        turnMover.getCurrentTurn().addAction(new AddDieInputAction(g, this, handler, diceValue));
-        handler.addDieInput(diceValue);
+    
+    private void addActionDie(int actionDiceValue) {
+        addAction(new AddDieInputAction(g, this, handler, actionDiceValue));
+        handler.addDieInput(actionDiceValue);
+    }
+    
+    private void addBooleanInput(boolean input) {
+        addAction(new AddBooleanInputAction(g, this, handler, input));
+        handler.addBooleanInput(input);
     }
 }

@@ -10,6 +10,7 @@ import java.awt.dnd.DragSourceMotionListener;
 import javax.swing.JComponent;
 import javax.swing.TransferHandler;
 
+@SuppressWarnings("serial")
 public class CustomizedTransferHandler extends TransferHandler implements DragSourceMotionListener {
     
     @Override

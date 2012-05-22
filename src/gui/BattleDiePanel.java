@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 
 import model.IGameDisplayState;
 
+@SuppressWarnings("serial")
 public class BattleDiePanel extends JPanel implements IListener {
     
     private JDie battleDie;

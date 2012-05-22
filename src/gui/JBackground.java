@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import model.IGameDisplayState;
 
+@SuppressWarnings("serial")
 public class JBackground extends JPanel implements IListener {
     
     private ResourceManager rm;

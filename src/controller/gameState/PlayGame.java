@@ -99,12 +99,18 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                 
                 if (discIndex != 7) {
                     moveMaker.chooseCardToActivate(discIndex);
-                    activation(g.getCardActivateManager().getActivatedCard().getName());
+                    if(g.getCardActivateManager().getActivatedCard() != null) {
+                        activation(g.getCardActivateManager().getActivatedCard().getName());
+                    } else {
+                        view.blockDiscDialog(discIndex);
+                    }
                 } else {
                     if (g.getCurrentPlayer().getMoney() >= dieValue) {
                         moveMaker.activateBribeDisc(dieValue);
                         if(g.getCardActivateManager().getActivatedCard() != null) {
                             activation(g.getCardActivateManager().getActivatedCard().getName());  
+                        } else {
+                            view.blockDiscDialog(discIndex);
                         }
                     }
                 }
@@ -258,7 +264,7 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
             }
         } else if (card == Card.TELEPHONEBOX) {
             
-            if(g.getActionDice().length >= 2) {
+            if(g.getActionDice().length >= 1) {
                 if(view.showTelephoneBoxConfirmDialog()) {
                     manager.shouldMoveForwardInTime(true);
                 } else {
@@ -339,6 +345,7 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                             manager.giveAttackDieRoll(g.getDiceManager().getBattleDie().getValue());
                             manager.complete();
                         } else if(behaviour instanceof GladiatorBehaviour) {
+                            manager.chooseDiceDisc(discIndex + 1);
                             manager.complete();
                         }
                         
@@ -351,6 +358,7 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
         } else if(behaviour instanceof PraetorianusBehaviour) {
             manager.chooseDiceDisc(discIndex + 1);
             manager.complete();
+            view.blockDiscDialog(discIndex + 1);
         } else if(card instanceof TelephoneBox) {
             manager.chooseDiceDisc(discIndex + 1);
             view.enableActionDiceAdapter(false);
@@ -420,7 +428,7 @@ public class PlayGame implements IUseDieInputListener, ILayCardListener, IGameSt
                 g.getNotifier().notifyListeners();
             }
         } else if(card instanceof TelephoneBox) {
-            manager.chooseActionDice(dieValue);
+            manager.setSecondDiceUsed(dieValue);
             manager.complete();
             view.enableActionDiceAdapter(true);
         }

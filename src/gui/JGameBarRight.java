@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import model.IGameDisplayState;
 
+@SuppressWarnings("serial")
 public class JGameBarRight extends JPanel implements ISwapListener {
 
     private IDisplayManager idm;

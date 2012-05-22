@@ -1,6 +1,5 @@
 package controller;
 
-import framework.cards.Card;
 
 public class GuiInputHandler {
     

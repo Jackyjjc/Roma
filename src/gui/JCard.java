@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import framework.cards.Card;
 
 
+@SuppressWarnings("serial")
 public class JCard extends JButton implements Transferable {
     
     private CardDisplayManager cdm;

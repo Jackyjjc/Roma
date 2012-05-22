@@ -7,15 +7,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import model.Game;
 import model.IGameDisplayState;
 import model.IGameIO;
 import model.Notifier;
-import controller.Controller;
 import controller.GuiInputHandler;
-import framework.Rules;
 import framework.cards.Card;
 
+@SuppressWarnings("serial")
 public class GraphicalView extends JFrame implements IListener, IDisplayManager {
     
     private static final String NAME = "Roma 3.2";
@@ -331,6 +329,11 @@ public class GraphicalView extends JFrame implements IListener, IDisplayManager 
         }
         
         return confirm;
+    }
+    
+    public void blockDiscDialog(int disc) {
+        JOptionPane.showMessageDialog(this,
+                "Disc " + disc + " is blocked");
     }
     
     public void gameOver() {

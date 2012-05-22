@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 
 import model.IGameDisplayState;
 
+@SuppressWarnings("serial")
 public class JStockPile extends JPanel implements IListener {
 
     private int poolVP;

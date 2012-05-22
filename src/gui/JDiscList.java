@@ -9,6 +9,7 @@ import model.IGameDisplayState;
 import controller.CustomizedTransferHandler;
 import controller.DieDropTargetListener;
 
+@SuppressWarnings("serial")
 public class JDiscList extends JPanel implements IListener {
     
     private static final int NUM_DISCS = 9;

@@ -9,6 +9,7 @@ import controller.CustomizedTransferHandler;
 import controller.MouseDraggingAdapter;
 import framework.cards.Card;
 
+@SuppressWarnings("serial")
 public class JHand extends JPanel implements IListener {
 
     private final boolean FACE_UP = true;

@@ -11,6 +11,7 @@ import controller.CardDropTargetListener;
 import controller.CustomizedTransferHandler;
 import framework.cards.Card;
 
+@SuppressWarnings("serial")
 public class SwapArea extends JPanel {
 
     private IDisplayManager idm;

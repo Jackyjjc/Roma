@@ -31,6 +31,9 @@ public class RetrieveCardFromPileBehaviour extends Behaviour implements ICardChe
 
         if (isValidCard(card)) {
             pile.removeCard(card);
+            if(checkType == null) {
+                pile.shuffle();
+            }
             hand.pushCard(card);
         }
 

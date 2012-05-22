@@ -9,9 +9,6 @@ import controller.gameState.SwapCard;
 
 public class Controller {
 
-    private static final int NUM_DICE = 3;
-    private static final int START_NUM_CARDS = 4;
-
     private Game g;
     private GraphicalView view;
     private GuiInputHandler handler;

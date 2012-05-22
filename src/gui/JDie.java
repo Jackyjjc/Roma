@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+@SuppressWarnings("serial")
 public class JDie extends JButton implements Transferable {
     
     private DieDisplayManager ddm;

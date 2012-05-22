@@ -15,8 +15,6 @@ import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.io.IOException;
 
-import model.InputHandler;
-
 public class DieDropTargetListener implements DropTargetListener {
 
     private static final Cursor droppableCursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);

@@ -5,7 +5,6 @@ import model.Game;
 import model.IDisc;
 import model.IPlayer;
 import model.card.AbstractCard;
-import model.card.CardFactory;
 import controller.GuiInputHandler;
 import controller.IGameState;
 import controller.ILayCardListener;

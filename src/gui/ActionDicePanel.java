@@ -8,6 +8,7 @@ import model.IGameDisplayState;
 import controller.CustomizedTransferHandler;
 import controller.MouseDraggingAdapter;
 
+@SuppressWarnings("serial")
 public class ActionDicePanel extends JPanel implements IListener {
     
     private static final int NUM_DICES = 3;

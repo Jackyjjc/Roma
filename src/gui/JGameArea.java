@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 
 import model.IGameDisplayState;
 
+@SuppressWarnings("serial")
 public class JGameArea extends JPanel implements IListener {
     
     private IDisplayManager idm;

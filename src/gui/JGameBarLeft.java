@@ -12,6 +12,7 @@ import controller.StopButtonClickListener;
 
 import model.IGameDisplayState;
 
+@SuppressWarnings("serial")
 public class JGameBarLeft extends JPanel implements IListener {
 
     private IDisplayManager idm;

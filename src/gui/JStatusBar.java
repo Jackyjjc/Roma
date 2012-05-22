@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 import model.IGameDisplayState;
 
+@SuppressWarnings("serial")
 public class JStatusBar extends JPanel implements IListener, MouseListener {
     
     private static final int PADDING = 5;

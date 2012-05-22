@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -10,6 +9,7 @@ import javax.swing.JPanel;
 import model.IGameDisplayState;
 import framework.cards.Card;
 
+@SuppressWarnings("serial")
 public class JPiles extends JPanel implements IListener {
 
     private IDisplayManager idm;
@@ -48,8 +48,6 @@ public class JPiles extends JPanel implements IListener {
     
     @Override
     public void paintComponent(Graphics g) {
-        
-        Graphics2D g2d = (Graphics2D) g;
         
         //this is the deck
         

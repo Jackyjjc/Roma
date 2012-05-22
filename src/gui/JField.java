@@ -12,6 +12,7 @@ import controller.FieldClickListener;
 import framework.cards.Card;
 
 
+@SuppressWarnings("serial")
 public class JField extends JPanel implements IListener {
 
     private static int NUM_CARDS = 7;
