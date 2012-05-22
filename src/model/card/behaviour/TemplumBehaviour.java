@@ -34,7 +34,8 @@ public class TemplumBehaviour extends Behaviour implements IForumListener, IDieC
         IPlayer player = getHost().getOwner();
 
         Die dieInput = handler.getDieInput();
-
+        dieInput.use();
+        
         if (dieInput != null) {
             bank.transferVP(player, dieInput.getValue());
         }
