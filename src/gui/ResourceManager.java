@@ -174,7 +174,7 @@ public class ResourceManager {
     
     private BufferedImage read(String name) throws IOException {
         
-        BufferedImage origin = ImageIO.read(ResourceManager.class.getResource("/resource/" + name));
+        BufferedImage origin = ImageIO.read(ResourceManager.class.getResource("/" + name));
         
         return scale(origin);
     }

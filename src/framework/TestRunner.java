@@ -66,7 +66,7 @@ public class TestRunner {
 
     private static Test[] getTestsInPackage(String packageName){
         Reflections reflections = new Reflections(new ConfigurationBuilder()
-                .filterInputsBy(new FilterBuilder.Include(FilterBuilder.prefix(packageName)))
+                .filterInputsBy(new FilterBuilder().includePattern(packageName))
                 .setUrls(ClasspathHelper.forJavaClassPath())
                 .setScanners(new SubTypesScanner()));
         Set<Class<? extends Test>> testClasses = reflections.getSubTypesOf(Test.class);
